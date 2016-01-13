@@ -1,0 +1,9 @@
+{
+  "eqeqeq": true,
+  "forin": true,
+  "undef": true,
+  "browser": true,
+  "latedef": true,
+  "unused": true,
+  "strict": true
+}
