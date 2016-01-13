@@ -1,15 +1,6 @@
 /* jshint jasmine: true */
 describe("App", function () {
   "use strict";
-  var simulateClick = function (element) {
-    var event = new MouseEvent("click", {
-      view: window,
-      bubbles: true,
-      cancelable: true
-    });
-    element.dispatchEvent(event);
-  };
-
 
   beforeEach(function () {
     this.root = document.createElement("div");
@@ -26,7 +17,7 @@ describe("App", function () {
   describe("When the user logs in", function () {
     beforeEach(function () {
       this.root.querySelector("input[type=text]").value = "theuser";
-      simulateClick(this.root.querySelector("button"));
+      Weatherbus.specHelper.simulateClick(this.root.querySelector("button"));
     });
 
     it("should show the stop list controller", function () {
