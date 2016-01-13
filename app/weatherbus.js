@@ -18,6 +18,23 @@
   };
 
 
+  // Base class for controllers. Should always be subclassed.
+  Weatherbus.Controller = function () {};
+
+  Weatherbus.Controller.prototype.createDom = function () {
+    throw new Error("Must override createDom()");
+  };
+
+  Weatherbus.Controller.prototype.appendTo = function (container) {
+    this._root = this.createDom();
+    container.appendChild(this._root);
+  };
+
+  Weatherbus.Controller.prototype.remove = function () {
+    this._root.parentNode.removeChild(this._root);
+  };
+
+
 
   Weatherbus.LoginController = function (loginCallback) {
     if (!loginCallback) {
@@ -27,32 +44,37 @@
     this._loginCallback = loginCallback;
   };
 
-  Weatherbus.LoginController.prototype.appendTo = function (container) {
-    var template = 'Username: <input type="text" name="username"> <button>Go</button>';
-    var that = this;
-    this._root = document.createElement("div");
-    this._root.innerHTML = template;
-    this._submitButton = this._root.querySelector("button");
-    this._usernameField = this._root.querySelector("input");
-    container.appendChild(this._root);
+  Weatherbus.LoginController.prototype = new Weatherbus.Controller();
 
+  Weatherbus.LoginController.prototype.createDom = function () {
+    var template = 'Username: <input type="text" name="username"> <button>Go</button>';
+    var dom = document.createElement("div");
+    dom.innerHTML = template;
+
+    this._submitButton = dom.querySelector("button");
+    this._usernameField = dom.querySelector("input");
+
+    var that = this;
     this._submitButton.addEventListener("click", function () {
       that._loginCallback(that._usernameField.value);
     });
+
+    return dom;
   };
 
-  Weatherbus.LoginController.prototype.remove = function () {
-    this._root.parentNode.removeChild(this._root);
-  };
 
 
   Weatherbus.StopListController = function () {};
 
-  Weatherbus.StopListController.prototype.appendTo = function (container) {
-    this._root = document.createElement("div");
-    this._root.innerHTML = "TODO";
-    container.appendChild(this._root);
+  Weatherbus.StopListController.prototype = new Weatherbus.Controller();
+
+  Weatherbus.StopListController.prototype.createDom = function() {
+    var dom = document.createElement("div");
+    dom.innerHTML = "TODO";
+    return dom;
   };
+
+
 
   Weatherbus.boot = function () {
     new Weatherbus.App(document.body).start();
