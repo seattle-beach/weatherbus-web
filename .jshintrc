@@ -1,4 +1,5 @@
 {
+  "globals": { "Weatherbus": true },
   "eqeqeq": true,
   "forin": true,
   "undef": true,
