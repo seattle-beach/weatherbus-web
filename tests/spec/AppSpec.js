@@ -20,10 +20,11 @@ describe("App", function () {
       Weatherbus.specHelper.simulateClick(this.root.querySelector("button"));
     });
 
-    it("should show the stop list controller", function () {
-      var stopListController = this.subject._rootController;
-      expect(stopListController instanceof Weatherbus.StopListController).toEqual(true);
-      expect(stopListController._root.parentNode).toBe(this.root);
+    it("should show the stops controller", function () {
+      var stopsController = this.subject._rootController;
+      expect(stopsController instanceof Weatherbus.StopsController).toEqual(true);
+      expect(stopsController._root.parentNode).toBe(this.root);
+      expect(stopsController.username).toBe("theuser");
     });
   });
 });
