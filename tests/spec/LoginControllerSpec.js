@@ -24,4 +24,19 @@ describe("LoginController", function () {
       expect(this.callback).toHaveBeenCalledWith("theuser");
     });
   });
+
+  describe("When the submit button is clicked without entering a username", function () {
+    beforeEach(function () {
+      Weatherbus.specHelper.simulateClick(this.root.querySelector("button"));
+    });
+
+    it("should not call the callback", function () {
+      expect(this.callback).not.toHaveBeenCalled();
+    });
+
+    it("should display an error", function () {
+      var error = this.root.querySelector(".error");
+      expect(error).not.toHaveClass("hidden");
+    });
+  });
 });

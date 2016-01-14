@@ -27,6 +27,18 @@
             };
           }
         };
+      },
+      toHaveClass: function () {
+        return {
+          compare: function (actual, expected) {
+            var element = actual;
+            var className = expected;
+            return {
+              pass: element.classList.contains(className),
+              message: "Expected " + element + " to have class \"" + className + "\""
+            };
+          }
+        };
       }
     });
   });
