@@ -1,8 +1,16 @@
 #!/bin/sh -e
 
+copyWithTemplates() {
+  sed '/TEMPLATES_GO_HERE/{
+    s/TEMPLATES_GO_HERE//
+    r src/templates.html
+  }' $1 > $2
+}
+
 rm -rf target
 mkdir -p target/app target/tests
 cp src/* target/app
-cp tests/SpecRunner.html target/tests
+copyWithTemplates src/index.html target/app/index.html
+copyWithTemplates tests/SpecRunner.html target/tests/SpecRunner.html
 jshint --exclude tests/lib .
 echo "ok"

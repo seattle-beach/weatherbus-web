@@ -47,7 +47,7 @@
   Weatherbus.LoginController.prototype = new Weatherbus.Controller();
 
   Weatherbus.LoginController.prototype.createDom = function () {
-    var template = '<div class="error hidden">Please enter a valid username.</div> Username: <input type="text" name="username"> <button>Go</button>';
+    var template = document.querySelector("#template_LoginController").innerText;
     var dom = document.createElement("div");
     dom.innerHTML = template;
 
