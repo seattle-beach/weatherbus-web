@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+rm -rf target
+mkdir -p target/app target/tests
+cp src/* target/app
+cp tests/SpecRunner.html target/tests
+jshint --exclude tests/lib .
+echo "ok"
