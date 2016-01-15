@@ -1,4 +1,3 @@
-/* jshint jasmine: true */
 (function () {
   "use strict";
 

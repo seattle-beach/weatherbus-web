@@ -1,4 +1,3 @@
-/* jshint jasmine: true */
 describe("LoginController", function () {
   "use strict";
 

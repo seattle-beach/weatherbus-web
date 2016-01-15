@@ -1,4 +1,3 @@
-/* jshint jasmine: true */
 describe("StopsController", function () {
   "use strict";
 

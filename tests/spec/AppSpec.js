@@ -1,4 +1,3 @@
-/* jshint jasmine: true */
 describe("App", function () {
   "use strict";
 

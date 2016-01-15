@@ -12,5 +12,6 @@ mkdir -p target/app target/tests
 cp src/index.html src/weatherbus.css src/weatherbus.js target/app
 copyWithTemplates src/index.html target/app/index.html
 copyWithTemplates tests/SpecRunner.html target/tests/SpecRunner.html
-jshint --exclude tests/lib,target .
+jshint src
+(cd tests && jshint --exclude lib .)
 echo "ok"

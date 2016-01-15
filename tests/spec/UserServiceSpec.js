@@ -1,4 +1,3 @@
-/*jshint jasmine: true */
 describe("UserService", function () {
   "use strict";
 
