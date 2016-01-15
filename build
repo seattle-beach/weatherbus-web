@@ -12,5 +12,5 @@ mkdir -p target/app target/tests
 cp src/* target/app
 copyWithTemplates src/index.html target/app/index.html
 copyWithTemplates tests/SpecRunner.html target/tests/SpecRunner.html
-jshint --exclude tests/lib .
+jshint --exclude tests/lib,target .
 echo "ok"
