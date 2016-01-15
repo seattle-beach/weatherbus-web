@@ -24,14 +24,14 @@ describe("UserService", function () {
 
     describe("When the AJAX call succeeds", function () {
       beforeEach( function () {
-        this.xhr.response = "Stops for bob:<br/>Stop: 123456<br/>Stop: 12345<br/>";
+        this.xhr.response = "Stops for bob:<br/>Stop: 12345_6<br/>Stop: 12345<br/>";
         this.xhr.readyState = 4;
         this.xhr.status = 200;
         this.xhr.onreadystatechange();
       });
 
       it("should call the callback with the list of stops", function () {
-        expect(this.callback).toHaveBeenCalledWith(null, ["123456", "12345"]);
+        expect(this.callback).toHaveBeenCalledWith(null, ["12345_6", "12345"]);
       });
     });
 
@@ -46,14 +46,6 @@ describe("UserService", function () {
         var errorMsg = "There was an error retrieving stops.";
         expect(this.callback).toHaveBeenCalledWith(errorMsg, null);
       });
-    });
-
-    it("should allow underscores in stop IDs", function () {
-      this.xhr.response = "Stops for bob:<br/>Stop: 12345_6<br/>";
-      this.xhr.readyState = 4;
-      this.xhr.status = 200;
-      this.xhr.onreadystatechange();
-      expect(this.callback).toHaveBeenCalledWith(null, ["12345_6"]);
     });
   });
 });
