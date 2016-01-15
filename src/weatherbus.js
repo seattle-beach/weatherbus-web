@@ -73,7 +73,7 @@
 
 
   Weatherbus.StopsController = function (username, userService) {
-    this.username = username; 
+    this.username = username;
     this.userService = userService;
   };
 
@@ -85,23 +85,27 @@
     var that = this;
     dom.innerHTML = template;
 
-    this.userService.getStopsForUser(this.username, function (stops) {
-      that._stopsLoaded(stops);
+    this.userService.getStopsForUser(this.username, function (error, stops) {
+      that._stopsLoaded(error, stops);
     });
-    //as page loads
-    //call service with username
-    //receive stops
-    //render (or error message)
     return dom;
   };
 
-  Weatherbus.StopsController.prototype._stopsLoaded = function (stops) {
+  Weatherbus.StopsController.prototype._stopsLoaded = function (error, stops) {
+    var i, li, ol, errorNode;
     this._root.querySelector(".loading").classList.add("hidden");
-    for(var i = 0; i < stops.length; i++) {
-      var li = document.createElement("li");
-      li.innerText = stops[i];
-      var ol = this._root.querySelector("ol");
-      ol.appendChild(li);
+
+    if (stops) {
+      for (i = 0; i < stops.length; i++) {
+        li = document.createElement("li");
+        li.innerText = stops[i];
+        ol = this._root.querySelector("ol");
+        ol.appendChild(li);
+      }
+    } else {
+      errorNode = this._root.querySelector(".error");
+      errorNode.classList.remove("hidden");
+      errorNode.innerText = error;
     }
   };
 
@@ -110,22 +114,31 @@
     this.xhrFactory = xhrFactory;
   };
 
+  var parseStops = function (responseText) {
+    var i;
+    var re = new RegExp("[^0-9]", "g");
+    var lines = responseText.split('<br/>');
+
+    for (i = 0; i < lines.length; i++) {
+      lines[i] = lines[i].replace(re, "");
+    }
+
+    return lines.filter(function (s) { return s !== ""; });
+  };
+
   Weatherbus.UserService.prototype.getStopsForUser = function (username, callback) {
     var xhr = this.xhrFactory();
+
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
-        var re = new RegExp("[^0-9]", "g");
-        var response = xhr.response.split('<br/>');
-        for(var i = 0; i < response.length; i++) {
-          response[i] = response[i].replace(re, "");
+        if (xhr.status === 200) {
+          callback(null, parseStops(xhr.response));
+        } else {
+          callback("There was an error retrieving stops.", null);
         }
-        response = response.filter(function (s) { return s !== ""; });
-        
-        
-        
-        callback(response);
       }
     };
+
     xhr.open("get", "http://localhost:8080/users/stops?username=" + username);
     xhr.send();
   };

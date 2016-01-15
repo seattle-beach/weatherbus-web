@@ -27,7 +27,7 @@ describe("StopsController", function () {
     beforeEach(function () {
       var args = this.userService.getStopsForUser.calls.mostRecent().args;
       var callback = args[1];
-      callback(["12345", "67890"]);
+      callback(null, ["12345", "67890"]);
     });
 
     it("should hide the loading indicator", function () {
@@ -40,6 +40,27 @@ describe("StopsController", function () {
       expect(stops.length).toEqual(2);
       expect(stops[0].innerText).toEqual("12345");
       expect(stops[1].innerText).toEqual("67890");
+    });
+  });
+
+  describe("When the list of stops fails to load", function () {
+    beforeEach(function () {
+      var args = this.userService.getStopsForUser.calls.mostRecent().args;
+      var callback = args[1];
+      var error = "ERROR";
+      callback(error, null);
+    });
+
+    it("should hide the loading indicator", function () {
+      var loadingIndicator = this.root.querySelector(".loading");
+      expect(loadingIndicator).toHaveClass("hidden");
+    });
+
+    it("should render an error message", function () {
+      expect(this.root).toContainElement(".error");
+      var msg = this.root.querySelector(".error");
+      expect(msg).not.toHaveClass("hidden");
+      expect(msg.innerText).toEqual("ERROR");
     });
   });
 });

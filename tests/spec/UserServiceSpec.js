@@ -30,11 +30,25 @@ describe("UserService", function () {
       beforeEach( function () {
         this.xhr.response = "Stops for bob:<br/>Stop: 123456<br/>Stop: 12345<br/>";
         this.xhr.readyState = 4;
+        this.xhr.status = 200;
         this.xhr.onreadystatechange();
       });
 
       it("should call the callback with the list of stops", function () {
-        expect(this.callback).toHaveBeenCalledWith(["123456", "12345"]);
+        expect(this.callback).toHaveBeenCalledWith(null, ["123456", "12345"]);
+      });
+    });
+
+    describe("When the AJAX call does not succeed", function () {
+      beforeEach( function () {
+        this.xhr.readyState = 4;
+        this.xhr.status = 400;
+        this.xhr.onreadystatechange();
+      });
+
+      it("should call the callback with an error message", function () {
+        var errorMsg = "There was an error retrieving stops.";
+        expect(this.callback).toHaveBeenCalledWith(errorMsg, null);
       });
     });
   });
