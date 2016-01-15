@@ -5,6 +5,7 @@ describe("App", function () {
   beforeEach(function () {
     this.root = document.createElement("div");
     this.subject = new Weatherbus.App(this.root);
+    this.subject._xhrFactory = Weatherbus.specHelper.mockXhrFactory;
     this.subject.start();
   });
 

@@ -5,10 +5,7 @@ describe("UserService", function () {
   beforeEach( function () {
     var that = this;
     var xhrFactory = function () {
-      that.xhr = {
-        open: jasmine.createSpy("open"),
-        send: jasmine.createSpy("send"),
-      };
+      that.xhr = Weatherbus.specHelper.mockXhrFactory();
       return that.xhr;
     };
     this.subject = new Weatherbus.UserService(xhrFactory);

@@ -10,13 +10,14 @@
     var that = this;
     this._rootController = new Weatherbus.LoginController(function(username) {
       that._rootController.remove();
-
-      that._rootController = new Weatherbus.StopsController(username, new Weatherbus.UserService(function() {
-        return new XMLHttpRequest();
-      }));
+      that._rootController = new Weatherbus.StopsController(username, new Weatherbus.UserService(that._xhrFactory));
       that._rootController.appendTo(that._root);
     });
     this._rootController.appendTo(this._root);
+  };
+
+  Weatherbus.App.prototype._xhrFactory = function () {
+    return new XMLHttpRequest();
   };
 
 

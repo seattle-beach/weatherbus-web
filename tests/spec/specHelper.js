@@ -10,6 +10,12 @@
         cancelable: true
       });
       element.dispatchEvent(event);
+    },
+    mockXhrFactory: function () {
+      return {
+        open: jasmine.createSpy("open"),
+        send: jasmine.createSpy("send"),
+      };
     }
   };
 
