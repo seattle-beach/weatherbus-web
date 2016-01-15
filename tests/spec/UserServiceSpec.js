@@ -47,5 +47,13 @@ describe("UserService", function () {
         expect(this.callback).toHaveBeenCalledWith(errorMsg, null);
       });
     });
+
+    it("should allow underscores in stop IDs", function () {
+      this.xhr.response = "Stops for bob:<br/>Stop: 12345_6<br/>";
+      this.xhr.readyState = 4;
+      this.xhr.status = 200;
+      this.xhr.onreadystatechange();
+      expect(this.callback).toHaveBeenCalledWith(null, ["12345_6"]);
+    });
   });
 });

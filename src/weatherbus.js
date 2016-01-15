@@ -117,7 +117,7 @@
 
   var parseStops = function (responseText) {
     var i;
-    var re = new RegExp("[^0-9]", "g");
+    var re = new RegExp("[^0-9_]", "g");
     var lines = responseText.split('<br/>');
 
     for (i = 0; i < lines.length; i++) {
