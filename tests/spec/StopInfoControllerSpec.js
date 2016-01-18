@@ -45,4 +45,26 @@ describe("StopInfoController", function () {
       expect(this.root.querySelector(".lng").innerText).toEqual("-122.305214");
     });
   });
+
+  describe("When the stop information fails to load", function () {
+    beforeEach(function () {
+      var args = this.stopService.getInfoForStop.calls.mostRecent().args;
+      var callback = args[1];
+      var error = "ERROR";
+      callback(error, null);
+    });
+
+    it("should hide the loading indicator", function () {
+      var loadingIndicator = this.root.querySelector(".loading");
+      expect(loadingIndicator).toHaveClass("hidden");
+    });
+
+    it("should render an error message", function () {
+      expect(this.root).toContainElement(".error");
+      var msg = this.root.querySelector(".error");
+      expect(msg).not.toHaveClass("hidden");
+      expect(msg.innerText).toEqual("ERROR");
+    });
+  });
+
 });

@@ -140,11 +140,19 @@
     dom.innerHTML = template;
     var that = this;
 
-    this._stopService.getInfoForStop(this._stopId, function (err,value) {
+    this._stopService.getInfoForStop(this._stopId, function (error, value) {
+      var errorNode;
       var loading = that._root.querySelector(".loading");
       loading.classList.add("hidden");
-      that._root.querySelector(".lat").innerText = value.latitude;
-      that._root.querySelector(".lng").innerText = value.longitude;
+
+      if (error) {
+        errorNode = that._root.querySelector(".error");
+        errorNode.classList.remove("hidden");
+        errorNode.innerText = error;
+      } else {
+        that._root.querySelector(".lat").innerText = value.latitude;
+        that._root.querySelector(".lng").innerText = value.longitude;
+      }
     });
 
     return dom;
@@ -201,7 +209,11 @@
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
-        callback(null, parseStopInfo(JSON.parse(xhr.response)));
+        if (xhr.status === 200) {
+          callback(null, parseStopInfo(JSON.parse(xhr.response)));
+        } else {
+          callback("There was an error getting stop info.", null);
+        }
       }
     };
 

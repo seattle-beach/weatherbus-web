@@ -38,5 +38,18 @@ describe("StopService", function() {
         expect(this.callback).toHaveBeenCalledWith(null, response);
       });
     });
+
+    describe("When the AJAX call does not succeed", function () {
+      beforeEach( function () {
+        this.xhr.readyState = 4;
+        this.xhr.status = 400;
+        this.xhr.onreadystatechange();
+      });
+
+      it("should call the callback with an error message", function () {
+        var errorMsg = "There was an error getting stop info.";
+        expect(this.callback).toHaveBeenCalledWith(errorMsg, null);
+      });
+    });
   });
 });
