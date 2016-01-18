@@ -217,7 +217,7 @@
       }
     };
 
-    xhr.open("get", "http://localhost:8080/buses/coordinates?stopId=" + stopId);
+    xhr.open("get", "http://localhost:8080/wb?stopId=" + stopId);
     xhr.send();
   };
 
