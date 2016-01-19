@@ -8,7 +8,7 @@
   Weatherbus.StopInfoController.prototype = new Weatherbus.Controller();
 
   Weatherbus.StopInfoController.prototype.createDom = function () {
-    var template = document.querySelector("#template_StopInfoController").innerText;
+    var template = document.querySelector("#template_StopInfoController").textContent;
     var dom = document.createElement("div");
     dom.innerHTML = template;
     return dom;
@@ -25,10 +25,10 @@
       if (error) {
         errorNode = that._root.querySelector(".error");
         errorNode.classList.remove("hidden");
-        errorNode.innerText = error;
+        errorNode.textContent = error;
       } else {
-        that._root.querySelector(".lat").innerText = value.latitude;
-        that._root.querySelector(".lng").innerText = value.longitude;
+        that._root.querySelector(".lat").textContent = value.latitude;
+        that._root.querySelector(".lng").textContent = value.longitude;
       }
     });
   };

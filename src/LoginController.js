@@ -11,7 +11,7 @@
   Weatherbus.LoginController.prototype = new Weatherbus.Controller();
 
   Weatherbus.LoginController.prototype.createDom = function () {
-    var template = document.querySelector("#template_LoginController").innerText;
+    var template = document.querySelector("#template_LoginController").textContent;
     var dom = document.createElement("div");
     dom.innerHTML = template;
 

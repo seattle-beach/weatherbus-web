@@ -41,8 +41,8 @@ describe("StopInfoController", function () {
     it("should display latitude and longitude", function () {
       expect(this.root).toContainElement(".lat");
       expect(this.root).toContainElement(".lng");
-      expect(this.root.querySelector(".lat").innerText).toEqual("47.654365");
-      expect(this.root.querySelector(".lng").innerText).toEqual("-122.305214");
+      expect(this.root.querySelector(".lat").textContent).toEqual("47.654365");
+      expect(this.root.querySelector(".lng").textContent).toEqual("-122.305214");
     });
   });
 
@@ -63,7 +63,7 @@ describe("StopInfoController", function () {
       expect(this.root).toContainElement(".error");
       var msg = this.root.querySelector(".error");
       expect(msg).not.toHaveClass("hidden");
-      expect(msg.innerText).toEqual("ERROR");
+      expect(msg.textContent).toEqual("ERROR");
     });
   });
 

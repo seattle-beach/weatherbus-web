@@ -40,8 +40,8 @@ describe("StopsController", function () {
     it("should show the stops", function () {
       var stops = this.root.querySelectorAll("li a");
       expect(stops.length).toEqual(2);
-      expect(stops[0].innerText).toEqual("12345");
-      expect(stops[1].innerText).toEqual("67890");
+      expect(stops[0].textContent).toEqual("12345");
+      expect(stops[1].textContent).toEqual("67890");
     });
 
     describe("When the user clicks a stop link", function () {
@@ -79,7 +79,7 @@ describe("StopsController", function () {
       expect(this.root).toContainElement(".error");
       var msg = this.root.querySelector(".error");
       expect(msg).not.toHaveClass("hidden");
-      expect(msg.innerText).toEqual("ERROR");
+      expect(msg.textContent).toEqual("ERROR");
     });
   });
 
