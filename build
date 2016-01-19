@@ -9,7 +9,8 @@ copyWithTemplates() {
 
 rm -rf target
 mkdir -p target/app target/tests
-cp src/index.html src/weatherbus.css src/weatherbus.js target/app
+cat src/prefix.js src/App.js src/Controller.js src/LoginController.js src/StopsController.js src/StopInfoController.js src/makeRestCall.js src/UserService.js src/StopService.js src/suffix.js > target/app/weatherbus.js
+cp src/index.html src/weatherbus.css target/app
 copyWithTemplates src/index.html target/app/index.html
 copyWithTemplates tests/SpecRunner.html target/tests/SpecRunner.html
 jshint src
