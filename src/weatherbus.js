@@ -30,9 +30,14 @@
     throw new Error("Must override createDom()");
   };
 
+  Weatherbus.Controller.prototype.shown = function () {
+    // For overriding.
+  };
+
   Weatherbus.Controller.prototype.appendTo = function (container) {
     this._root = this.createDom();
     container.appendChild(this._root);
+    this.shown();
   };
 
   Weatherbus.Controller.prototype.remove = function () {
@@ -86,13 +91,15 @@
   Weatherbus.StopsController.prototype.createDom = function() {
     var template = document.querySelector("#template_StopsController").innerText;
     var dom = document.createElement("div");
-    var that = this;
     dom.innerHTML = template;
+    return dom;
+  };
 
+  Weatherbus.StopsController.prototype.shown = function () {
+    var that = this;
     this.userService.getStopsForUser(this.username, function (error, stops) {
       that._stopsLoaded(error, stops);
     });
-    return dom;
   };
 
   Weatherbus.StopsController.prototype._stopsLoaded = function (error, stops) {
@@ -138,6 +145,10 @@
     var template = document.querySelector("#template_StopInfoController").innerText;
     var dom = document.createElement("div");
     dom.innerHTML = template;
+    return dom;
+  };
+
+  Weatherbus.StopInfoController.prototype.shown = function () {
     var that = this;
 
     this._stopService.getInfoForStop(this._stopId, function (error, value) {
@@ -154,8 +165,6 @@
         that._root.querySelector(".lng").innerText = value.longitude;
       }
     });
-
-    return dom;
   };
 
 
