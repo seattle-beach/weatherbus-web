@@ -7,6 +7,7 @@ require 'capybara/rspec'
 # with actual One Bus Away data.
 USERNAME = 'integration'
 STOP_ID = '1_75403'
+STOP_NAME = 'Stevens Way & Benton Ln'
 LATITUDE = '47.654'
 LONGITUDE = '-122.305'
 
@@ -18,10 +19,12 @@ end
 def add_user(username)
   uri = URI('http://localhost:8080/users')
   response = post_json(uri, "{\"username\": \"#{username}\"}")
-  doc = JSON.parse(response.body)
 
-  if response.code != '200' && doc['message'] != "User already exists"
-    raise "Failed to add user; HTTP code #{response.code}, message \"#{doc['message']}\""
+  if response.code != '200'
+    doc = JSON.parse(response.body)
+    if doc['message'] != "User already exists"
+      raise "Failed to add user; HTTP code #{response.code}, message \"#{doc['message']}\""
+    end
   end
 end
 
@@ -45,8 +48,8 @@ describe 'Weatherbus web front-end integration', :type => :feature do
     visit("file://#{path}")
     fill_in 'username', :with => USERNAME
     click_button('Go')
-    expect(page).to have_content STOP_ID
-    click_link(STOP_ID)
+    expect(page).to have_content STOP_NAME
+    click_link(STOP_NAME)
     expect(page).to have_content "Latitude: #{LATITUDE}"
     expect(page).to have_content "Longitude: #{LONGITUDE}"
   end

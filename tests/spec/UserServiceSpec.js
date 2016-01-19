@@ -31,7 +31,7 @@ describe("UserService", function () {
       });
 
       it("should call the callback with the list of stops", function () {
-        expect(this.callback).toHaveBeenCalledWith(null, ["12345_6", "12345"]);
+        expect(this.callback).toHaveBeenCalledWith(null, [{id: "12345_6", name: "Underscore six"}, { id : "12345", name : "Luggage"}]);
       });
     });
 

@@ -5,9 +5,7 @@
   };
 
   var parseStops = function (json) {
-    return json.map(function (stop) {
-      return stop.id;
-    });
+    return json;
   };
 
   Weatherbus.UserService.prototype.getStopsForUser = function (username, callback) {

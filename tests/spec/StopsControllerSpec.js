@@ -29,7 +29,7 @@ describe("StopsController", function () {
     beforeEach(function () {
       var args = this.userService.getStopsForUser.calls.mostRecent().args;
       var callback = args[1];
-      callback(null, ["12345", "67890"]);
+      callback(null, [{name: "Stop 1", id: "12345"}, {name: "Stop 2", id: "67890"}]);
     });
 
     it("should hide the loading indicator", function () {
@@ -40,8 +40,8 @@ describe("StopsController", function () {
     it("should show the stops", function () {
       var stops = this.root.querySelectorAll("li a");
       expect(stops.length).toEqual(2);
-      expect(stops[0].textContent).toEqual("12345");
-      expect(stops[1].textContent).toEqual("67890");
+      expect(stops[0].textContent).toEqual("Stop 1");
+      expect(stops[1].textContent).toEqual("Stop 2");
     });
 
     describe("When the user clicks a stop link", function () {

@@ -38,17 +38,18 @@
     }
   };
 
-  Weatherbus.StopsController.prototype._createStopNode = function (stopId) {
+  Weatherbus.StopsController.prototype._createStopNode = function (stop) {
     var li = document.createElement("li");
     var a = document.createElement("a");
     var that = this;
+
     a.href = "#";
     a.addEventListener("click", function (event) {
       event.preventDefault();
-      var stopInfoController = new Weatherbus.StopInfoController(stopId, that.stopService);
+      var stopInfoController = new Weatherbus.StopInfoController(stop.id, that.stopService);
       stopInfoController.appendTo(that._root);
     });
-    a.textContent = stopId;
+    a.textContent = stop.name;
     li.appendChild(a);
     return li;
   };
