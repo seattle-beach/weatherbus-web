@@ -32,3 +32,7 @@ You should see "ok" with no other output.
   1. If it's not still open, open file://<repo root>/target/app/index.html
   2. Log in as bob.
   3. You should see the stop that was created in the previous step.
+
+7. Run the integation tests
+  1. Make sure weatherbus is running
+  2. Change to the integration-tests directory and run rspec.
