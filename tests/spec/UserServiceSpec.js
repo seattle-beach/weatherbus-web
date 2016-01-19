@@ -24,7 +24,7 @@ describe("UserService", function () {
 
     describe("When the AJAX call succeeds", function () {
       beforeEach( function () {
-        this.xhr.response = "Stops for bob:<br/>Stop: 12345_6<br/>Stop: 12345<br/>";
+        this.xhr.response = "[{\"id\": \"12345_6\", \"name\": \"Underscore six\"}, {\"id\": \"12345\", \"name\": \"Luggage\"}]";
         this.xhr.readyState = 4;
         this.xhr.status = 200;
         this.xhr.onreadystatechange();

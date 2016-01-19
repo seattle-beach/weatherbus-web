@@ -164,15 +164,9 @@
   };
 
   var parseStops = function (responseText) {
-    var i;
-    var re = new RegExp("[^0-9_]", "g");
-    var lines = responseText.split('<br/>');
-
-    for (i = 0; i < lines.length; i++) {
-      lines[i] = lines[i].replace(re, "");
-    }
-
-    return lines.filter(function (s) { return s !== ""; });
+    return JSON.parse(responseText).map(function (stop) {
+      return stop.id;
+    });
   };
 
   Weatherbus.UserService.prototype.getStopsForUser = function (username, callback) {
