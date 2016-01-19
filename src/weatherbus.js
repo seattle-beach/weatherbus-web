@@ -159,31 +159,34 @@
   };
 
 
+  var makeRestCall = function (xhr, url, errorMsg, jsonTransform, callback) {
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          callback(null, jsonTransform(JSON.parse(xhr.response)));
+        } else {
+          callback(errorMsg, null);
+        }
+      }
+    };
+
+    xhr.open("get", url);
+    xhr.send();
+  };
+
   Weatherbus.UserService = function (xhrFactory) {
     this.xhrFactory = xhrFactory;
   };
 
-  var parseStops = function (responseText) {
-    return JSON.parse(responseText).map(function (stop) {
+  var parseStops = function (json) {
+    return json.map(function (stop) {
       return stop.id;
     });
   };
 
   Weatherbus.UserService.prototype.getStopsForUser = function (username, callback) {
-    var xhr = this.xhrFactory();
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          callback(null, parseStops(xhr.response));
-        } else {
-          callback("There was an error retrieving stops.", null);
-        }
-      }
-    };
-
-    xhr.open("get", "http://localhost:8080/users/stops?username=" + username);
-    xhr.send();
+    var url = "http://localhost:8080/users/stops?username=" + username;
+    makeRestCall(this.xhrFactory(), url, "There was an error retrieving stops.", parseStops, callback);
   };
 
 
@@ -199,20 +202,8 @@
   };
 
   Weatherbus.StopService.prototype.getInfoForStop = function (stopId, callback) {
-    var xhr = this.xhrFactory();
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          callback(null, parseStopInfo(JSON.parse(xhr.response)));
-        } else {
-          callback("There was an error getting stop info.", null);
-        }
-      }
-    };
-
-    xhr.open("get", "http://localhost:8080/wb?stopId=" + stopId);
-    xhr.send();
+    var url = "http://localhost:8080/wb?stopId=" + stopId;
+    makeRestCall(this.xhrFactory(), url, "There was an error getting stop info.", parseStopInfo, callback);
   };
 
 
