@@ -43,19 +43,27 @@ describe("StopsController", function () {
     });
 
     describe("When the user clicks a stop link", function () {
-      var mockStopInfoController;
-
       beforeEach(function () {
-        mockStopInfoController = {
-          appendTo: jasmine.createSpy("appendTo")
-        };
-        spyOn(Weatherbus, "StopInfoController").and.returnValue(mockStopInfoController);
+        var RealCtor = Weatherbus.StopInfoController;
+        spyOn(Weatherbus, "StopInfoController").and.callFake(function (stopId, stopService) {
+          return new RealCtor(stopId, stopService);
+        });
+
         Weatherbus.specHelper.simulateClick(this.root.querySelector("li a"));
       });
 
       it("should show a StopInfoController for that stop", function () {
         expect(Weatherbus.StopInfoController).toHaveBeenCalledWith("12345", this.stopService);
-        expect(mockStopInfoController.appendTo).toHaveBeenCalledWith(this.subject._root);
+        var child = Weatherbus.StopInfoController.calls.mostRecent().returnValue;
+        expect(child._root.parentNode).toBe(this.subject._root);
+      });
+
+      it("should remove previous stop info", function() {
+        var firstChild = Weatherbus.StopInfoController.calls.mostRecent().returnValue;
+        Weatherbus.specHelper.simulateClick(this.root.querySelectorAll("li a")[1]);
+        var secondChild = Weatherbus.StopInfoController.calls.mostRecent().returnValue;
+        expect(firstChild._root.parentNode).toBe(null);
+        expect(secondChild._root.parentNode).toBe(this.subject._root);
       });
     });
   });

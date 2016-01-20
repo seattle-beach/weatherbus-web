@@ -46,8 +46,13 @@
     a.href = "#";
     a.addEventListener("click", function (event) {
       event.preventDefault();
-      var stopInfoController = new Weatherbus.StopInfoController(stop.id, that.stopService);
-      stopInfoController.appendTo(that._root);
+
+      if (that._stopInfoController) {
+        that._stopInfoController.remove();
+      }
+
+      that._stopInfoController = new Weatherbus.StopInfoController(stop.id, that.stopService);
+      that._stopInfoController.appendTo(that._root);
     });
     a.textContent = stop.name;
     li.appendChild(a);
