@@ -21,14 +21,24 @@
 
     var that = this;
     this._submitButton.addEventListener("click", function () {
-      if (!that._usernameField.value) {
-        that._errorLabel.classList.remove("hidden");
-        return;
-      }
+        that._submit();
+    });
 
-      that._loginCallback(that._usernameField.value);
+    this._usernameField.addEventListener("keyup", function (event) {
+      if (event.keyCode === 13) {
+        that._submit();
+      }
     });
 
     return dom;
+  };
+
+  Weatherbus.LoginController.prototype._submit = function () {
+    if (!this._usernameField.value) {
+      this._errorLabel.classList.remove("hidden");
+      return;
+    }
+
+    this._loginCallback(this._usernameField.value);
   };
 }());
