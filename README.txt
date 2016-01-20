@@ -4,6 +4,10 @@ Setup Instructions
 
     ./build
 
+    Or, to run against the acceptance environment:
+
+    ./build acceptance
+
 You should see "ok" with no other output.
 
 2. Run the Jasmine tests
@@ -36,3 +40,4 @@ You should see "ok" with no other output.
 7. Run the integation tests
   1. Make sure weatherbus is running
   2. Change to the integration-tests directory and run rspec.
+  3. Or, to test against acceptance, run buildenv=acceptance rspec.

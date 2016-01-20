@@ -11,13 +11,24 @@ STOP_NAME = 'Stevens Way & Benton Ln'
 LATITUDE = '47.654'
 LONGITUDE = '-122.305'
 
+def base_url
+  buildenv = ENV['buildenv']
+
+  case buildenv
+  when "acceptance"
+    return "http://weatherbus.cfapps.io/"
+  else
+    return "http://localhost:8080/"
+  end
+end
+
 def post_json(uri, body)
   http = Net::HTTP.new(uri.host, uri.port)
   return http.post(uri, body, {'Content-type' => 'application/json'})
 end
 
 def add_user(username)
-  uri = URI('http://localhost:8080/users')
+  uri = URI("#{base_url}/users")
   response = post_json(uri, "{\"username\": \"#{username}\"}")
 
   if response.code != '200'
@@ -29,7 +40,7 @@ def add_user(username)
 end
 
 def add_stop(username, stop_id)
-  uri = URI("http://localhost:8080/users/#{username}/stops")
+  uri = URI("#{base_url}/users/#{username}/stops")
   response = post_json(uri, "{\"stopId\": \"#{stop_id}\"}")
 
   if response.code != '200'

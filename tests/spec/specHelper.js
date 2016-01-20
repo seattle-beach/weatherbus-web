@@ -46,5 +46,9 @@
         };
       }
     });
+
+    Weatherbus.config = {
+      serviceUrl: "http://localhost/"
+    };
   });
 }());

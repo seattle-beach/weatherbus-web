@@ -18,7 +18,7 @@ describe("StopService", function() {
 
     it("should do an AJAX call to the stopInfo API", function() {
       expect(this.xhr).toBeTruthy();
-      expect(this.xhr.open).toHaveBeenCalledWith("get", "http://localhost:8080/wb?stopId=1_75403");
+      expect(this.xhr.open).toHaveBeenCalledWith("get", "http://localhost/wb?stopId=1_75403");
       expect(this.xhr.send).toHaveBeenCalled();
     });
 

@@ -18,7 +18,7 @@ describe("UserService", function () {
 
     it("should do an AJAX call to the user API", function () {
       expect(this.xhr).toBeTruthy();
-      expect(this.xhr.open).toHaveBeenCalledWith("get", "http://localhost:8080/users/stops?username=bob");
+      expect(this.xhr.open).toHaveBeenCalledWith("get", "http://localhost/users/stops?username=bob");
       expect(this.xhr.send).toHaveBeenCalled();
     });
 

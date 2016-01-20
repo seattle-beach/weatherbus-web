@@ -9,7 +9,7 @@
   };
 
   Weatherbus.UserService.prototype.getStopsForUser = function (username, callback) {
-    var url = "http://localhost:8080/users/stops?username=" + username;
+    var url = "users/stops?username=" + username;
     Weatherbus.makeRestCall(this.xhrFactory(), url, "There was an error retrieving stops.", parseStops, callback);
   };
 }());

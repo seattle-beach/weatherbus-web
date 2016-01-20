@@ -7,10 +7,19 @@ copyWithTemplates() {
   }' $1 > $2
 }
 
+
+buildenv="dev"
+if [ $# -eq 1 ]; then
+  buildenv=$1
+fi
+
+
+
 rm -rf target
 mkdir -p target/app target/tests
 cat src/prefix.js src/App.js src/Controller.js src/LoginController.js src/StopsController.js src/StopInfoController.js src/makeRestCall.js src/UserService.js src/StopService.js src/suffix.js > target/app/weatherbus.js
 cp src/index.html src/weatherbus.css target/app
+cp src/config-$buildenv.js target/app/config.js
 copyWithTemplates src/index.html target/app/index.html
 copyWithTemplates tests/SpecRunner.html target/tests/SpecRunner.html
 jshint src

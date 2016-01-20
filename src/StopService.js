@@ -12,7 +12,7 @@
   };
 
   Weatherbus.StopService.prototype.getInfoForStop = function (stopId, callback) {
-    var url = "http://localhost:8080/wb?stopId=" + stopId;
+    var url = "wb?stopId=" + stopId;
     Weatherbus.makeRestCall(this.xhrFactory(), url, "There was an error getting stop info.", parseStopInfo, callback);
   };
 }());
