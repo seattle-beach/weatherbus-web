@@ -20,9 +20,7 @@ describe("StopsController", function () {
   });
 
   it("should ask the user service for the user's stops", function () {
-    expect(this.userService.getStopsForUser).toHaveBeenCalled();
-    var args = this.userService.getStopsForUser.calls.mostRecent().args;
-    expect(args[0]).toBe("bob");
+    expect(this.userService.getStopsForUser).toHaveBeenCalledWith("bob", jasmine.any(Function));
   });
 
   describe("When the list of stops loads", function () {

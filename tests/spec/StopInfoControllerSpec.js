@@ -17,9 +17,7 @@ describe("StopInfoController", function () {
   });
 
   it("should load information for the stop", function () {
-    expect(this.stopService.getInfoForStop).toHaveBeenCalled();
-    var args = this.stopService.getInfoForStop.calls.mostRecent().args;
-    expect(args[0]).toBe("6789_0");
+    expect(this.stopService.getInfoForStop).toHaveBeenCalledWith("6789_0", jasmine.any(Function));
   });
 
   describe("When the stop information loads", function () {
