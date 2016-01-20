@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'net/http'
 require 'json'
 require 'capybara/rspec'
+require 'capybara/poltergeist'
+
 
 # Username is arbitrary but the stop ID and coordinates need to match up
 # with actual One Bus Away data.
@@ -51,7 +53,15 @@ end
 
 describe 'Weatherbus web front-end integration', :type => :feature do
   it 'should work' do
-    Capybara.default_driver = :selenium
+    headless = true # Change to false to debug in a real browser
+
+    if headless
+      Capybara.default_driver = :poltergeist
+      Capybara.javascript_driver = :poltergeist
+    else
+      Capybara.default_driver = :selenium
+    end
+
     add_user(USERNAME)
     add_stop(USERNAME, STOP_ID)
     path = File.expand_path(Dir.pwd + "/../target/app/index.html")
