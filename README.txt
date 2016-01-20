@@ -41,3 +41,8 @@ You should see "ok" with no other output.
   1. Make sure weatherbus is running
   2. Change to the integration-tests directory and run rspec.
   3. Or, to test against acceptance, run buildenv=acceptance rspec.
+
+8. Push to the acceptance environment
+  1. ./build acceptance
+  2. cf login
+  3. cf push weatherbus-web -b staticfile_buildpack
