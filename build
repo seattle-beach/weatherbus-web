@@ -21,7 +21,6 @@ cat src/prefix.js src/App.js src/Controller.js src/LoginController.js src/StopsC
 cp src/index.html src/weatherbus.css target/app
 cp src/config-$buildenv.js target/app/config.js
 copyWithTemplates src/index.html target/app/index.html
-copyWithTemplates tests/SpecRunner.html target/tests/SpecRunner.html
 jshint src
 (cd tests && jshint --exclude lib .)
 echo "ok"

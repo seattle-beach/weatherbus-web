@@ -11,8 +11,10 @@ Setup Instructions
 You should see "ok" with no other output.
 
 2. Run the Jasmine tests
-  1. Open file://<repo root>/target/tests/SpecRunner.html in a browser.
-  2. Everything should be green.
+  1. Run bundle install.
+  2. Run rake jasmine and go to the URL mentioned in the output.
+  3. Alternately, run rake jasmine:ci to run the tests in a headless browser.
+  4. Everything should be green.
 
 3. Launch the app
   1. Open file://<repo root>/target/app/index.html in a browser.
@@ -38,11 +40,10 @@ You should see "ok" with no other output.
   3. You should see the stop that was created in the previous step.
 
 7. Run the integation tests
-  1. Run bundle install.
-  2. Install PhantomJS if it's not already installed: npm install -g phantomjs
-  3. Make sure weatherbus is running
-  4. Change to the integration-tests directory and run rspec.
-  5. Or, to test against acceptance, run buildenv=acceptance rspec.
+  1. Install PhantomJS if it's not already installed: npm install -g phantomjs
+  2. Make sure weatherbus is running
+  3. Change to the integration-tests directory and run rspec.
+  4. Or, to test against acceptance, run buildenv=acceptance rspec.
 
 8. Push to the acceptance environment
   1. ./build acceptance
