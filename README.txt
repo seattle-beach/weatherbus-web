@@ -19,9 +19,10 @@ Setup Instructions
     }
 
 4. Create a Weatherbus user and some stops
-  1. Create a user by going to <http://localhost:8080/users/addUser?username=bob>.
-  2. Add a stop by going to <http://localhost:8080/users/addStop?username=bob&stopId=12345>.
-  3. Verify the setup by going to <http://localhost:8080/users/stops?username=bob>.
+  1. Change to the weatherbus repo from step 3 above.
+  2. Create a user by running `tools/adduser bob`.
+  3. Add a stop by running `tools/addstop bob <a real stop ID, e.g. 1_75403>`.
+  4. Verify the setup by running `tools/getstops bob`.
 
 5. Log in to the web front end as the newly created user
   1. If it's not still open, open file://<repo root>/target/index.html
