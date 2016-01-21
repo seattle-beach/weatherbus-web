@@ -1,6 +1,6 @@
 (function () {
   "use strict";
   Weatherbus.config = {
-    serviceUrl: "http://weatherbus.cfapps.io/"
+    serviceUrl: "http://weatherbus-prime-dev.cfapps.io/"
   };
 }());

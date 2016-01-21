@@ -18,7 +18,7 @@ def base_url
 
   case buildenv
   when "acceptance"
-    return "http://weatherbus.cfapps.io/"
+    return "http://weatherbus-prime-dev.cfapps.io/"
   else
     return "http://localhost:8080/"
   end
