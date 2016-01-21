@@ -1,12 +1,12 @@
 Setup Instructions 
 
 1. Build the app
-  1. Run bundle install.
+  1. Run `bundle install`.
   2. Run `rake`. Or, to run against the acceptance environment, run `rake build['acceptance'] unitTests`.
   3. You should not see any errors.
 
 2. Launch the app
-  1. Open file://<repo root>/target/app/index.html in a browser.
+  1. Open file://<repo root>/target/index.html in a browser.
   2. You should see a login form.
 
 3. Clone, set up, and launch weatherbus
@@ -24,7 +24,7 @@ Setup Instructions
   3. Verify the setup by going to <http://localhost:8080/users/stops?username=bob>.
 
 5. Log in to the web front end as the newly created user
-  1. If it's not still open, open file://<repo root>/target/app/index.html
+  1. If it's not still open, open file://<repo root>/target/index.html
   2. Log in as bob.
   3. You should see the stop that was created in the previous step.
 
@@ -32,14 +32,14 @@ Setup Instructions
 Other things you can do:
 
 * Run the Jasmine test in a browser
-  1. Run rake jasmine and go to the URL mentioned in the output.
+  1. Run `rake jasmine` and go to the URL mentioned in the output.
   2. Everything should be green.
 
 * Run the integation tests
-  1. Install PhantomJS if it's not already installed: npm install -g phantomjs
+  1. Install PhantomJS if it's not already installed: `npm install -g phantomjs`
   2. Make sure weatherbus is running
-  3. Change to the integration-tests directory and run rspec.
-  4. Or, to test against acceptance, run buildenv=acceptance rspec.
+  3. Change to the integration-tests directory and run `rspec`.
+  4. Or, to test against acceptance, run `buildenv=acceptance rspec`.
 
 * Push to the acceptance environment
   1. ./build acceptance

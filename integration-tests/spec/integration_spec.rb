@@ -63,7 +63,7 @@ describe 'Weatherbus web front-end integration', :type => :feature do
 
     add_user(USERNAME)
     add_stop(USERNAME, STOP_ID)
-    path = File.expand_path(Dir.pwd + "/target/app/index.html")
+    path = File.expand_path(Dir.pwd + "/../target/index.html")
 
     visit("file://#{path}")
     fill_in 'username', :with => USERNAME
