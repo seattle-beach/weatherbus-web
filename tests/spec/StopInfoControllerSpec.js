@@ -70,8 +70,8 @@ describe("StopInfoController", function () {
       expect(rows.length).toEqual(2); // TODO: custom matcher for number of elements matching a selector?
       var cells0 = getCellsText(rows[0]);
       var cells1 = getCellsText(rows[1]);
-      expect(cells0).toEqual(["31 CENTRAL MAGNOLIA FREMONT", "11:12", "11:09"]);
-      expect(cells1).toEqual(["855 Lynnwood", "11:10", ""]);
+      expect(cells0).toEqual(["31 CENTRAL MAGNOLIA FREMONT", "11:09"]);
+      expect(cells1).toEqual(["855 Lynnwood", "11:10 (scheduled)"]);
     });
   });
 

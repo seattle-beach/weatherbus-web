@@ -21,7 +21,7 @@
     row.appendChild(cell);
   };
 
-  var formatDepartureTime = function (rawTime) {
+  var formatTime = function (rawTime) {
     if (rawTime === 0) {
       return "";
     }
@@ -29,6 +29,14 @@
     var date = new Date(rawTime);
     var minutes = date.getMinutes();
     return date.getHours() + ":" + (minutes < 10 ? "0" + minutes : minutes);
+  };
+
+  var formatDepartureTime = function (departure) {
+    if (departure.predictedTime === 0) {
+      return formatTime(departure.scheduledTime) + " (scheduled)";
+    } else {
+      return formatTime(departure.predictedTime);
+    }
   };
 
   Weatherbus.StopInfoController.prototype.shown = function () {
@@ -47,11 +55,11 @@
         that._root.querySelector(".lat").textContent = value.latitude;
         that._root.querySelector(".lng").textContent = value.longitude;
         tbody = that._departureTable.querySelector("tbody");
-        value.departures.forEach(function (departure) {
+
+        value.departures.forEach(function (d) {
           var row = tbody.insertRow(-1);
-          appendCellWithText(row, departure.routeShortName + " "  + departure.headsign);
-          appendCellWithText(row, formatDepartureTime(departure.scheduledTime));
-          appendCellWithText(row, formatDepartureTime(departure.predictedTime));
+          appendCellWithText(row, d.routeShortName + " "  + d.headsign);
+          appendCellWithText(row, formatDepartureTime(d));
         });
       }
     });
