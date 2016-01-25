@@ -4,9 +4,17 @@
     url = Weatherbus.config.serviceUrl + url;
 
     xhr.onreadystatechange = function () {
+      var response;
+
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          callback(null, jsonTransform(JSON.parse(xhr.response)));
+          response = JSON.parse(xhr.response);
+
+          if (jsonTransform) {
+            response = jsonTransform(response);
+          }
+
+          callback(null, response);
         } else {
           callback(errorMsg, null);
         }

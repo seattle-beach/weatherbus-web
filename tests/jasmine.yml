@@ -121,3 +121,5 @@ boot_files:
 # rack_options:
 #   server: 'thin'
 
+
+show_console_log: true

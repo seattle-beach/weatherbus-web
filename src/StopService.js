@@ -4,15 +4,8 @@
     this.xhrFactory = xhrFactory;
   };
 
-  var parseStopInfo = function(response) {
-    return {
-      latitude: response.latitude,
-      longitude: response.longitude
-    };
-  };
-
   Weatherbus.StopService.prototype.getInfoForStop = function (stopId, callback) {
     var url = "wb?stopId=" + stopId;
-    Weatherbus.makeRestCall(this.xhrFactory(), url, "There was an error getting stop info.", parseStopInfo, callback);
+    Weatherbus.makeRestCall(this.xhrFactory(), url, "There was an error getting stop info.", null, callback);
   };
 }());

@@ -24,7 +24,21 @@ describe("StopService", function() {
 
     describe("When the AJAX call succeeds", function () {
       beforeEach( function () {
-        this.xhr.response = "{\"longitude\":-122.305214,\"latitude\":47.654365,\"stopId\":\"1_75403\"}";
+        this.xhr.response = JSON.stringify({
+          "longitude":-122.305214,
+          "latitude":47.654365,
+          "stopId":"1_75403",
+          "departures": [
+            {
+              "predictedTime": 1453317145000,
+              "routeShortName": "31",
+              "scheduledTime": 1453317145000,
+              "temp": 36.2,
+              "headsign": "CENTRAL MAGNOLIA FREMONT"
+            }
+          ]
+        });
+        
         this.xhr.readyState = 4;
         this.xhr.status = 200;
         this.xhr.onreadystatechange();
@@ -33,7 +47,17 @@ describe("StopService", function() {
       it("should call the callback with the stop information", function () {
         var response = {
           latitude: 47.654365,
-          longitude: -122.305214
+          longitude: -122.305214,
+          stopId: "1_75403",
+          departures: [
+            {
+              predictedTime: 1453317145000,
+              routeShortName: "31",
+              scheduledTime: 1453317145000,
+              temp: 36.2,
+              headsign: "CENTRAL MAGNOLIA FREMONT"
+            }
+          ]
         };
         expect(this.callback).toHaveBeenCalledWith(null, response);
       });
