@@ -2,13 +2,13 @@
 platform: linux
 image: "docker:///alidaka/web-frontend-test"
 inputs:
-  - name: weatherbus-web
+  - name: web
 outputs:
   - name: build
-    path: weatherbus-web/artifacts
+    path: web/artifacts
 run:
-  path: "weatherbus-web/concourse/build_and_test.sh"
-  args: ["weatherbus-web"]
+  path: "web/concourse/build_and_test.sh"
+  args: ["web"]
 params:
   "TERM": "xterm"
 
