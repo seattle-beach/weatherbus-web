@@ -2,14 +2,14 @@
 
 cd $1
 
-echo "Building app..."
-./build
-
 echo "Starting bundle install..."
 bundle install
 
-echo "Running unit tests..."
+echo "Building app..."
+bundle exec rake build
 
+echo "Running unit tests..."
+bundle exec rake unitTests
 
 #cd integration-tests
 #buildenv=acceptance rspec
