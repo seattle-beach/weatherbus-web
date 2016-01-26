@@ -44,5 +44,5 @@ Other things you can do:
 
 * Push to the acceptance environment
   1. ./build acceptance
-  2. cf login
-  3. cf push weatherbus-web -b staticfile_buildpack
+  2. cf login, and select the seattle-beach org and the development space.
+  3. cf push
