@@ -10,11 +10,3 @@ bundle exec rake build['acceptance']
 
 echo "Running unit tests..."
 bundle exec rake unitTests
-
-#cd integration-tests
-#buildenv=acceptance rspec
-
-# For debugging
-echo -n "Working directory: "
-pwd
-find . -print
