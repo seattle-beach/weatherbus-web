@@ -5,7 +5,7 @@ inputs:
   - name: web
 outputs:
   - name: build
-    path: web/artifacts
+    path: web/target
 run:
   path: "web/concourse/build_and_test.sh"
   args: ["web"]
