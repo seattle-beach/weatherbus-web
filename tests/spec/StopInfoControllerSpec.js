@@ -34,16 +34,16 @@ describe("StopInfoController", function () {
          longitude: -122.305214,
          departures: [
            {
-             predictedTime: 1453316965000,
+             predictedTime: new Date(1453316965000),
              routeShortName: "31",
-             scheduledTime: 1453317145000,
+             scheduledTime: new Date(1453317145000),
              temp: 36.2,
              headsign: "CENTRAL MAGNOLIA FREMONT"
            },
            {
-             predictedTime: 0,
+             predictedTime: null,
              routeShortName: "855",
-             scheduledTime: 1516561850000,
+             scheduledTime: new Date(1516561850000),
              temp: 14.4,
              headsign: "Lynnwood"
            }

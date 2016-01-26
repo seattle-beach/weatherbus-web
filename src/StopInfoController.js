@@ -21,21 +21,20 @@
     row.appendChild(cell);
   };
 
-  var formatTime = function (rawTime) {
-    if (rawTime === 0) {
+  var formatTime = function (date) {
+    if (!date) {
       return "";
     }
 
-    var date = new Date(rawTime);
     var minutes = date.getMinutes();
     return date.getHours() + ":" + (minutes < 10 ? "0" + minutes : minutes);
   };
 
   var formatDepartureTime = function (departure) {
-    if (departure.predictedTime === 0) {
-      return formatTime(departure.scheduledTime) + " (scheduled)";
-    } else {
+    if (departure.predictedTime) {
       return formatTime(departure.predictedTime);
+    } else {
+      return formatTime(departure.scheduledTime) + " (scheduled)";
     }
   };
 

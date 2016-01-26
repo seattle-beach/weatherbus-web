@@ -23,7 +23,7 @@ describe("StopService", function() {
     });
 
     describe("When the AJAX call succeeds", function () {
-      beforeEach( function () {
+      beforeEach(function () {
         this.xhr.response = JSON.stringify({
           "longitude":-122.305214,
           "latitude":47.654365,
@@ -51,15 +51,42 @@ describe("StopService", function() {
           stopId: "1_75403",
           departures: [
             {
-              predictedTime: 1453317145000,
+              predictedTime: new Date(1453317145000),
               routeShortName: "31",
-              scheduledTime: 1453317145000,
+              scheduledTime: new Date(1453317145000),
               temp: 36.2,
               headsign: "CENTRAL MAGNOLIA FREMONT"
             }
           ]
         };
         expect(this.callback).toHaveBeenCalledWith(null, response);
+      });
+    });
+
+    describe("When a timestamp is 0", function () {
+      beforeEach(function () {
+        this.xhr.response = JSON.stringify({
+          "longitude":-122.305214,
+          "latitude":47.654365,
+          "stopId":"1_75403",
+          "departures": [
+            {
+              "predictedTime": 0,
+              "routeShortName": "31",
+              "scheduledTime": 1453317145000,
+              "temp": 36.2,
+              "headsign": "CENTRAL MAGNOLIA FREMONT"
+            }
+          ]
+        });
+        
+        this.xhr.readyState = 4;
+        this.xhr.status = 200;
+        this.xhr.onreadystatechange();
+      });
+    
+      it("should produce null", function () {
+        expect(this.callback.calls.mostRecent().args[1].departures[0].predictedTime).toBeNull();
       });
     });
 
