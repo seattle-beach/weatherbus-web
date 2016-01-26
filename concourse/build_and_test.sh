@@ -6,7 +6,7 @@ echo "Starting bundle install..."
 bundle install
 
 echo "Building app..."
-bundle exec rake build
+bundle exec rake build['acceptance']
 
 echo "Running unit tests..."
 bundle exec rake unitTests
