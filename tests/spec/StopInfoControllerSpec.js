@@ -70,8 +70,33 @@ describe("StopInfoController", function () {
       expect(rows.length).toEqual(2); // TODO: custom matcher for number of elements matching a selector?
       var cells0 = getCellsText(rows[0]);
       var cells1 = getCellsText(rows[1]);
-      expect(cells0).toEqual(["31 CENTRAL MAGNOLIA FREMONT", "11:09"]);
-      expect(cells1).toEqual(["855 Lynnwood", "11:10 (scheduled)"]);
+
+      // WARNING: Time zone issues ahead!
+      // If you change this, be sure to test with your local clock set to UTC (used by Concourse) and Pacific.
+      var pstToLocal = function (pstTime) {
+        // This is deliberately dumb -- rather than doing a bunch of complicated time zone math,
+        // we just hardcode the possible results. That makes the tests easier to follow and more
+        // likely to be right.
+        var values = {
+          /* UTC */ 0: {
+            "11:09": "19:09",
+            "11:10": "19:10"
+          },
+          /* PST */ 480: {
+            "11:09": "11:09",
+            "11:10": "11:10"
+          },
+          /* PDT */ 420: {
+            "11:09": "12:09",
+            "11:10": "12:10"
+          }
+        };
+
+        return values[new Date().getTimezoneOffset()][pstTime];
+      };
+
+      expect(cells0).toEqual(["31 CENTRAL MAGNOLIA FREMONT", pstToLocal("11:09")]);
+      expect(cells1).toEqual(["855 Lynnwood", pstToLocal("11:10") + " (scheduled)"]);
     });
   });
 
