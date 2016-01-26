@@ -13,3 +13,8 @@ bundle exec rake unitTests
 
 #cd integration-tests
 #buildenv=acceptance rspec
+
+# For debugging
+echo -n "Working directory: "
+pwd
+find . -print
