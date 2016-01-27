@@ -89,4 +89,18 @@ describe("StopsController", function () {
     });
   });
 
+  describe("When the user has no stops", function () {
+    beforeEach(function () {
+      var args = this.userService.getStopsForUser.calls.mostRecent().args;
+      var callback = args[1];
+      callback(null, []);
+    });
+
+    it("should show a message", function () {
+      expect(this.root).toContainElement(".error");
+      var msg = this.root.querySelector(".error");
+      expect(msg).not.toHaveClass("hidden");
+      expect(msg.textContent).toEqual("You don't have any favorite stops.");
+    });
+  });
 });

@@ -12,6 +12,7 @@
     var template = document.querySelector("#template_StopsController").textContent;
     var dom = document.createElement("div");
     dom.innerHTML = template;
+    this._errorNode = dom.querySelector(".error");
     return dom;
   };
 
@@ -23,19 +24,26 @@
   };
 
   Weatherbus.StopsController.prototype._stopsLoaded = function (error, stops) {
-    var i, ol, errorNode;
+    var i, ol;
     this._root.querySelector(".loading").classList.add("hidden");
 
     if (stops) {
-      for (i = 0; i < stops.length; i++) {
-        ol = this._root.querySelector("ol");
-        ol.appendChild(this._createStopNode(stops[i]));
+      if (stops.length === 0) {
+        this._showError("You don't have any favorite stops.");
+      } else {
+        for (i = 0; i < stops.length; i++) {
+          ol = this._root.querySelector("ol");
+          ol.appendChild(this._createStopNode(stops[i]));
+        }
       }
     } else {
-      errorNode = this._root.querySelector(".error");
-      errorNode.classList.remove("hidden");
-      errorNode.textContent = error;
+      this._showError(error);
     }
+  };
+
+  Weatherbus.StopsController.prototype._showError = function (msg) {
+    this._errorNode.classList.remove("hidden");
+    this._errorNode.textContent = msg;
   };
 
   Weatherbus.StopsController.prototype._createStopNode = function (stop) {
