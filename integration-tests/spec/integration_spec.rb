@@ -12,14 +12,30 @@ STOP_NAME = 'Stevens Way & Benton Ln'
 LATITUDE = '47.654'
 LONGITUDE = '-122.305'
 
-def base_url
-  buildenv = ENV['buildenv']
+def buildenv
+ ENV['buildenv'] or "local"
+end
 
+def base_services_url
   case buildenv
   when "acceptance"
-    return "http://weatherbus-prime-dev.cfapps.io/"
+    "http://weatherbus-prime-dev.cfapps.io/"
+  when "local"
+    "http://localhost:8080/"
   else
-    return "http://localhost:8080/"
+    raise "No service URL configured for the \"#{buildenv}\" environment"
+  end
+end
+
+def app_url
+  case buildenv
+  when "acceptance"
+    "http://weatherbus-web-dev.cfapps.io/"
+  when "local"
+    path = File.expand_path(Dir.pwd + "/../target/index.html")
+    "file://#{path}"
+  else
+    raise "No app URL configured for the \"#{buildenv}\" environment"
   end
 end
 
@@ -29,7 +45,7 @@ def post_json(uri, body)
 end
 
 def add_user(username)
-  uri = URI("#{base_url}/users")
+  uri = URI("#{base_services_url}/users")
   response = post_json(uri, "{\"username\": \"#{username}\"}")
 
   if response.code != '200'
@@ -41,7 +57,7 @@ def add_user(username)
 end
 
 def add_stop(username, stop_id)
-  uri = URI("#{base_url}/users/#{username}/stops")
+  uri = URI("#{base_services_url}/users/#{username}/stops")
   response = post_json(uri, "{\"stopId\": \"#{stop_id}\"}")
 
   if response.code != '200'
@@ -65,7 +81,7 @@ describe 'Weatherbus web front-end integration', :type => :feature do
     add_stop(USERNAME, STOP_ID)
     path = File.expand_path(Dir.pwd + "/../target/index.html")
 
-    visit("file://#{path}")
+    visit(app_url)
     fill_in 'username', :with => USERNAME
     click_button('Go')
     expect(page).to have_content STOP_NAME
