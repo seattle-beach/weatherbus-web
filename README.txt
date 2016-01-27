@@ -39,8 +39,9 @@ Other things you can do:
 * Run the integation tests
   1. Install PhantomJS if it's not already installed: `npm install -g phantomjs`
   2. Make sure weatherbus is running
-  3. Change to the integration-tests directory and run `rspec`.
-  4. Or, to test against acceptance, run `buildenv=acceptance rspec`.
+  3. Change to the target directory and run `python -m SimpleHTTPServer`.
+  4. Change to the integration-tests directory and run `rspec`.
+  5. Can also run against the deployed services and/or web app by setting the svcenv and/or appenv environment variables, e.g. `svcenv=acceptance rspec`. Note that if you use the local app (appenv=local or not set), then svcenv must match the environment that the app was built against in step 1.
 
 * Push to the acceptance environment
   1. ./build acceptance

@@ -12,30 +12,33 @@ STOP_NAME = 'Stevens Way & Benton Ln'
 LATITUDE = '47.654'
 LONGITUDE = '-122.305'
 
-def buildenv
- ENV['buildenv'] or "local"
+def svcenv
+ ENV['svcenv'] or "local"
+end
+
+def appenv
+ ENV['appenv'] or "local"
 end
 
 def base_services_url
-  case buildenv
+  case svcenv
   when "acceptance"
     "http://weatherbus-prime-dev.cfapps.io/"
   when "local"
     "http://localhost:8080/"
   else
-    raise "No service URL configured for the \"#{buildenv}\" environment"
+    raise "No service URL configured for the \"#{svcenv}\" environment"
   end
 end
 
 def app_url
-  case buildenv
+  case appenv
   when "acceptance"
     "http://weatherbus-web-dev.cfapps.io/"
   when "local"
-    path = File.expand_path(Dir.pwd + "/../target/index.html")
-    "file://#{path}"
+    "http://localhost:8000/"
   else
-    raise "No app URL configured for the \"#{buildenv}\" environment"
+    raise "No app URL configured for the \"#{svcenv}\" environment"
   end
 end
 
