@@ -5,6 +5,6 @@
   "undef": true,
   "browser": true,
   "latedef": true,
-  "unused": true,
+  "unused": "vars",
   "strict": true
 }

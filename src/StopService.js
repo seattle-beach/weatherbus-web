@@ -23,6 +23,9 @@
 
   Weatherbus.StopService.prototype.getInfoForStop = function (stopId, callback) {
     var url = "wb?stopId=" + stopId;
-    Weatherbus.makeRestCall(this.xhrFactory(), url, "There was an error getting stop info.", processStopInfo, callback);
+    var transformError = function () {
+      return "There was an error getting stop info.";
+    };
+    Weatherbus.makeRestCall(this.xhrFactory(), url, transformError, processStopInfo, callback);
   };
 }());

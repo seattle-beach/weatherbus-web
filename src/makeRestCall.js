@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  Weatherbus.makeRestCall = function (xhr, url, errorMsg, jsonTransform, callback) {
+  Weatherbus.makeRestCall = function (xhr, url, transformError, jsonTransform, callback) {
     url = Weatherbus.config.serviceUrl + url;
 
     xhr.onreadystatechange = function () {
@@ -16,7 +16,7 @@
 
           callback(null, response);
         } else {
-          callback(errorMsg, null);
+          callback(transformError(xhr.status, xhr.response), null);
         }
       }
     };
