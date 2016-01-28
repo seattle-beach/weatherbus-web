@@ -27,5 +27,10 @@
     var url = "users/stops?username=" + username;
     Weatherbus.makeRestCall(this.xhrFactory(), url, transformError, parseStops, callback);
   };
+
+  Weatherbus.UserService.prototype.createUser = function (username, callback) {
+    var body = JSON.stringify({username: username });
+    Weatherbus.makeRestPost(this.xhrFactory(), "users/addUser", body, null, callback);
+  };
 }());
 

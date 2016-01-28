@@ -1,5 +1,6 @@
 (function () {
   "use strict";
+  // TODO: rename to makeRestGet
   Weatherbus.makeRestCall = function (xhr, url, transformError, jsonTransform, callback) {
     url = Weatherbus.config.serviceUrl + url;
 

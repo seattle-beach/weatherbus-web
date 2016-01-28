@@ -62,4 +62,18 @@ describe("UserService", function () {
       });
     });
   });
+
+  describe("createUser", function () {
+    beforeEach(function () {
+      this.callback = jasmine.createSpy("callback");
+      this.subject.createUser("bob", this.callback);
+    });
+
+    it("should do an AJAX call to the user API", function () {
+      expect(this.xhr).toBeTruthy();
+      expect(this.xhr.open).toHaveBeenCalledWith("post", "http://localhost/users/addUser");
+      expect(this.xhr.setRequestHeader).toHaveBeenCalledWith("Content-type", "application/json");
+      expect(this.xhr.send).toHaveBeenCalledWith("{\"username\": \"bob\"}");
+    });
+  });
 });

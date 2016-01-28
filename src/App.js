@@ -15,7 +15,7 @@
     if (stopMatch) {
       this._rootController = new Weatherbus.StopInfoController(stopMatch[1], stopService);
     } else {
-	    this._rootController = new Weatherbus.LoginController(function(username) {
+	    this._rootController = new Weatherbus.NotLoggedInController(userService, function(username) {
 	      that._rootController.remove();
 	      that._rootController = new Weatherbus.StopsController(username, userService, stopService, that.locationService);
 	      that._rootController.appendTo(that._root);
