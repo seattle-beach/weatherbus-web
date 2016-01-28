@@ -48,7 +48,7 @@ task :build, [:environment] => :clean do |t, args|
   build_app_html
 
   sh 'node_modules/.bin/jshint src'
-  sh 'cd tests && node_modules/.bin/jshint --exclude lib .'
+  sh 'cd tests && ../node_modules/.bin/jshint --exclude lib .'
 end
 
 
