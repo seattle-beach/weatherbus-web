@@ -1,9 +1,10 @@
 (function () {
   "use strict";
-  Weatherbus.StopsController = function (username, userService, stopService) {
+  Weatherbus.StopsController = function (username, userService, stopService, locationService) {
     this.username = username;
     this.userService = userService;
     this.stopService = stopService;
+    this.locationService = locationService;
   };
 
   Weatherbus.StopsController.prototype = new Weatherbus.Controller();
@@ -61,6 +62,7 @@
 
       that._stopInfoController = new Weatherbus.StopInfoController(stop.id, that.stopService);
       that._stopInfoController.appendTo(that._root);
+      that.locationService.pushState("#stop-" + stop.id);
     });
     a.textContent = stop.name;
     li.appendChild(a);

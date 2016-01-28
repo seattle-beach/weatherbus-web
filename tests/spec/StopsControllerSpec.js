@@ -8,7 +8,8 @@ describe("StopsController", function () {
     this.stopService = {
       getInfoForStop: function () {}
     };
-    this.subject = new Weatherbus.StopsController("bob", this.userService, this.stopService);
+    this.locationService = new Weatherbus.LocationService();
+    this.subject = new Weatherbus.StopsController("bob", this.userService, this.stopService, this.locationService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
@@ -50,6 +51,10 @@ describe("StopsController", function () {
         });
 
         Weatherbus.specHelper.simulateClick(this.root.querySelector("li a"));
+      });
+
+      it("should update the URL", function () {
+        expect(this.locationService.pushState).toHaveBeenCalledWith("#stop-12345");
       });
 
       it("should show a StopInfoController for that stop", function () {
