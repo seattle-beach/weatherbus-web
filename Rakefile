@@ -39,7 +39,7 @@ task :build, [:environment] => :clean do |t, args|
     buildenv = 'dev'
   end
 
-  FileUtils.mkdir(TARGET_DIRECTORY)
+  mkdir_p(TARGET_DIRECTORY)
 
   concat('target/weatherbus.js', ['src/prefix.js', 'src/App.js', 'src/Controller.js', 'src/LoginController.js', 'src/StopsController.js', 'src/StopInfoController.js', 'src/makeRestCall.js', 'src/UserService.js', 'src/StopService.js', 'src/suffix.js'])
 
@@ -53,5 +53,11 @@ end
 
 
 task :clean do
-  FileUtils.rm_rf(TARGET_DIRECTORY)
+  if File.exist?("target")
+	  Dir.entries(TARGET_DIRECTORY).each do |f|
+	    if f != "." && f != ".."
+	      rm_rf("#{TARGET_DIRECTORY}/#{f}")
+	    end
+	  end
+  end
 end
