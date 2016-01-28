@@ -8,9 +8,7 @@
   Weatherbus.StopInfoController.prototype = new Weatherbus.Controller();
 
   Weatherbus.StopInfoController.prototype.createDom = function () {
-    var template = document.querySelector("#template_StopInfoController").textContent;
-    var dom = document.createElement("div");
-    dom.innerHTML = template;
+    var dom = this.createDomFromTemplate("#template_StopInfoController");
     this._departureTable = dom.querySelector(".departures");
     return dom;
   };

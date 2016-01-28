@@ -7,6 +7,13 @@
     throw new Error("Must override createDom()");
   };
 
+  Weatherbus.Controller.prototype.createDomFromTemplate = function (selector) {
+    var template = document.querySelector(selector).textContent;
+    var dom = document.createElement("div");
+    dom.innerHTML = template;
+    return dom;
+  };
+
   Weatherbus.Controller.prototype.shown = function () {
     // For overriding.
   };

@@ -10,9 +10,7 @@
   Weatherbus.StopsController.prototype = new Weatherbus.Controller();
 
   Weatherbus.StopsController.prototype.createDom = function() {
-    var template = document.querySelector("#template_StopsController").textContent;
-    var dom = document.createElement("div");
-    dom.innerHTML = template;
+    var dom = this.createDomFromTemplate("#template_StopsController");
     this._errorNode = dom.querySelector(".error");
     return dom;
   };
