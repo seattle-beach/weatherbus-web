@@ -62,4 +62,43 @@ describe("UserService", function () {
       });
     });
   });
+
+  describe("createUser", function () {
+    beforeEach(function () {
+      this.callback = jasmine.createSpy("callback");
+      this.subject.createUser("bob", this.callback);
+    });
+
+    it("should do an AJAX call to the user API", function () {
+      expect(this.xhr).toBeTruthy();
+      expect(this.xhr.open).toHaveBeenCalledWith("post", "http://localhost/users");
+      expect(this.xhr.setRequestHeader).toHaveBeenCalledWith("Content-type", "application/json");
+      expect(this.xhr.send).toHaveBeenCalledWith("{\"username\":\"bob\"}");
+    });
+
+    describe("When the AJAX call succeeds", function () {
+      beforeEach(function () {
+        this.xhr.readyState = 4;
+        this.xhr.status = 200;
+        this.xhr.onreadystatechange();
+      });
+
+      it("should call the callback", function () {
+        expect(this.callback).toHaveBeenCalledWith(null);
+      });
+    });
+
+    describe("When the AJAX call fails", function () {
+      beforeEach(function () {
+        this.xhr.readyState = 4;
+        this.xhr.status = 404;
+        this.xhr.response = "Nope!";
+        this.xhr.onreadystatechange();
+      });
+
+      it("should call the callback with the status code and respons", function () {
+        expect(this.callback).toHaveBeenCalledWith("Could not create user.");
+      });
+    });
+  });
 });

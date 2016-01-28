@@ -1,5 +1,6 @@
 (function () {
   "use strict";
+  // TODO: rename to makeRestGet
   Weatherbus.makeRestCall = function (xhr, url, transformError, jsonTransform, callback) {
     url = Weatherbus.config.serviceUrl + url;
 
@@ -23,5 +24,23 @@
 
     xhr.open("get", url);
     xhr.send();
+  };
+
+  Weatherbus.makeRestPost = function (xhr, url, body, transformError, callback) {
+    url = Weatherbus.config.serviceUrl + url;
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          callback(null);
+        } else {
+          callback(transformError(xhr.status, xhr.response));
+        }
+      }
+    };
+
+    xhr.open("post", url);
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send(JSON.stringify(body));
   };
 }());

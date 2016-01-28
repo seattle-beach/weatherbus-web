@@ -1,5 +1,5 @@
 {
-  "globals": { "Weatherbus": true },
+  "globals": { "Weatherbus": true, "console": true },
   "eqeqeq": true,
   "forin": true,
   "undef": true,

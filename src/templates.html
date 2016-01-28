@@ -1,3 +1,18 @@
+<script type="text/template" id="template_NotLoggedInController">
+  <div class="child-container"></div>
+  <a class="create-link" href="#">Create Account</a>
+</script>
+<script type="text/template" id="template_CreateAccountController">
+  <form>
+    <fieldset>
+      <legend>Add User</legend>
+      <div class="error hidden"></div>
+      Username: <input type="text" name="username">
+      <button class="add">Add</button>
+      <button class="cancel">Cancel</button>
+    </fieldset>
+  </form>
+</script>
 <script type="text/template" id="template_LoginController">
   <div class="error hidden">Please enter a valid username.</div>
   Username: <input type="text" name="username">

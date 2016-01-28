@@ -12,6 +12,7 @@
       return {
         open: jasmine.createSpy("open"),
         send: jasmine.createSpy("send"),
+        setRequestHeader: jasmine.createSpy("setRequestHeader")
       };
     }
   };
@@ -57,9 +58,18 @@
           compare: function (actual, expected) {
             var element = actual;
             var className = expected;
+            var pass = element.classList.contains(className);
+            var message;
+
+            if (pass) {
+              message = "Expected " + element + " not to have class \"" + className + "\"";
+            } else {
+              message = "Expected " + element + " to have class \"" + className + "\"";
+            }
+
             return {
-              pass: element.classList.contains(className),
-              message: "Expected " + element + " to have class \"" + className + "\""
+              pass: pass,
+              message: message
             };
           }
         };

@@ -8,7 +8,7 @@
     return json;
   };
 
-  var transformError = function (status, response) {
+  var transformGetStopsError = function (status, response) {
     if (status === 404) {
       try {
         if (JSON.parse(response).message === "User not found") {
@@ -25,7 +25,17 @@
 
   Weatherbus.UserService.prototype.getStopsForUser = function (username, callback) {
     var url = "users/stops?username=" + username;
-    Weatherbus.makeRestCall(this.xhrFactory(), url, transformError, parseStops, callback);
+    Weatherbus.makeRestCall(this.xhrFactory(), url, transformGetStopsError, parseStops, callback);
+  };
+
+  var transformAddUserError = function (status, response) {
+    console.log("Error adding user. Server returned", status, response);
+    return "Could not create user.";
+  };
+
+  Weatherbus.UserService.prototype.createUser = function (username, callback) {
+    var body = {username: username };
+    Weatherbus.makeRestPost(this.xhrFactory(), "users", body, transformAddUserError, callback);
   };
 }());
 

@@ -13,10 +13,10 @@ describe("App", function () {
       this.subject.start();
     });
 
-	  it("should show the login controller", function () {
-	    var loginController = this.subject._rootController;
-	    expect(loginController instanceof Weatherbus.LoginController).toEqual(true);
-	    expect(loginController._root.parentNode).toBe(this.root);
+	  it("should show the not logged in controller", function () {
+	    var rootController = this.subject._rootController;
+      expect(rootController).toEqual(jasmine.any(Weatherbus.NotLoggedInController));
+	    expect(rootController._root.parentNode).toBe(this.root);
 	  });
 	
 	  describe("When the user logs in", function () {
