@@ -2,7 +2,7 @@ language: ruby
 rvm:
 - 2.2.3
 install: npm install jshint
-script: rake build['acceptance'] unitTests
+script: bundle exec rake build['acceptance'] unitTests
 
 deploy:
   edge: true
