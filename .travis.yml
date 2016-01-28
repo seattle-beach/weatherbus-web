@@ -1,4 +1,16 @@
 language: ruby
 rvm:
- - "2.2.3"
-script: cd integration-tests && appenv=acceptance svcenv=acceptance bundle exec rspec
+- 2.2.3
+script: rake build['acceptance'] unitTests
+
+deploy:
+  edge: true
+  provider: cloudfoundry
+  username: kseebaldt+cfdeploy@pivotal.io
+  password:
+    secure: I+x9siGLzN3BTvL+cIlsuTflwToYa9BV7ubXFFG/ZziS2RPm+eX+9ctJ6lUms2hFF9dmdZY4WWOfgnnlWb2XCW+ZUlPXkJxvE9jSuXQ8mqMJpVXxrEUsE2ifyOo84DFE4PXDDqnSg75LKKrf/Oc9fy+3IpqEKVhT6+4jxU3pNfLgRrO4Eygmx9ME983A2cjqQlTF5BA/IG9hnn4nBNTaD3YWB+DYAeb0ormFKZDj2xgvRoJvVx7z1MQSE/ibj67R6D879g4MP9qcDV2frAEC8CZGNnFa28GwRj7F9YI1PJ1wwbA84SH8Uqm1Zj2q/PwvW7ueqmWsfcYFQfsL4VqevYUu8eXj+IQRCSBSwLwKQx8D3EebyUv9uXUJuD1AMEwJjL56IYwx8R3oltFYVeYTaGOMPDJIk4mEIWTymZLkWsJLfwkQzEA7XraHq8KTvqdknFjsVHOh7poSOM78nNVPez/bw3rviMJCo2qboLsxbPSUX4fvgGZlnSTm1wbZzo+u3jBv7S0xuqP827YTW3f/qxKyISIKqhL7hMYXSYnYRlMTP+n756P1zRTyD0W6Oh9kJjfCQA8AZ0kme/boJTE4U29Vd/uxm7d4j7cA/M7rqj9YAn5dy/3aiIUeu4+gnFj8vYoqsnb2BV02TUbTghePJHciBQ8Md5CWTMuXb2u+1a4=
+  api: https://api.run.pivotal.io
+  organization: seattle-beach
+  space: development
+
+after_deploy: cd integration-tests && appenv=acceptance svcenv=acceptance bundle exec rspec
