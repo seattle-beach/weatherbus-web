@@ -1,5 +1,0 @@
-#!/bin/sh -e
-
-cd "$1/integration-tests"
-npm install -g phantomjs
-svcenv=acceptance appenv=acceptance rspec
