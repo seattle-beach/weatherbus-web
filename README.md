@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sgravrock/weatherbus-web.svg?branch=master)](https://travis-ci.org/sgravrock/weatherbus-web)
+[![Build Status](https://travis-ci.org/seattle-beach/weatherbus-web.svg?branch=master)](https://travis-ci.org/seattle-beach/weatherbus-web)
 
 Setup Instructions 
 
