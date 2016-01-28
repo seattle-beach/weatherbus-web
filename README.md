@@ -4,8 +4,9 @@ Setup Instructions
 
 1. Build the app
   1. Run `bundle install`.
-  2. Run `rake`. Or, to run against the acceptance environment, run `rake build['acceptance'] unitTests`.
-  3. You should not see any errors.
+  2. Run `npm install jshint`.
+  3. Run `rake`. Or, to run against the acceptance environment, run `rake build['acceptance'] unitTests`.
+  4. You should not see any errors.
 
 2. Launch the app
   1. Open [file://&lt;repo root&gt;/target/index.html]() in a browser.

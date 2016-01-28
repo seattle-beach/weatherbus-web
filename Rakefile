@@ -47,8 +47,8 @@ task :build, [:environment] => :clean do |t, args|
   FileUtils.cp("src/config-#{buildenv}.js", "#{TARGET_DIRECTORY}/config.js")
   build_app_html
 
-  sh 'jshint src'
-  sh 'cd tests && jshint --exclude lib .'
+  sh 'node_modules/.bin/jshint src'
+  sh 'cd tests && node_modules/.bin/jshint --exclude lib .'
 end
 
 
