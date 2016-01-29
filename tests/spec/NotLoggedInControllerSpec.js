@@ -12,8 +12,9 @@ describe("NotLoggedInController", function () {
         callback();
       }
     };
-    this.loggedInCallback = jasmine.createSpy("loggedInCallback");
-    this.subject = new Weatherbus.NotLoggedInController(userService, this.loggedInCallback);
+    this.loggedInHandler = jasmine.createSpy("loggedInHandler");
+    this.subject = new Weatherbus.NotLoggedInController(userService);
+    this.subject.loggedIn.subscribe(this.loggedInHandler);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
@@ -41,8 +42,8 @@ describe("NotLoggedInController", function () {
         Weatherbus.specHelper.simulateClick(this.root.querySelector(".add"));
       });
 
-      it("shnould call the callback with the created user's username", function () {
-        expect(this.loggedInCallback).toHaveBeenCalledWith("theuser");
+      it("shnould trigger the loggedIn event with the created user's username", function () {
+        expect(this.loggedInHandler).toHaveBeenCalledWith("theuser");
       });
     });
 

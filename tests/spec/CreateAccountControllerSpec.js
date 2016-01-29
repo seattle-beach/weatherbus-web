@@ -1,13 +1,16 @@
 describe("CreateAccountController", function () {
   "use strict";
   beforeEach(function () {
-    this.doneCallback = jasmine.createSpy("doneCallback");
+    this.completedHandler = jasmine.createSpy("completedHandler");
+    this.canceledHandler = jasmine.createSpy("canceledHandler");
     this.userService = {
       createUser: jasmine.createSpy("createUser")
     };
-    this.subject = new Weatherbus.CreateAccountController(this.userService, this.doneCallback);
+    this.subject = new Weatherbus.CreateAccountController(this.userService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
+    this.subject.completed.subscribe(this.completedHandler);
+    this.subject.canceled.subscribe(this.canceledHandler);
   });
 
   describe("When the user clicks Add without entering a username", function () {
@@ -26,8 +29,8 @@ describe("CreateAccountController", function () {
       Weatherbus.specHelper.simulateClick(this.root.querySelector(".cancel"));
     });
 
-    it("should call the callback", function () {
-      expect(this.doneCallback).toHaveBeenCalledWith(null);
+    it("should trigger the canceled event", function () {
+      expect(this.canceledHandler).toHaveBeenCalled();
     });
   });
 
@@ -47,8 +50,8 @@ describe("CreateAccountController", function () {
         cb(null);
       });
 
-      it("should call the callback with the new user's username", function () {
-        expect(this.doneCallback).toHaveBeenCalledWith("theuser");
+      it("should trigger the completed event with the new user's username", function () {
+        expect(this.completedHandler).toHaveBeenCalledWith("theuser");
       });
     });
 

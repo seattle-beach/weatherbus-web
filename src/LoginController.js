@@ -1,11 +1,7 @@
 (function() {
   "use strict";
-  Weatherbus.LoginController = function (loginCallback) {
-    if (!loginCallback) {
-      throw new Error("LoginController requires a callback!");
-    }
-
-    this._loginCallback = loginCallback;
+  Weatherbus.LoginController = function () {
+    this.completed = new Weatherbus.Event();
   };
 
   Weatherbus.LoginController.prototype = new Weatherbus.Controller();
@@ -37,6 +33,6 @@
       return;
     }
 
-    this._loginCallback(this._usernameField.value);
+    this.completed.trigger(this._usernameField.value);
   };
 }());

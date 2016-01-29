@@ -1,9 +1,10 @@
 (function () {
   "use strict";
 
-  Weatherbus.CreateAccountController = function (userService, callback) {
+  Weatherbus.CreateAccountController = function (userService) {
     this._userService = userService;
-    this._callback = callback;
+    this.completed = new Weatherbus.Event();
+    this.canceled = new Weatherbus.Event();
   };
 
   Weatherbus.CreateAccountController.prototype = new Weatherbus.Controller();
@@ -23,7 +24,7 @@
           if (error) {
             that._showError(error);
           } else {
-            that._callback(username);
+            that.completed.trigger(username);
           }
         });
       } else {
@@ -34,7 +35,7 @@
     var cancelButton = dom.querySelector(".cancel");
     cancelButton.addEventListener("click", function (event) {
       event.preventDefault();
-      that._callback(null);
+      that.canceled.trigger();
     });
 
     return dom;

@@ -1,9 +1,9 @@
 (function () {
   "use strict";
 
-  Weatherbus.NotLoggedInController = function (userService, callback) {
+  Weatherbus.NotLoggedInController = function (userService) {
     this._userService = userService;
-    this._callback = callback;
+    this.loggedIn = new Weatherbus.Event();
   };
 
   Weatherbus.NotLoggedInController.prototype = new Weatherbus.Controller();
@@ -16,15 +16,18 @@
 
     createLink.addEventListener("click", function (event) {
       event.preventDefault();
-      var callback = function(username) {
-        if (username) {
-          that._callback(username);
-        } else {
-          that._showLoginController();
-          createLink.classList.remove("hidden");
-        }
-      };
-      that._replaceChild(new Weatherbus.CreateAccountController(that._userService, callback));
+      var createAccountController = new Weatherbus.CreateAccountController(that._userService);
+
+      createAccountController.completed.subscribe(function (username) {
+        that.loggedIn.trigger(username);
+      });
+
+      createAccountController.canceled.subscribe(function () {
+        that._showLoginController();
+        createLink.classList.remove("hidden");
+      });
+
+      that._replaceChild(createAccountController);
       createLink.classList.add("hidden");
     });
 
@@ -37,8 +40,9 @@
 
   Weatherbus.NotLoggedInController.prototype._showLoginController = function () {
     var that = this;
-    var loginController = new Weatherbus.LoginController(function (username) {
-      that._callback(username);
+    var loginController = new Weatherbus.LoginController();
+    loginController.completed.subscribe(function (username) {
+      that.loggedIn.trigger(username);
     });
     this._replaceChild(loginController);
   };

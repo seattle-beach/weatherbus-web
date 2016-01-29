@@ -2,8 +2,9 @@ describe("LoginController", function () {
   "use strict";
 
   beforeEach(function () {
-    this.callback = jasmine.createSpy("callback");
+    this.completedHandler = jasmine.createSpy("completedHandler");
     this.subject = new Weatherbus.LoginController(this.callback);
+    this.subject.completed.subscribe(this.completedHandler);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
@@ -19,8 +20,8 @@ describe("LoginController", function () {
       Weatherbus.specHelper.simulateClick(this.root.querySelector("button"));
     });
 
-    it("should call the callback", function () {
-      expect(this.callback).toHaveBeenCalledWith("theuser");
+    it("should trigger the completed event", function () {
+      expect(this.completedHandler).toHaveBeenCalledWith("theuser");
     });
   });
 
@@ -29,8 +30,8 @@ describe("LoginController", function () {
       Weatherbus.specHelper.simulateClick(this.root.querySelector("button"));
     });
 
-    it("should not call the callback", function () {
-      expect(this.callback).not.toHaveBeenCalled();
+    it("should not trigger the completed event", function () {
+      expect(this.completedHandler).not.toHaveBeenCalled();
     });
 
     it("should display an error", function () {
