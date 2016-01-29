@@ -18,7 +18,7 @@
 	    this._rootController = new Weatherbus.NotLoggedInController(userService);
 	    this._rootController.loggedIn.subscribe(function(username) {
 	      that._rootController.remove();
-	      that._rootController = new Weatherbus.StopsController(username, userService, stopService, that.locationService);
+	      that._rootController = new Weatherbus.StopListController(username, userService, stopService, that.locationService);
 	      that._rootController.appendTo(that._root);
 	    });
     }

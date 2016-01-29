@@ -1,4 +1,4 @@
-describe("StopsController", function () {
+describe("StopListController", function () {
   "use strict";
 
   beforeEach(function () {
@@ -9,7 +9,7 @@ describe("StopsController", function () {
       getInfoForStop: function () {}
     };
     this.locationService = new Weatherbus.LocationService();
-    this.subject = new Weatherbus.StopsController("bob", this.userService, this.stopService, this.locationService);
+    this.subject = new Weatherbus.StopListController("bob", this.userService, this.stopService, this.locationService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });

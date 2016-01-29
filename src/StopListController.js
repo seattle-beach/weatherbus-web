@@ -1,28 +1,28 @@
 (function () {
   "use strict";
-  Weatherbus.StopsController = function (username, userService, stopService, locationService) {
+  Weatherbus.StopListController = function (username, userService, stopService, locationService) {
     this.username = username;
     this.userService = userService;
     this.stopService = stopService;
     this.locationService = locationService;
   };
 
-  Weatherbus.StopsController.prototype = new Weatherbus.Controller();
+  Weatherbus.StopListController.prototype = new Weatherbus.Controller();
 
-  Weatherbus.StopsController.prototype.createDom = function() {
-    var dom = this.createDomFromTemplate("#template_StopsController");
+  Weatherbus.StopListController.prototype.createDom = function() {
+    var dom = this.createDomFromTemplate("#template_StopListController");
     this._errorNode = dom.querySelector(".error");
     return dom;
   };
 
-  Weatherbus.StopsController.prototype.shown = function () {
+  Weatherbus.StopListController.prototype.shown = function () {
     var that = this;
     this.userService.getStopsForUser(this.username, function (error, stops) {
       that._stopsLoaded(error, stops);
     });
   };
 
-  Weatherbus.StopsController.prototype._stopsLoaded = function (error, stops) {
+  Weatherbus.StopListController.prototype._stopsLoaded = function (error, stops) {
     var i, ol;
     this._root.querySelector(".loading").classList.add("hidden");
 
@@ -40,12 +40,12 @@
     }
   };
 
-  Weatherbus.StopsController.prototype._showError = function (msg) {
+  Weatherbus.StopListController.prototype._showError = function (msg) {
     this._errorNode.classList.remove("hidden");
     this._errorNode.textContent = msg;
   };
 
-  Weatherbus.StopsController.prototype._createStopNode = function (stop) {
+  Weatherbus.StopListController.prototype._createStopNode = function (stop) {
     var li = document.createElement("li");
     var a = document.createElement("a");
     var that = this;

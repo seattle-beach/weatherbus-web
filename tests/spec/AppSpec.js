@@ -26,10 +26,10 @@ describe("App", function () {
 	    });
 	
 	    it("should show the stops controller", function () {
-	      var stopsController = this.subject._rootController;
-	      expect(stopsController instanceof Weatherbus.StopsController).toEqual(true);
-	      expect(stopsController._root.parentNode).toBe(this.root);
-	      expect(stopsController.username).toBe("theuser");
+	      var stopListController = this.subject._rootController;
+	      expect(stopListController instanceof Weatherbus.StopListController).toEqual(true);
+	      expect(stopListController._root.parentNode).toBe(this.root);
+	      expect(stopListController.username).toBe("theuser");
 	    });
 	  });
   });
