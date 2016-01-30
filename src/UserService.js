@@ -33,9 +33,20 @@
     return "Could not create user.";
   };
 
+  var transformAddStopError = function (status, response) {
+    // TODO
+  };
+
+
   Weatherbus.UserService.prototype.createUser = function (username, callback) {
     var body = {username: username };
     Weatherbus.makeRestPost(this.xhrFactory(), "users", body, transformAddUserError, callback);
+  };
+
+  Weatherbus.UserService.prototype.addStop = function (username, stopId, callback) {
+    var url = "users/" + encodeURIComponent(username) + "/stops";
+    var body = {stopId: stopId};
+    Weatherbus.makeRestPost(this.xhrFactory(), url, body, transformAddStopError, callback);
   };
 }());
 

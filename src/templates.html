@@ -2,6 +2,7 @@
   <div class="child-container"></div>
   <a class="create-link" href="#">Create Account</a>
 </script>
+
 <script type="text/template" id="template_CreateAccountController">
   <form>
     <fieldset>
@@ -13,16 +14,20 @@
     </fieldset>
   </form>
 </script>
+
 <script type="text/template" id="template_LoginController">
   <div class="error hidden">Please enter a valid username.</div>
   Username: <input type="text" name="username">
   <button>Go</button>
 </script>
+
 <script type="text/template" id="template_StopListController">
   <div class="error hidden"></div>
   <div class="loading">Loading...</div>
   <ol></ol>
+  <div class="addStopContainer"></div>
 </script>
+
 <script type="text/template" id="template_StopInfoController">
   <div class="error hidden"></div>
   <div class="loading">Loading...</div>
@@ -39,4 +44,10 @@
     <tbody>
     </tbody>
   </table>
+</script>
+
+<script type="text/template" id="template_AddStopController">
+  <div class="error hidden">Please enter a valid stop id.</div>
+  Stop id: <input type="text" name="stopId">
+  <button>Go</button>
 </script>

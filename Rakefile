@@ -41,7 +41,7 @@ task :build, [:environment] => :clean do |t, args|
 
   mkdir_p(TARGET_DIRECTORY)
 
-  concat('target/weatherbus.js', ['src/prefix.js', 'src/App.js', 'src/Controller.js', 'src/LoginController.js', 'src/StopListController.js', 'src/StopInfoController.js', 'src/makeRestCall.js', 'src/UserService.js', 'src/StopService.js', 'src/LocationService.js', 'src/NotLoggedInController.js', 'src/CreateAccountController.js', 'src/Event.js', 'src/suffix.js'])
+  concat('target/weatherbus.js', ['src/prefix.js', 'src/App.js', 'src/Controller.js', 'src/LoginController.js', 'src/StopListController.js', 'src/StopInfoController.js', 'src/makeRestCall.js', 'src/UserService.js', 'src/StopService.js', 'src/LocationService.js', 'src/NotLoggedInController.js', 'src/CreateAccountController.js', 'src/AddStopController.js', 'src/Event.js', 'src/suffix.js'])
 
   FileUtils.cp(['src/index.html', 'src/weatherbus.css'], TARGET_DIRECTORY)
   FileUtils.cp("src/config-#{buildenv}.js", "#{TARGET_DIRECTORY}/config.js")

@@ -43,6 +43,27 @@ describe("StopListController", function () {
       expect(stops[1].textContent).toEqual("Stop 2");
     });
 
+    it("should have an AddStopController", function () {
+      var asc = this.subject._addStopController;
+      expect(asc).toBeTruthy();
+      expect(this.root.querySelector(".addStopContainer").firstChild).toBe(asc._root);
+    });
+
+    describe("When the user adds a stop", function () {
+      beforeEach(function () {
+        this.userService.getStopsForUser.calls.reset();
+        this.subject._addStopController.completedEvent.trigger();
+      });
+
+      it("should reload", function () {
+        var loadingIndicator = this.root.querySelector(".loading");
+        expect(loadingIndicator).not.toHaveClass("hidden");
+        var stops = this.root.querySelectorAll("li");
+        expect(stops.length).toEqual(0);
+        expect(this.userService.getStopsForUser).toHaveBeenCalled();
+      });
+    });
+
     describe("When the user clicks a stop link", function () {
       beforeEach(function () {
         var RealCtor = Weatherbus.StopInfoController;

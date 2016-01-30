@@ -101,4 +101,21 @@ describe("UserService", function () {
       });
     });
   });
+
+  describe("createUser", function () {
+    beforeEach(function () {
+      this.callback = jasmine.createSpy("callback");
+      this.subject.addStop("bob", "1_2345", this.callback);
+    });
+
+    it("should do an AJAX call to the user add stops API", function () {
+      expect(this.xhr).toBeTruthy();
+      expect(this.xhr.open).toHaveBeenCalledWith("post", "http://localhost/users/bob/stops");
+      expect(this.xhr.setRequestHeader).toHaveBeenCalledWith("Content-type", "application/json");
+      expect(this.xhr.send).toHaveBeenCalledWith("{\"stopId\":\"1_2345\"}");
+    });
+
+  });
+
+
 });

@@ -11,11 +11,27 @@
 
   Weatherbus.StopListController.prototype.createDom = function() {
     var dom = this.createDomFromTemplate("#template_StopListController");
+    var that = this;
     this._errorNode = dom.querySelector(".error");
+    this._loadingIndicator = dom.querySelector(".loading");
+    this._stopList = dom.querySelector("ol");
+
+    this._addStopController = new Weatherbus.AddStopController(this.userService, this.username);
+    this._addStopController.appendTo(dom.querySelector(".addStopContainer"));
+    this._addStopController.completedEvent.subscribe(function () {
+      that._loadingIndicator.classList.remove("hidden");
+      that._stopList.innerHTML = "";
+      that._loadStops();
+    });
+
     return dom;
   };
 
   Weatherbus.StopListController.prototype.shown = function () {
+    this._loadStops();
+  };
+
+  Weatherbus.StopListController.prototype._loadStops = function () {
     var that = this;
     this.userService.getStopsForUser(this.username, function (error, stops) {
       that._stopsLoaded(error, stops);
@@ -24,14 +40,14 @@
 
   Weatherbus.StopListController.prototype._stopsLoaded = function (error, stops) {
     var i, ol;
-    this._root.querySelector(".loading").classList.add("hidden");
+    this._loadingIndicator.classList.add("hidden");
 
     if (stops) {
       if (stops.length === 0) {
         this._showError("You don't have any favorite stops.");
       } else {
         for (i = 0; i < stops.length; i++) {
-          ol = this._root.querySelector("ol");
+          ol = this._stopList;
           ol.appendChild(this._createStopNode(stops[i]));
         }
       }
