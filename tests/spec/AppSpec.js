@@ -6,6 +6,7 @@ describe("App", function () {
     this.subject = new Weatherbus.App(this.root);
     this.subject._xhrFactory = Weatherbus.specHelper.mockXhrFactory;
     this.subject.locationService.hash.and.stub().and.returnValue("");
+    this.subject.locationService.search.and.stub().and.returnValue("");
   });
 
   describe("When the app launches", function () {
@@ -43,6 +44,19 @@ describe("App", function () {
     it("should show a stop info controller for the specified stop", function () {
       expect(this.subject._rootController).toEqual(jasmine.any(Weatherbus.StopInfoController));
       expect(this.subject._rootController._stopId).toEqual("1_2345");
+    });
+  });
+
+  describe("When the app launches at a url that has routes specified", function () {
+    beforeEach(function () {
+      this.subject.locationService.search.and.stub().and.returnValue("?stop=1_619&routes=40,28");
+      this.subject.start();
+    });
+
+    it("should show a stop info controller with the specified route filter", function() {
+      expect(this.subject._rootController).toEqual(jasmine.any(Weatherbus.StopInfoController));
+      expect(this.subject._rootController._stopId).toEqual("1_619");
+      expect(this.subject._rootController._routeFilter).toEqual(["40", "28"]);
     });
   });
 });

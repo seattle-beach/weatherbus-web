@@ -67,8 +67,8 @@ describe("StopListController", function () {
     describe("When the user clicks a stop link", function () {
       beforeEach(function () {
         var RealCtor = Weatherbus.StopInfoController;
-        spyOn(Weatherbus, "StopInfoController").and.callFake(function (stopId, stopService) {
-          return new RealCtor(stopId, stopService);
+        spyOn(Weatherbus, "StopInfoController").and.callFake(function (stopId, routeFilter, stopService) {
+          return new RealCtor(stopId, null, stopService);
         });
 
         Weatherbus.specHelper.simulateClick(this.root.querySelector("li a"));
@@ -79,7 +79,7 @@ describe("StopListController", function () {
       });
 
       it("should show a StopInfoController for that stop", function () {
-        expect(Weatherbus.StopInfoController).toHaveBeenCalledWith("12345", this.stopService);
+        expect(Weatherbus.StopInfoController).toHaveBeenCalledWith("12345", null, this.stopService, this.locationService);
         var child = Weatherbus.StopInfoController.calls.mostRecent().returnValue;
         expect(child._root.parentNode).toBe(this.subject._root);
       });

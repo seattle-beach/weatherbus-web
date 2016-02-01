@@ -78,7 +78,13 @@
 
     spyOn(Weatherbus.LocationService.prototype, "hash").and.throwError(
       "Caught an unmocked access to a location object's hash()");
+    spyOn(Weatherbus.LocationService.prototype, "search").and.throwError(
+      "Caught an unmocked access to a location object's search()");
     spyOn(Weatherbus.LocationService.prototype, "pushState");
+    spyOn(Weatherbus.LocationService.prototype, "navigate").and.throwError(
+      "Caught an unmocked access to a location object's navigate()");
+
+
 
     Weatherbus.config = {
       serviceUrl: "http://localhost/"

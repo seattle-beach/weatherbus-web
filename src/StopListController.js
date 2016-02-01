@@ -74,7 +74,7 @@
         that._stopInfoController.remove();
       }
 
-      that._stopInfoController = new Weatherbus.StopInfoController(stop.id, that.stopService);
+      that._stopInfoController = new Weatherbus.StopInfoController(stop.id, null, that.stopService, that.locationService);
       that._stopInfoController.appendTo(that._root);
       that.locationService.pushState("#stop-" + stop.id);
     });
