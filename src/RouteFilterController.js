@@ -1,7 +1,8 @@
 (function () {
   "use strict";
-  Weatherbus.RouteFilterController = function (routes) {
+  Weatherbus.RouteFilterController = function (routes, currentFilter) {
   	this._routes = routes;
+    this._currentFilter = currentFilter;
     this.completed = new Weatherbus.Event();
   };
 
@@ -42,6 +43,11 @@
       var checkbox = routeDom.querySelector("input[type=checkbox]");
       checkbox.value = this._routes[i];
       this._checkboxes.push(checkbox);
+
+      if (this._currentFilter && this._currentFilter.indexOf(this._routes[i]) === -1) {
+        checkbox.checked = false;
+      }
+
       routeDom.querySelector("span").textContent = this._routes[i];
       dom.querySelector(".routes").appendChild(routeDom);
     }

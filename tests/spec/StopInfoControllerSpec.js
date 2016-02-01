@@ -228,6 +228,19 @@ describe("StopInfoController", function () {
         expect(rows[0].querySelector("td").textContent).toEqual("31 CENTRAL MAGNOLIA FREMONT");
         expect(rows[1].querySelector("td").textContent).toEqual("31 CENTRAL MAGNOLIA FREMONT");
       });
+
+      describe("When the user clicks 'Filter Routes'", function () {
+        beforeEach(function () {
+          Weatherbus.specHelper.simulateClick(this.root.querySelector(".filter-link"));
+        });
+
+        it("should pass the current filter to the filter controller", function () {
+          var filterController = this.subject._filterController;
+          expect(filterController).toBeTruthy();
+          expect(this.root.querySelector(".filter-container").firstChild).toBe(filterController._root);
+          expect(filterController._currentFilter).toEqual(["31"]);
+        });
+      });
     });
   });
 });

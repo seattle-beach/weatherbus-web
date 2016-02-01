@@ -26,7 +26,7 @@
 
   Weatherbus.StopInfoController.prototype._showFilter = function () {
     var that = this;
-    this._filterController = new Weatherbus.RouteFilterController(that._routes());
+    this._filterController = new Weatherbus.RouteFilterController(this._routes(), this._routeFilter);
     this._filterController.appendTo(this._root.querySelector(".filter-container"));
     this._filterController.completed.subscribe(function (routes) {
       that._locationService.navigate("?stop=" + that._stopId + "&routes=" + routes.join(","));

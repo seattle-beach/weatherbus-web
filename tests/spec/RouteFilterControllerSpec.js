@@ -15,6 +15,20 @@ describe("RouteFilterController", function () {
     expect(text).toEqual([" 31", " 855"]);
   });
 
+  describe("When the RouteFilterController gets constructed with a current filter", function () {
+    beforeEach(function () {
+      this.subject = new Weatherbus.RouteFilterController(["31", "855"], ["31"]);
+      this.root = document.createElement("div");
+      this.subject.appendTo(this.root);
+    });
+
+    it("should only check the boxes that are in the current filter", function () {
+      var checkboxes = this.root.querySelectorAll("input[type=checkbox]");
+      expect(checkboxes[0].checked).toEqual(true);
+      expect(checkboxes[1].checked).toEqual(false);
+    });
+  });
+
   describe("When the user clicks Apply", function () {
     beforeEach(function () {
       this.subscriber = jasmine.createSpy("subscriber");
