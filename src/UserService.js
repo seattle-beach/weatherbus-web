@@ -34,7 +34,17 @@
   };
 
   var transformAddStopError = function (status, response) {
-    // TODO
+     if (status === 404) {
+      try {
+        if (JSON.parse(response).message === "Stop Id not found") {
+          return "Stop ID not found";
+        }
+      } catch (e) {
+        // Probably the response didn't parse as JSON.
+        // In any case, ignore it & return the generic error message below.
+      }
+    }
+    return "Could not add stop.";
   };
 
 

@@ -30,11 +30,31 @@ describe("AddStopController", function () {
       beforeEach(function () {
         this.completedEventHandler = jasmine.createSpy("completedEventHandler");
         this.subject.completedEvent.subscribe(this.completedEventHandler);
-        this.userService.addStop.calls.mostRecent().args[2](null);
+        var callback = this.userService.addStop.calls.mostRecent().args[2];
+        callback(null);
       });
 
       it("should trigger the completedEvent", function () {
         expect(this.completedEventHandler).toHaveBeenCalled();
+      });
+    });
+
+    describe("When the service call fails", function () {
+      beforeEach(function () {
+        this.completedEventHandler = jasmine.createSpy("completedEventHandler");
+        this.subject.completedEvent.subscribe(this.completedEventHandler);
+        var callback = this.userService.addStop.calls.mostRecent().args[2];
+        callback("nope!");
+      });
+
+      it("should not trigger the completedEvent", function () {
+        expect(this.completedEventHandler).not.toHaveBeenCalled();
+      });
+
+      it("should show an error", function () {
+        var errorNode = this.root.querySelector(".error");
+        expect(errorNode).not.toHaveClass("hidden");
+        expect(errorNode.textContent).toEqual("nope!");
       });
     });
   });

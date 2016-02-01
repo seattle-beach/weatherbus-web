@@ -96,13 +96,13 @@ describe("UserService", function () {
         this.xhr.onreadystatechange();
       });
 
-      it("should call the callback with the status code and respons", function () {
+      it("should call the callback with a generic error message", function () {
         expect(this.callback).toHaveBeenCalledWith("Could not create user.");
       });
     });
   });
 
-  describe("createUser", function () {
+  describe("addStop", function () {
     beforeEach(function () {
       this.callback = jasmine.createSpy("callback");
       this.subject.addStop("bob", "1_2345", this.callback);
@@ -115,7 +115,42 @@ describe("UserService", function () {
       expect(this.xhr.send).toHaveBeenCalledWith("{\"stopId\":\"1_2345\"}");
     });
 
+    describe("When the AJAX call succeeds", function () {
+      beforeEach(function () {
+        this.xhr.readyState = 4;
+        this.xhr.status = 200;
+        this.xhr.onreadystatechange();
+      });
+
+      it("should call the callback", function () {
+        expect(this.callback).toHaveBeenCalledWith(null);
+      });
+    });
+
+    describe("When the AJAX call fails", function () {
+      beforeEach(function () {
+        this.xhr.readyState = 4;
+        this.xhr.status = 404;
+        this.xhr.response = "Nope!";
+        this.xhr.onreadystatechange();
+      });
+
+      it("should call the callback with a generic error message", function () {
+        expect(this.callback).toHaveBeenCalledWith("Could not add stop.");
+      });
+    });
+    
+    describe("When the AJAX call fails because the stop wasn't found", function () {
+      beforeEach(function () {
+        this.xhr.readyState = 4;
+        this.xhr.status = 404;
+        this.xhr.response = JSON.stringify({message: "Stop Id not found"});
+        this.xhr.onreadystatechange();
+      });
+
+      it("should call the callback with a generic error message", function () {
+        expect(this.callback).toHaveBeenCalledWith("Stop ID not found");
+      });
+    });
   });
-
-
 });

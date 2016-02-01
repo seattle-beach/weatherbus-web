@@ -29,9 +29,14 @@
 
   Weatherbus.AddStopController.prototype._submit = function () {
     var that = this;
-    this._userService.addStop(this._username, this._stopIdField.value, function () {
-      // TODO: handle errors
-      that.completedEvent.trigger();
+    this._userService.addStop(this._username, this._stopIdField.value, function (error) {
+      if (error) {
+        var errorNode = that._root.querySelector(".error");
+        errorNode.classList.remove("hidden");
+        errorNode.textContent = error;
+      } else {
+        that.completedEvent.trigger();
+      }
     });
   };
 }());
