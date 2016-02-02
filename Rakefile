@@ -43,9 +43,9 @@ task :build, [:environment] => :clean do |t, args|
 
   concat('target/weatherbus.js', ['src/prefix.js', 'src/App.js', 'src/Controller.js', 'src/LoginController.js', 'src/StopListController.js', 'src/StopInfoController.js', 'src/makeRestCall.js', 'src/UserService.js', 'src/StopService.js', 'src/LocationService.js', 'src/NotLoggedInController.js', 'src/CreateAccountController.js', 'src/AddStopController.js', 'src/Event.js', 'src/RouteFilterController.js', 'src/suffix.js'])
 
-  FileUtils.cp(['src/index.html', 'src/weatherbus.css'], TARGET_DIRECTORY)
   FileUtils.cp("src/config-#{buildenv}.js", "#{TARGET_DIRECTORY}/config.js")
   build_app_html
+  sh 'sass --scss src/weatherbus.scss target/weatherbus.css'
 
   sh 'node_modules/.bin/jshint src'
   sh 'cd tests && ../node_modules/.bin/jshint --exclude lib .'
