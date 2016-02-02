@@ -8,7 +8,7 @@ describe("StopInfoController", function () {
     this.locationService = {
       navigate: jasmine.createSpy("navigate")
     };
-    this.subject = new Weatherbus.StopInfoController("6789_0", null, this.stopService, this.locationService);
+    this.subject = new WB.StopInfoController("6789_0", null, this.stopService, this.locationService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
@@ -156,7 +156,7 @@ describe("StopInfoController", function () {
       };
       cb(null, result);
 
-      Weatherbus.specHelper.simulateClick(this.root.querySelector(".filter-link"));
+      WB.specHelper.simulateClick(this.root.querySelector(".filter-link"));
     });
 
     it("should show a filter controller", function () {
@@ -172,7 +172,7 @@ describe("StopInfoController", function () {
 
     describe("When the user applies the filter", function () {
       beforeEach(function () {
-        Weatherbus.specHelper.simulateClick(this.subject._filterController._root.querySelector("button"));
+        WB.specHelper.simulateClick(this.subject._filterController._root.querySelector("button"));
       });
 
       it("should navigate to a filtered stop URL", function () {
@@ -183,7 +183,7 @@ describe("StopInfoController", function () {
 
   describe("When a route filter was supplied", function () {
     beforeEach(function () {
-      this.subject = new Weatherbus.StopInfoController("6789_0", ["31"], this.stopService,
+      this.subject = new WB.StopInfoController("6789_0", ["31"], this.stopService,
       this.locationService);
       this.root = document.createElement("div");
       this.subject.appendTo(this.root);
@@ -231,7 +231,7 @@ describe("StopInfoController", function () {
 
       describe("When the user clicks 'Filter Routes'", function () {
         beforeEach(function () {
-          Weatherbus.specHelper.simulateClick(this.root.querySelector(".filter-link"));
+          WB.specHelper.simulateClick(this.root.querySelector(".filter-link"));
         });
 
         it("should pass the current filter to the filter controller", function () {

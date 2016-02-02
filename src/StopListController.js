@@ -1,22 +1,22 @@
 (function () {
   "use strict";
-  Weatherbus.StopListController = function (username, userService, stopService, locationService) {
+  WB.StopListController = function (username, userService, stopService, locationService) {
     this.username = username;
     this.userService = userService;
     this.stopService = stopService;
     this.locationService = locationService;
   };
 
-  Weatherbus.StopListController.prototype = new Weatherbus.Controller();
+  WB.StopListController.prototype = new WB.Controller();
 
-  Weatherbus.StopListController.prototype.createDom = function() {
+  WB.StopListController.prototype.createDom = function() {
     var dom = this.createDomFromTemplate("#template_StopListController");
     var that = this;
     this._errorNode = dom.querySelector(".error");
     this._loadingIndicator = dom.querySelector(".loading");
     this._stopList = dom.querySelector("ol");
 
-    this._addStopController = new Weatherbus.AddStopController(this.userService, this.username);
+    this._addStopController = new WB.AddStopController(this.userService, this.username);
     this._addStopController.appendTo(dom.querySelector(".addStopContainer"));
     this._addStopController.completedEvent.subscribe(function () {
       that._loadingIndicator.classList.remove("hidden");
@@ -27,18 +27,18 @@
     return dom;
   };
 
-  Weatherbus.StopListController.prototype.shown = function () {
+  WB.StopListController.prototype.shown = function () {
     this._loadStops();
   };
 
-  Weatherbus.StopListController.prototype._loadStops = function () {
+  WB.StopListController.prototype._loadStops = function () {
     var that = this;
     this.userService.getStopsForUser(this.username, function (error, stops) {
       that._stopsLoaded(error, stops);
     });
   };
 
-  Weatherbus.StopListController.prototype._stopsLoaded = function (error, stops) {
+  WB.StopListController.prototype._stopsLoaded = function (error, stops) {
     var i, ol;
     this._loadingIndicator.classList.add("hidden");
 
@@ -56,12 +56,12 @@
     }
   };
 
-  Weatherbus.StopListController.prototype._showError = function (msg) {
+  WB.StopListController.prototype._showError = function (msg) {
     this._errorNode.classList.remove("hidden");
     this._errorNode.textContent = msg;
   };
 
-  Weatherbus.StopListController.prototype._createStopNode = function (stop) {
+  WB.StopListController.prototype._createStopNode = function (stop) {
     var li = document.createElement("li");
     var a = document.createElement("a");
     var that = this;
@@ -74,7 +74,7 @@
         that._stopInfoController.remove();
       }
 
-      that._stopInfoController = new Weatherbus.StopInfoController(stop.id, null, that.stopService, that.locationService);
+      that._stopInfoController = new WB.StopInfoController(stop.id, null, that.stopService, that.locationService);
       that._stopInfoController.appendTo(that._root);
       that.locationService.pushState("#stop-" + stop.id);
     });

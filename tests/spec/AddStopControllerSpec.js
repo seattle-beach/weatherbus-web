@@ -6,7 +6,7 @@ describe("AddStopController", function () {
       addStop: jasmine.createSpy("addStop")
     };
 
-    this.subject = new Weatherbus.AddStopController(this.userService, "bob");
+    this.subject = new WB.AddStopController(this.userService, "bob");
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
@@ -19,7 +19,7 @@ describe("AddStopController", function () {
   describe("When the submit button is clicked", function () {
     beforeEach(function () {
       this.root.querySelector("input[type=text]").value = "theStopId";
-      Weatherbus.specHelper.simulateClick(this.root.querySelector("button"));
+      WB.specHelper.simulateClick(this.root.querySelector("button"));
     });
 
     it("should make an ajax call to add a stop", function () {
@@ -59,7 +59,7 @@ describe("AddStopController", function () {
 
       describe("When the user tries to add another stop", function () {
         beforeEach(function () {
-          Weatherbus.specHelper.simulateClick(this.root.querySelector("button"));
+          WB.specHelper.simulateClick(this.root.querySelector("button"));
         });
 
         it("should hide the error", function () {

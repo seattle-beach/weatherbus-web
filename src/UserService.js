@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  Weatherbus.UserService = function (xhrFactory) {
+  WB.UserService = function (xhrFactory) {
     this.xhrFactory = xhrFactory;
   };
 
@@ -23,9 +23,9 @@
     return "There was an error retrieving stops.";
   };
 
-  Weatherbus.UserService.prototype.getStopsForUser = function (username, callback) {
+  WB.UserService.prototype.getStopsForUser = function (username, callback) {
     var url = "users/stops?username=" + username;
-    Weatherbus.makeRestCall(this.xhrFactory(), url, transformGetStopsError, parseStops, callback);
+    WB.makeRestCall(this.xhrFactory(), url, transformGetStopsError, parseStops, callback);
   };
 
   var transformAddUserError = function (status, response) {
@@ -48,15 +48,15 @@
   };
 
 
-  Weatherbus.UserService.prototype.createUser = function (username, callback) {
+  WB.UserService.prototype.createUser = function (username, callback) {
     var body = {username: username };
-    Weatherbus.makeRestPost(this.xhrFactory(), "users", body, transformAddUserError, callback);
+    WB.makeRestPost(this.xhrFactory(), "users", body, transformAddUserError, callback);
   };
 
-  Weatherbus.UserService.prototype.addStop = function (username, stopId, callback) {
+  WB.UserService.prototype.addStop = function (username, stopId, callback) {
     var url = "users/" + encodeURIComponent(username) + "/stops";
     var body = {stopId: stopId};
-    Weatherbus.makeRestPost(this.xhrFactory(), url, body, transformAddStopError, callback);
+    WB.makeRestPost(this.xhrFactory(), url, body, transformAddStopError, callback);
   };
 }());
 

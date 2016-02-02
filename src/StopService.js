@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  Weatherbus.StopService = function (xhrFactory) {
+  WB.StopService = function (xhrFactory) {
     this.xhrFactory = xhrFactory;
   };
 
@@ -21,11 +21,11 @@
     return stopInfo.data;
   };
 
-  Weatherbus.StopService.prototype.getInfoForStop = function (stopId, callback) {
+  WB.StopService.prototype.getInfoForStop = function (stopId, callback) {
     var url = "api/v1/stops/" + stopId;
     var transformError = function () {
       return "There was an error getting stop info.";
     };
-    Weatherbus.makeRestCall(this.xhrFactory(), url, transformError, processStopInfo, callback);
+    WB.makeRestCall(this.xhrFactory(), url, transformError, processStopInfo, callback);
   };
 }());

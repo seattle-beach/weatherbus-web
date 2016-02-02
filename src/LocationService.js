@@ -1,21 +1,21 @@
 (function () {
   "use strict";
-  Weatherbus.LocationService = function () {
+  WB.LocationService = function () {
   };
 
-  Weatherbus.LocationService.prototype.hash = function () {
+  WB.LocationService.prototype.hash = function () {
     return location.hash;
   };
 
-  Weatherbus.LocationService.prototype.search = function () {
+  WB.LocationService.prototype.search = function () {
     return location.search;
   };
 
-  Weatherbus.LocationService.prototype.pushState = function (hash) {
-    history.pushState(null, "Weatherbus", hash);
+  WB.LocationService.prototype.pushState = function (hash) {
+    history.pushState(null, "WB", hash);
   };
 
-  Weatherbus.LocationService.prototype.navigate = function (url) {
+  WB.LocationService.prototype.navigate = function (url) {
     window.location = url;
   };
 }());

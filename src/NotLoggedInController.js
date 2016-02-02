@@ -1,14 +1,14 @@
 (function () {
   "use strict";
 
-  Weatherbus.NotLoggedInController = function (userService) {
+  WB.NotLoggedInController = function (userService) {
     this._userService = userService;
-    this.loggedIn = new Weatherbus.Event();
+    this.loggedIn = new WB.Event();
   };
 
-  Weatherbus.NotLoggedInController.prototype = new Weatherbus.Controller();
+  WB.NotLoggedInController.prototype = new WB.Controller();
 
-  Weatherbus.NotLoggedInController.prototype.createDom = function () {
+  WB.NotLoggedInController.prototype.createDom = function () {
     var that = this;
     var dom = this.createDomFromTemplate("#template_NotLoggedInController");
     this._childContainer = dom.querySelector(".child-container");
@@ -16,7 +16,7 @@
 
     createLink.addEventListener("click", function (event) {
       event.preventDefault();
-      var createAccountController = new Weatherbus.CreateAccountController(that._userService);
+      var createAccountController = new WB.CreateAccountController(that._userService);
 
       createAccountController.completed.subscribe(function (username) {
         that.loggedIn.trigger(username);
@@ -34,20 +34,20 @@
     return dom;
   };
 
-  Weatherbus.NotLoggedInController.prototype.shown = function () {
+  WB.NotLoggedInController.prototype.shown = function () {
     this._showLoginController();
   };
 
-  Weatherbus.NotLoggedInController.prototype._showLoginController = function () {
+  WB.NotLoggedInController.prototype._showLoginController = function () {
     var that = this;
-    var loginController = new Weatherbus.LoginController();
+    var loginController = new WB.LoginController();
     loginController.completed.subscribe(function (username) {
       that.loggedIn.trigger(username);
     });
     this._replaceChild(loginController);
   };
 
-  Weatherbus.NotLoggedInController.prototype._replaceChild = function (newChild) {
+  WB.NotLoggedInController.prototype._replaceChild = function (newChild) {
     if (this._child) {
       this._child.remove();
     }

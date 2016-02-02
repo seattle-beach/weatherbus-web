@@ -1,7 +1,7 @@
 describe("Event", function () {
   "use strict";
   beforeEach(function () {
-    this.subject = new Weatherbus.Event();
+    this.subject = new WB.Event();
   });
 
   it("should allow subscribing", function () {

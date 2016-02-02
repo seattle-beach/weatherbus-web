@@ -1,14 +1,14 @@
 (function () {
   "use strict";
-  Weatherbus.RouteFilterController = function (routes, currentFilter) {
-    this._routes = Weatherbus.sortRouteNumbers(routes);
+  WB.RouteFilterController = function (routes, currentFilter) {
+    this._routes = WB.sortRouteNumbers(routes);
     this._currentFilter = currentFilter;
-    this.completed = new Weatherbus.Event();
+    this.completed = new WB.Event();
   };
 
-  Weatherbus.RouteFilterController.prototype = new Weatherbus.Controller();
+  WB.RouteFilterController.prototype = new WB.Controller();
 
-  Weatherbus.RouteFilterController.prototype.createDom = function () {
+  WB.RouteFilterController.prototype.createDom = function () {
     var that = this;
     var dom = this.createDomFromTemplate("#template_RouteFilterController");
     this._addRoutes(dom);
@@ -21,7 +21,7 @@
     return dom;
   };
 
-  Weatherbus.RouteFilterController.prototype._selectedRoutes = function () {
+  WB.RouteFilterController.prototype._selectedRoutes = function () {
     var selection = [];
     var checkboxes = this._checkboxes;
     var i;
@@ -34,7 +34,7 @@
     return selection;
   };
 
-  Weatherbus.RouteFilterController.prototype._addRoutes = function (dom) {
+  WB.RouteFilterController.prototype._addRoutes = function (dom) {
     var i, routeDom;
     this._checkboxes = [];
 

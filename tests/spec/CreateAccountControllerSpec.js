@@ -6,7 +6,7 @@ describe("CreateAccountController", function () {
     this.userService = {
       createUser: jasmine.createSpy("createUser")
     };
-    this.subject = new Weatherbus.CreateAccountController(this.userService);
+    this.subject = new WB.CreateAccountController(this.userService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
     this.subject.completed.subscribe(this.completedHandler);
@@ -15,7 +15,7 @@ describe("CreateAccountController", function () {
 
   describe("When the user clicks Add without entering a username", function () {
     beforeEach(function () {
-      Weatherbus.specHelper.simulateClick(this.root.querySelector(".add"));
+      WB.specHelper.simulateClick(this.root.querySelector(".add"));
     });
 
     it("should display an error", function () {
@@ -26,7 +26,7 @@ describe("CreateAccountController", function () {
 
   describe("When the user clicks Cancel", function () {
     beforeEach(function () {
-      Weatherbus.specHelper.simulateClick(this.root.querySelector(".cancel"));
+      WB.specHelper.simulateClick(this.root.querySelector(".cancel"));
     });
 
     it("should trigger the canceled event", function () {
@@ -37,7 +37,7 @@ describe("CreateAccountController", function () {
   describe("When the user clicks Add after entering a name", function() {
     beforeEach(function() {
       this.root.querySelector("input[type=text]").value = "theuser";
-      Weatherbus.specHelper.simulateClick(this.root.querySelector(".add"));
+      WB.specHelper.simulateClick(this.root.querySelector(".add"));
     });
 
     it("should create the account", function () {

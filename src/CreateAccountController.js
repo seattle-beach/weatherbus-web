@@ -1,15 +1,15 @@
 (function () {
   "use strict";
 
-  Weatherbus.CreateAccountController = function (userService) {
+  WB.CreateAccountController = function (userService) {
     this._userService = userService;
-    this.completed = new Weatherbus.Event();
-    this.canceled = new Weatherbus.Event();
+    this.completed = new WB.Event();
+    this.canceled = new WB.Event();
   };
 
-  Weatherbus.CreateAccountController.prototype = new Weatherbus.Controller();
+  WB.CreateAccountController.prototype = new WB.Controller();
 
-  Weatherbus.CreateAccountController.prototype.createDom = function () {
+  WB.CreateAccountController.prototype.createDom = function () {
     var that = this;
     var dom = this.createDomFromTemplate("#template_CreateAccountController");
     this._errorField = dom.querySelector(".error");
@@ -41,7 +41,7 @@
     return dom;
   };
 
-  Weatherbus.CreateAccountController.prototype._showError = function (error) {
+  WB.CreateAccountController.prototype._showError = function (error) {
     this._errorField.classList.remove("hidden");
     this._errorField.textContent = error;
   };

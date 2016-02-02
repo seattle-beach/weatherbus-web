@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  Weatherbus.specHelper = {
+  WB.specHelper = {
     simulateClick: function (element) {
       var event = document.createEvent("MouseEvent");
       event.initMouseEvent("click", true, true, window);
@@ -76,17 +76,17 @@
       }
     });
 
-    spyOn(Weatherbus.LocationService.prototype, "hash").and.throwError(
+    spyOn(WB.LocationService.prototype, "hash").and.throwError(
       "Caught an unmocked access to a location object's hash()");
-    spyOn(Weatherbus.LocationService.prototype, "search").and.throwError(
+    spyOn(WB.LocationService.prototype, "search").and.throwError(
       "Caught an unmocked access to a location object's search()");
-    spyOn(Weatherbus.LocationService.prototype, "pushState");
-    spyOn(Weatherbus.LocationService.prototype, "navigate").and.throwError(
+    spyOn(WB.LocationService.prototype, "pushState");
+    spyOn(WB.LocationService.prototype, "navigate").and.throwError(
       "Caught an unmocked access to a location object's navigate()");
 
 
 
-    Weatherbus.config = {
+    WB.config = {
       serviceUrl: "http://localhost/"
     };
   });

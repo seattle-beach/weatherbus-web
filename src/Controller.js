@@ -1,30 +1,30 @@
 (function () {
   "use strict";
   // Base class for controllers. Should always be subclassed.
-  Weatherbus.Controller = function () {};
+  WB.Controller = function () {};
 
-  Weatherbus.Controller.prototype.createDom = function () {
+  WB.Controller.prototype.createDom = function () {
     throw new Error("Must override createDom()");
   };
 
-  Weatherbus.Controller.prototype.createDomFromTemplate = function (selector) {
+  WB.Controller.prototype.createDomFromTemplate = function (selector) {
     var template = document.querySelector(selector).textContent;
     var dom = document.createElement("div");
     dom.innerHTML = template;
     return dom;
   };
 
-  Weatherbus.Controller.prototype.shown = function () {
+  WB.Controller.prototype.shown = function () {
     // For overriding.
   };
 
-  Weatherbus.Controller.prototype.appendTo = function (container) {
+  WB.Controller.prototype.appendTo = function (container) {
     this._root = this.createDom();
     container.appendChild(this._root);
     this.shown();
   };
 
-  Weatherbus.Controller.prototype.remove = function () {
+  WB.Controller.prototype.remove = function () {
     this._root.parentNode.removeChild(this._root);
   };
 }());

@@ -1,8 +1,8 @@
 (function () {
   "use strict";
   // TODO: rename to makeRestGet
-  Weatherbus.makeRestCall = function (xhr, url, transformError, jsonTransform, callback) {
-    url = Weatherbus.config.serviceUrl + url;
+  WB.makeRestCall = function (xhr, url, transformError, jsonTransform, callback) {
+    url = WB.config.serviceUrl + url;
 
     xhr.onreadystatechange = function () {
       var response;
@@ -26,8 +26,8 @@
     xhr.send();
   };
 
-  Weatherbus.makeRestPost = function (xhr, url, body, transformError, callback) {
-    url = Weatherbus.config.serviceUrl + url;
+  WB.makeRestPost = function (xhr, url, body, transformError, callback) {
+    url = WB.config.serviceUrl + url;
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {

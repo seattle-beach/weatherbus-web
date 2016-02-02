@@ -30,7 +30,7 @@
     }
   };
 
-  Weatherbus.sortRouteNumbers = function (list) {
+  WB.sortRouteNumbers = function (list) {
     return list.sort(compareRouteNumbers);
   };
 }());

@@ -1,15 +1,15 @@
 (function () {
   "use strict";
 
-  Weatherbus.AddStopController = function (userService, username) {
+  WB.AddStopController = function (userService, username) {
     this._userService = userService;
     this._username = username;
-    this.completedEvent = new Weatherbus.Event();
+    this.completedEvent = new WB.Event();
   };
 
-  Weatherbus.AddStopController.prototype = new Weatherbus.Controller();
+  WB.AddStopController.prototype = new WB.Controller();
 
-  Weatherbus.AddStopController.prototype.createDom = function () {
+  WB.AddStopController.prototype.createDom = function () {
     var dom = this.createDomFromTemplate("#template_AddStopController");
     var that = this;
 
@@ -27,7 +27,7 @@
     return dom;
   };
 
-  Weatherbus.AddStopController.prototype._submit = function () {
+  WB.AddStopController.prototype._submit = function () {
     var that = this;
     var errorNode = that._root.querySelector(".error");
     errorNode.classList.add("hidden");

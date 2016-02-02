@@ -8,8 +8,8 @@ describe("StopListController", function () {
     this.stopService = {
       getInfoForStop: function () {}
     };
-    this.locationService = new Weatherbus.LocationService();
-    this.subject = new Weatherbus.StopListController("bob", this.userService, this.stopService, this.locationService);
+    this.locationService = new WB.LocationService();
+    this.subject = new WB.StopListController("bob", this.userService, this.stopService, this.locationService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
@@ -66,12 +66,12 @@ describe("StopListController", function () {
 
     describe("When the user clicks a stop link", function () {
       beforeEach(function () {
-        var RealCtor = Weatherbus.StopInfoController;
-        spyOn(Weatherbus, "StopInfoController").and.callFake(function (stopId, routeFilter, stopService) {
+        var RealCtor = WB.StopInfoController;
+        spyOn(WB, "StopInfoController").and.callFake(function (stopId, routeFilter, stopService) {
           return new RealCtor(stopId, null, stopService);
         });
 
-        Weatherbus.specHelper.simulateClick(this.root.querySelector("li a"));
+        WB.specHelper.simulateClick(this.root.querySelector("li a"));
       });
 
       it("should update the URL", function () {
@@ -79,15 +79,15 @@ describe("StopListController", function () {
       });
 
       it("should show a StopInfoController for that stop", function () {
-        expect(Weatherbus.StopInfoController).toHaveBeenCalledWith("12345", null, this.stopService, this.locationService);
-        var child = Weatherbus.StopInfoController.calls.mostRecent().returnValue;
+        expect(WB.StopInfoController).toHaveBeenCalledWith("12345", null, this.stopService, this.locationService);
+        var child = WB.StopInfoController.calls.mostRecent().returnValue;
         expect(child._root.parentNode).toBe(this.subject._root);
       });
 
       it("should remove previous stop info", function() {
-        var firstChild = Weatherbus.StopInfoController.calls.mostRecent().returnValue;
-        Weatherbus.specHelper.simulateClick(this.root.querySelectorAll("li a")[1]);
-        var secondChild = Weatherbus.StopInfoController.calls.mostRecent().returnValue;
+        var firstChild = WB.StopInfoController.calls.mostRecent().returnValue;
+        WB.specHelper.simulateClick(this.root.querySelectorAll("li a")[1]);
+        var secondChild = WB.StopInfoController.calls.mostRecent().returnValue;
         expect(firstChild._root.parentNode).toBe(null);
         expect(secondChild._root.parentNode).toBe(this.subject._root);
       });

@@ -13,19 +13,19 @@ describe("NotLoggedInController", function () {
       }
     };
     this.loggedInHandler = jasmine.createSpy("loggedInHandler");
-    this.subject = new Weatherbus.NotLoggedInController(userService);
+    this.subject = new WB.NotLoggedInController(userService);
     this.subject.loggedIn.subscribe(this.loggedInHandler);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
 
   it("should show a login controller", function () {
-    verifyChild(this, Weatherbus.LoginController);
+    verifyChild(this, WB.LoginController);
   });
 
   describe("When the user clicks Create Account", function () {
     beforeEach(function () {
-      Weatherbus.specHelper.simulateClick(this.root.querySelector(".create-link"));
+      WB.specHelper.simulateClick(this.root.querySelector(".create-link"));
     });
 
     it("should hide the Create Account link", function () {
@@ -33,13 +33,13 @@ describe("NotLoggedInController", function () {
     });
 
     it("should show a Create Account controller", function () {
-      verifyChild(this, Weatherbus.CreateAccountController);
+      verifyChild(this, WB.CreateAccountController);
     });
 
     describe("When the user creates an account", function () {
       beforeEach(function () {
         this.root.querySelector("input[type=text]").value = "theuser";
-        Weatherbus.specHelper.simulateClick(this.root.querySelector(".add"));
+        WB.specHelper.simulateClick(this.root.querySelector(".add"));
       });
 
       it("shnould trigger the loggedIn event with the created user's username", function () {
@@ -49,11 +49,11 @@ describe("NotLoggedInController", function () {
 
     describe("When the user cancels", function () {
       beforeEach(function () {
-        Weatherbus.specHelper.simulateClick(this.root.querySelector(".cancel"));
+        WB.specHelper.simulateClick(this.root.querySelector(".cancel"));
       });
     
       it("should show a login controller", function () {
-        verifyChild(this, Weatherbus.LoginController);
+        verifyChild(this, WB.LoginController);
       });
 
       it("should show the Create Account link", function () {

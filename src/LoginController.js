@@ -1,12 +1,12 @@
 (function() {
   "use strict";
-  Weatherbus.LoginController = function () {
-    this.completed = new Weatherbus.Event();
+  WB.LoginController = function () {
+    this.completed = new WB.Event();
   };
 
-  Weatherbus.LoginController.prototype = new Weatherbus.Controller();
+  WB.LoginController.prototype = new WB.Controller();
 
-  Weatherbus.LoginController.prototype.createDom = function () {
+  WB.LoginController.prototype.createDom = function () {
     var dom = this.createDomFromTemplate("#template_LoginController");
 
     this._submitButton = dom.querySelector("button");
@@ -27,7 +27,7 @@
     return dom;
   };
 
-  Weatherbus.LoginController.prototype._submit = function () {
+  WB.LoginController.prototype._submit = function () {
     if (!this._usernameField.value) {
       this._errorLabel.classList.remove("hidden");
       return;

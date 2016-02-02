@@ -4,10 +4,10 @@ describe("StopService", function() {
   beforeEach(function() {
     var that = this;
     var xhrFactory = function() {
-      that.xhr = Weatherbus.specHelper.mockXhrFactory();
+      that.xhr = WB.specHelper.mockXhrFactory();
       return that.xhr;
     };
-    this.subject = new Weatherbus.StopService(xhrFactory);
+    this.subject = new WB.StopService(xhrFactory);
   });
 
   describe("getInfoForStop", function() {

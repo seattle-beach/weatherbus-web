@@ -1,15 +1,15 @@
 (function () {
   "use strict";
-  Weatherbus.StopInfoController = function (stopId, routeFilter, stopService, locationService) {
+  WB.StopInfoController = function (stopId, routeFilter, stopService, locationService) {
     this._stopId = stopId;
     this._stopService = stopService;
     this._locationService = locationService;
     this._routeFilter = routeFilter;
   };
 
-  Weatherbus.StopInfoController.prototype = new Weatherbus.Controller();
+  WB.StopInfoController.prototype = new WB.Controller();
 
-  Weatherbus.StopInfoController.prototype.createDom = function () {
+  WB.StopInfoController.prototype.createDom = function () {
     var that = this;
     var dom = this.createDomFromTemplate("#template_StopInfoController");
     var filterLink = dom.querySelector(".filter-link");
@@ -24,9 +24,9 @@
     return dom;
   };
 
-  Weatherbus.StopInfoController.prototype._showFilter = function () {
+  WB.StopInfoController.prototype._showFilter = function () {
     var that = this;
-    this._filterController = new Weatherbus.RouteFilterController(this._routes(), this._routeFilter);
+    this._filterController = new WB.RouteFilterController(this._routes(), this._routeFilter);
     this._filterController.appendTo(this._root.querySelector(".filter-container"));
     this._filterController.completed.subscribe(function (routes) {
       that._locationService.navigate("?stop=" + that._stopId + "&routes=" + routes.join(","));
@@ -56,7 +56,7 @@
     }
   };
 
-  Weatherbus.StopInfoController.prototype._routes = function () {
+  WB.StopInfoController.prototype._routes = function () {
     var routes = [];
     var i;
     for (i = 0; i < this._departures.length; i++) {
@@ -67,7 +67,7 @@
     return routes;
   };
 
-  Weatherbus.StopInfoController.prototype.shown = function () {
+  WB.StopInfoController.prototype.shown = function () {
     var that = this;
 
     this._stopService.getInfoForStop(this._stopId, function (error, value) {
@@ -97,7 +97,7 @@
     });
   };
 
-  Weatherbus.StopInfoController.prototype._shouldShowDeparture = function (departure) {
+  WB.StopInfoController.prototype._shouldShowDeparture = function (departure) {
     if (this._routeFilter === null) {
       return true;
     }

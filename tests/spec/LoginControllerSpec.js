@@ -3,7 +3,7 @@ describe("LoginController", function () {
 
   beforeEach(function () {
     this.completedHandler = jasmine.createSpy("completedHandler");
-    this.subject = new Weatherbus.LoginController(this.callback);
+    this.subject = new WB.LoginController(this.callback);
     this.subject.completed.subscribe(this.completedHandler);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
@@ -17,7 +17,7 @@ describe("LoginController", function () {
   describe("When the submit button is clicked", function () {
     beforeEach(function () {
       this.root.querySelector("input[type=text]").value = "theuser";
-      Weatherbus.specHelper.simulateClick(this.root.querySelector("button"));
+      WB.specHelper.simulateClick(this.root.querySelector("button"));
     });
 
     it("should trigger the completed event", function () {
@@ -27,7 +27,7 @@ describe("LoginController", function () {
 
   describe("When the submit button is clicked without entering a username", function () {
     beforeEach(function () {
-      Weatherbus.specHelper.simulateClick(this.root.querySelector("button"));
+      WB.specHelper.simulateClick(this.root.querySelector("button"));
     });
 
     it("should not trigger the completed event", function () {
