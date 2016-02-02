@@ -1,6 +1,13 @@
 describe("RouteFilterController", function () {
   "use strict";
 
+  var checkboxLabelsText = function (root) {
+    var labels = root.querySelectorAll("label");
+    return Array.prototype.map.call(labels, function (label) {
+      return label.textContent;
+    });
+  };
+
   beforeEach(function () {
     this.subject = new Weatherbus.RouteFilterController(["855", "31"]);
     this.root = document.createElement("div");
@@ -8,11 +15,7 @@ describe("RouteFilterController", function () {
   });
 
   it("should show a checkbox for each route", function () {
-    var labels = this.root.querySelectorAll("label");
-    var text = Array.prototype.map.call(labels, function (label) {
-      return label.textContent;
-    });
-    expect(text).toEqual([" 31", " 855"]);
+    expect(checkboxLabelsText(this.root)).toEqual([" 31", " 855"]);
   });
 
   describe("When the RouteFilterController gets constructed with a current filter", function () {
@@ -40,5 +43,15 @@ describe("RouteFilterController", function () {
     it("should trigger the completed event with the list of selected stops", function () {
       expect(this.subscriber).toHaveBeenCalledWith(["855"]);
     });
+  });
+
+  it("should sort routes numerically", function () {
+    this.subject = new Weatherbus.RouteFilterController(["113", "28E", "28", "D", "C"]);
+    this.root = document.createElement("div");
+    this.subject.appendTo(this.root);
+    var text = checkboxLabelsText(this.root).map(function (s) {
+      return s.trim();
+    });
+    expect(text).toEqual(["28", "28E", "113", "C", "D"]);
   });
 });

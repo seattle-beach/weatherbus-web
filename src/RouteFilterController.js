@@ -1,7 +1,7 @@
 (function () {
   "use strict";
   Weatherbus.RouteFilterController = function (routes, currentFilter) {
-  	this._routes = routes.sort();
+    this._routes = Weatherbus.sortRouteNumbers(routes);
     this._currentFilter = currentFilter;
     this.completed = new Weatherbus.Event();
   };
