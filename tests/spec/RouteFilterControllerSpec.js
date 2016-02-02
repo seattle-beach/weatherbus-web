@@ -2,7 +2,7 @@ describe("RouteFilterController", function () {
   "use strict";
 
   beforeEach(function () {
-    this.subject = new Weatherbus.RouteFilterController(["31", "855"]);
+    this.subject = new Weatherbus.RouteFilterController(["855", "31"]);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
