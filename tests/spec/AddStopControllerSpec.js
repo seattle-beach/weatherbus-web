@@ -56,6 +56,17 @@ describe("AddStopController", function () {
         expect(errorNode).not.toHaveClass("hidden");
         expect(errorNode.textContent).toEqual("nope!");
       });
+
+      describe("When the user tries to add another stop", function () {
+        beforeEach(function () {
+          Weatherbus.specHelper.simulateClick(this.root.querySelector("button"));
+        });
+
+        it("should hide the error", function () {
+          var errorNode = this.root.querySelector(".error");
+          expect(errorNode).toHaveClass("hidden");
+        });
+      });
     });
   });
 });

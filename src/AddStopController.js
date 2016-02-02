@@ -29,9 +29,11 @@
 
   Weatherbus.AddStopController.prototype._submit = function () {
     var that = this;
+    var errorNode = that._root.querySelector(".error");
+    errorNode.classList.add("hidden");
+
     this._userService.addStop(this._username, this._stopIdField.value, function (error) {
       if (error) {
-        var errorNode = that._root.querySelector(".error");
         errorNode.classList.remove("hidden");
         errorNode.textContent = error;
       } else {
