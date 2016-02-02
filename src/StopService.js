@@ -13,16 +13,16 @@
   };
 
   var processStopInfo = function (stopInfo) {
-    stopInfo.departures.forEach(function (d) {
+    stopInfo.data.departures.forEach(function (d) {
       d.predictedTime = convertDate(d.predictedTime);
       d.scheduledTime = convertDate(d.scheduledTime);
     });
 
-    return stopInfo;
+    return stopInfo.data;
   };
 
   Weatherbus.StopService.prototype.getInfoForStop = function (stopId, callback) {
-    var url = "wb?stopId=" + stopId;
+    var url = "api/v1/stops/" + stopId;
     var transformError = function () {
       return "There was an error getting stop info.";
     };

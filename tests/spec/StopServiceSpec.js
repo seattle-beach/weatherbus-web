@@ -18,25 +18,27 @@ describe("StopService", function() {
 
     it("should do an AJAX call to the stopInfo API", function() {
       expect(this.xhr).toBeTruthy();
-      expect(this.xhr.open).toHaveBeenCalledWith("get", "http://localhost/wb?stopId=1_75403");
+      expect(this.xhr.open).toHaveBeenCalledWith("get", "http://localhost/api/v1/stops/1_75403");
       expect(this.xhr.send).toHaveBeenCalled();
     });
 
     describe("When the AJAX call succeeds", function () {
       beforeEach(function () {
         this.xhr.response = JSON.stringify({
-          "longitude":-122.305214,
-          "latitude":47.654365,
-          "stopId":"1_75403",
-          "departures": [
-            {
-              "predictedTime": 1453317145000,
-              "routeShortName": "31",
-              "scheduledTime": 1453317145000,
-              "temp": 36.2,
-              "headsign": "CENTRAL MAGNOLIA FREMONT"
-            }
-          ]
+          data: {
+            "longitude":-122.305214,
+            "latitude":47.654365,
+            "stopId":"1_75403",
+            "departures": [
+              {
+                "predictedTime": 1453317145000,
+                "routeShortName": "31",
+                "scheduledTime": 1453317145000,
+                "temp": 36.2,
+                "headsign": "CENTRAL MAGNOLIA FREMONT"
+              }
+            ]
+          }
         });
         
         this.xhr.readyState = 4;
@@ -66,18 +68,20 @@ describe("StopService", function() {
     describe("When a timestamp is 0", function () {
       beforeEach(function () {
         this.xhr.response = JSON.stringify({
-          "longitude":-122.305214,
-          "latitude":47.654365,
-          "stopId":"1_75403",
-          "departures": [
-            {
-              "predictedTime": 0,
-              "routeShortName": "31",
-              "scheduledTime": 1453317145000,
-              "temp": 36.2,
-              "headsign": "CENTRAL MAGNOLIA FREMONT"
-            }
-          ]
+          data: {
+            "longitude":-122.305214,
+            "latitude":47.654365,
+            "stopId":"1_75403",
+            "departures": [
+              {
+                "predictedTime": 0,
+                "routeShortName": "31",
+                "scheduledTime": 1453317145000,
+                "temp": 36.2,
+                "headsign": "CENTRAL MAGNOLIA FREMONT"
+              }
+            ]
+          }
         });
         
         this.xhr.readyState = 4;
