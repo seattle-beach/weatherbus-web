@@ -20,6 +20,17 @@ def build_app_html
   html = File.read('src/index.html').sub('TEMPLATES_GO_HERE', templates)
   File.write("#{TARGET_DIRECTORY}/index.html", html)
 end
+
+def build_version_file
+  version = `git show --oneline --quiet HEAD`
+  changes = `git status --porcelain | grep -v '^$'`
+
+  if changes == ""
+    File.write("target/version.txt", version)
+  else
+    File.write("target/version.txt", "#{version}(dirty)\n")
+  end
+end
  
 
 task :integrationTests => :build do
@@ -45,6 +56,7 @@ task :build, [:environment] => :clean do |t, args|
 
   FileUtils.cp("src/config-#{buildenv}.js", "#{TARGET_DIRECTORY}/config.js")
   build_app_html
+  build_version_file
   sh 'sass --scss src/weatherbus.scss target/weatherbus.css'
 
   sh 'node_modules/.bin/jshint src'
