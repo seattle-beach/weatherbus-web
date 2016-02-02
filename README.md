@@ -5,7 +5,7 @@ Setup Instructions
 1. Build the app
   1. Run `bundle install`.
   2. Run `npm install jshint`.
-  3. Run `rake`. Or, to run against the acceptance environment, run `rake build['acceptance'] unitTests`.
+  3. Run `rake`. Or, to run against a local Weatherbus instance, run `rake build['dev'] unitTests`.
   4. You should not see any errors.
 
 2. Launch the app

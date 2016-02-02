@@ -47,7 +47,7 @@ task :build, [:environment] => :clean do |t, args|
   buildenv = args[:environment]
 
   if buildenv.nil?
-    buildenv = 'dev'
+    buildenv = 'acceptance'
   end
 
   mkdir_p(TARGET_DIRECTORY)
