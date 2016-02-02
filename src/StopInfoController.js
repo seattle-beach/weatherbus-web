@@ -90,6 +90,7 @@
             var row = tbody.insertRow(-1);
             appendCellWithText(row, d.routeShortName + " "  + d.headsign);
             appendCellWithText(row, formatDepartureTime(d));
+            appendCellWithText(row, d.temp);
           }
         });
       }

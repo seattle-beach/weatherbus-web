@@ -98,8 +98,8 @@ describe("StopInfoController", function () {
         return values[new Date().getTimezoneOffset()][pstTime];
       };
 
-      expect(cells0).toEqual(["31 CENTRAL MAGNOLIA FREMONT", pstToLocal("11:09")]);
-      expect(cells1).toEqual(["855 Lynnwood", pstToLocal("11:10") + " (scheduled)"]);
+      expect(cells0).toEqual(["31 CENTRAL MAGNOLIA FREMONT", pstToLocal("11:09"), "36.2"]);
+      expect(cells1).toEqual(["855 Lynnwood", pstToLocal("11:10") + " (scheduled)", "14.4"]);
     });
   });
 
