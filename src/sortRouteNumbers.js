@@ -19,20 +19,14 @@
   var compareRouteNumbers = function (a, b) {
     var an = numberPrefix(a), bn = numberPrefix(b);
 
-    if (an === null && bn === null) {
+    if (an === bn) {
       return naiveCompare(a, b);
     } else if (an === null) {
       return 1;
     } else if (bn === null) {
       return -1;
-    }
-
-    var subresult = naiveCompare(an, bn);
-
-    if (subresult === 0) {
-      return naiveCompare(a, b);
     } else {
-      return subresult;
+      return naiveCompare(an, bn);
     }
   };
 
