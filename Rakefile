@@ -19,7 +19,7 @@ end
 def build_app_html
   maps_key = ENV['WB_MAPS_API_KEY']
   templates = File.read('src/templates.html')
-  erb = ERB.new(File.read('src/index.erb'))
+  erb = ERB.new(File.read('src/index.html.erb'))
   html = erb.result(binding)
   File.write("#{TARGET_DIRECTORY}/index.html", html)
 end
@@ -44,7 +44,6 @@ end
 task :default => [:build, :unitTests]
 
 task :unitTests => "jasmine:ci"
-
 
 task :build, [:environment] => :clean do |t, args|
   buildenv = args[:environment]
