@@ -85,6 +85,7 @@ describe 'Weatherbus web front-end integration', :type => :feature do
     path = File.expand_path(Dir.pwd + "/../target/index.html")
 
     visit(app_url)
+    click_link('Log in')
     fill_in 'username', :with => USERNAME
     click_button('Go')
     expect(page).to have_content STOP_NAME
