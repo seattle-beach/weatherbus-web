@@ -17,7 +17,7 @@ def concat(dest, sources)
 end
 
 def build_app_html
-  maps_key = ENV['WB_MAPS_API_KEY'] || 'AIzaSyBIMixNNyUPrcnsKhRnZu18Ue5MqtT0aOY'
+  maps_key = ENV['WB_MAPS_API_KEY']
   templates = File.read('src/templates.html')
   erb = ERB.new(File.read('src/index.erb'))
   html = erb.result(binding)
