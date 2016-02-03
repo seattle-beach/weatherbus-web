@@ -89,5 +89,19 @@
     WB.config = {
       serviceUrl: "http://localhost/"
     };
+
+
+    // Stubs
+    window.google = {
+      maps: {
+        Map: function (container, config) {
+          WB.latestMap = {
+            _config: config,
+            _container: container
+          };
+          return WB.latestMap;
+        }
+      }
+    };
   });
 }());

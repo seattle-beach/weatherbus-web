@@ -16,8 +16,9 @@ def concat(dest, sources)
 end
 
 def build_app_html
+  maps_key = ENV['WB_MAPS_API_KEY'] or 'AIzaSyBIMixNNyUPrcnsKhRnZu18Ue5MqtT0aOY'
   templates = File.read('src/templates.html')
-  html = File.read('src/index.html').sub('TEMPLATES_GO_HERE', templates)
+  html = File.read('src/index.html').sub('TEMPLATES_GO_HERE', templates).sub("MAPS_API_KEY", maps_key)
   File.write("#{TARGET_DIRECTORY}/index.html", html)
 end
 
