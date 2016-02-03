@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
    </head>
    <body>
-        TEMPLATES_GO_HERE
+        <%= templates %>
         <script src="weatherbus.js"></script>
         <script src="config.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=MAPS_API_KEY"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%= maps_key %>"></script>
         <script>WB.boot();</script>
    </body>
 </html>
