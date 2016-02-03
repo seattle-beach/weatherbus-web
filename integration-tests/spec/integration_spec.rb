@@ -38,7 +38,7 @@ def app_url
   when "local"
     "http://localhost:8000/"
   else
-    raise "No app URL configured for the \"#{svcenv}\" environment"
+    raise "No app URL configured for the \"#{appenv}\" environment"
   end
 end
 
