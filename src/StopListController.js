@@ -1,12 +1,12 @@
 (function () {
   "use strict";
   WB.StopListController = class extends WB.Controller {
-    constructor(username, userService, stopService, locationService) {
+    constructor(username, userService, stopService, navService) {
       super();
       this.username = username;
       this.userService = userService;
       this.stopService = stopService;
-      this.locationService = locationService;
+      this.navService = navService;
     }
 
     createDom() {
@@ -70,9 +70,9 @@
           this._stopInfoController.remove();
         }
   
-        this._stopInfoController = new WB.StopInfoController(stop.id, null, this.stopService, this.locationService);
+        this._stopInfoController = new WB.StopInfoController(stop.id, null, this.stopService, this.navService);
         this._stopInfoController.appendTo(this._root);
-        this.locationService.pushState("#stop-" + stop.id);
+        this.navService.pushState("#stop-" + stop.id);
       });
       a.textContent = stop.name;
       li.appendChild(a);

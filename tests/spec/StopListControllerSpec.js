@@ -8,8 +8,8 @@ describe("StopListController", function () {
     this.stopService = {
       getInfoForStop: function () {}
     };
-    this.locationService = new WB.LocationService();
-    this.subject = new WB.StopListController("bob", this.userService, this.stopService, this.locationService);
+    this.navService = new WB.NavigationService();
+    this.subject = new WB.StopListController("bob", this.userService, this.stopService, this.navService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
@@ -75,11 +75,11 @@ describe("StopListController", function () {
       });
 
       it("should update the URL", function () {
-        expect(this.locationService.pushState).toHaveBeenCalledWith("#stop-12345");
+        expect(this.navService.pushState).toHaveBeenCalledWith("#stop-12345");
       });
 
       it("should show a StopInfoController for that stop", function () {
-        expect(WB.StopInfoController).toHaveBeenCalledWith("12345", null, this.stopService, this.locationService);
+        expect(WB.StopInfoController).toHaveBeenCalledWith("12345", null, this.stopService, this.navService);
         var child = WB.StopInfoController.calls.mostRecent().returnValue;
         expect(child._root.parentNode).toBe(this.subject._root);
       });

@@ -5,10 +5,10 @@ describe("StopInfoController", function () {
     this.stopService = {
       getInfoForStop: jasmine.createSpy("getInfoForStop")
     };
-    this.locationService = {
+    this.navService = {
       navigate: jasmine.createSpy("navigate")
     };
-    this.subject = new WB.StopInfoController("6789_0", null, this.stopService, this.locationService);
+    this.subject = new WB.StopInfoController("6789_0", null, this.stopService, this.navService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
@@ -176,15 +176,14 @@ describe("StopInfoController", function () {
       });
 
       it("should navigate to a filtered stop URL", function () {
-        expect(this.locationService.navigate).toHaveBeenCalledWith("?stop=6789_0&routes=31,855");
+        expect(this.navService.navigate).toHaveBeenCalledWith("?stop=6789_0&routes=31,855");
       });
     });
   });
 
   describe("When a route filter was supplied", function () {
     beforeEach(function () {
-      this.subject = new WB.StopInfoController("6789_0", ["31"], this.stopService,
-      this.locationService);
+      this.subject = new WB.StopInfoController("6789_0", ["31"], this.stopService, this.navService);
       this.root = document.createElement("div");
       this.subject.appendTo(this.root);
     });

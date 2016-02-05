@@ -81,12 +81,12 @@
       }
     });
 
-    spyOn(WB.LocationService.prototype, "hash").and.throwError(
+    spyOn(WB.NavigationService.prototype, "hash").and.throwError(
       "Caught an unmocked access to a location object's hash()");
-    spyOn(WB.LocationService.prototype, "search").and.throwError(
+    spyOn(WB.NavigationService.prototype, "search").and.throwError(
       "Caught an unmocked access to a location object's search()");
-    spyOn(WB.LocationService.prototype, "pushState");
-    spyOn(WB.LocationService.prototype, "navigate").and.throwError(
+    spyOn(WB.NavigationService.prototype, "pushState");
+    spyOn(WB.NavigationService.prototype, "navigate").and.throwError(
       "Caught an unmocked access to a location object's navigate()");
 
 

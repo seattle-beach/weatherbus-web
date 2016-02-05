@@ -26,11 +26,11 @@
 
 
   WB.StopInfoController = class extends WB.Controller {
-    constructor(stopId, routeFilter, stopService, locationService) {
+    constructor(stopId, routeFilter, stopService, navService) {
       super();
       this._stopId = stopId;
       this._stopService = stopService;
-      this._locationService = locationService;
+      this._navService = navService;
       this._routeFilter = routeFilter;
     }
   
@@ -52,7 +52,7 @@
       this._filterController = new WB.RouteFilterController(this._routes(), this._routeFilter);
       this._filterController.appendTo(this._root.querySelector(".filter-container"));
       this._filterController.completed.subscribe(routes => {
-        this._locationService.navigate("?stop=" + this._stopId + "&routes=" + routes.join(","));
+        this._navService.navigate("?stop=" + this._stopId + "&routes=" + routes.join(","));
       });
     }
   

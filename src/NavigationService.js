@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  WB.LocationService = class {
+  WB.NavigationService = class {
     hash() {
       return location.hash;
     }
