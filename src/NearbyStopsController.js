@@ -2,9 +2,9 @@
   "use strict";
 
   WB.NearbyStopsController = class extends WB.Controller {
-    constructor(geolocationService) {
+    constructor(browserLocationService) {
       super();
-      this._geolocationService = geolocationService;
+      this._browserLocationService = browserLocationService;
     }
 
     createDom() {
@@ -13,7 +13,7 @@
     }
   
     shown() {
-      this._geolocationService.getLocation(position => {
+      this._browserLocationService.getLocation(position => {
         this._map = new google.maps.Map(this._root.querySelector(".map-container"), {
           center: position,
           zoom: 16

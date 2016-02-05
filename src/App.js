@@ -10,7 +10,7 @@
     start() {
       var userService = new WB.UserService(this._xhrFactory);
       var stopService = new WB.StopService(this._xhrFactory);
-      var geolocationService = new WB.GeolocationService();
+      var browserLocationService = new WB.BrowserLocationService();
       var stopMatch = this.navService.hash().match(/^#stop-(.*)$/);
       var stopWithRoutesMatch = this.navService.search()
         .match(/^\?stop=([^&]*)&routes=(.*)$/);
@@ -26,7 +26,7 @@
           stopService, 
           this.navService);
       } else {
-        this._rootController = new WB.HomeController(geolocationService);
+        this._rootController = new WB.HomeController(browserLocationService);
         this._rootController.loginClicked.subscribe(() => {
           var nlic = new WB.NotLoggedInController(userService);
           this._rootController.remove();

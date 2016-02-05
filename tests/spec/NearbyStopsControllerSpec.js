@@ -1,21 +1,21 @@
 describe("NearbyStopsController", function () {
   "use strict";
   beforeEach(function () {
-    this.geolocationService = {
+    this.browserLocationService = {
       getLocation: jasmine.createSpy("getLocation")
     };
-    this.subject = new WB.NearbyStopsController(this.geolocationService);
+    this.subject = new WB.NearbyStopsController(this.browserLocationService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
 
   it("should request the user's location", function () {
-    expect(this.geolocationService.getLocation).toHaveBeenCalledWith(jasmine.any(Function));
+    expect(this.browserLocationService.getLocation).toHaveBeenCalledWith(jasmine.any(Function));
   });
 
   describe("When the location request succeeds", function () {
     beforeEach(function () {
-      var cb = this.geolocationService.getLocation.calls.mostRecent().args[0];
+      var cb = this.browserLocationService.getLocation.calls.mostRecent().args[0];
       cb({lat: 47.5959576, lng: -122.33709630000001});
     });
 

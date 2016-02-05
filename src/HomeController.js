@@ -1,10 +1,10 @@
 (function () {
   "use strict";
   WB.HomeController = class extends WB.Controller {
-    constructor(geolocationService) {
+    constructor(browserLocationService) {
       super();
       this.loginClicked = new WB.Event();
-      this._geolocationService = geolocationService;
+      this._browserLocationService = browserLocationService;
     }
   
     createDom() {
@@ -24,7 +24,7 @@
     }
   
     _showNearbyStops() {
-      this._child = new WB.NearbyStopsController(this._geolocationService);
+      this._child = new WB.NearbyStopsController(this._browserLocationService);
       this._child.appendTo(this._root.querySelector(".child"));
     }
   };
