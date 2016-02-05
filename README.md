@@ -4,7 +4,7 @@ Setup Instructions
 
 1. Build the app
   1. Run `bundle install`.
-  2. Run `npm install jshint`.
+  2. Install Node modules: `npm install --dedupe jshint babel babel-cli babel-preset-es2015`
   3. If you intend to use any of the Google Maps features, specify the API key: `export WB_MAPS_API_KEY=<the key>`.
   4. Run `rake`. Or, to run against a local Weatherbus instance, run `rake build['dev'] unitTests`.
   5. You should not see any errors.

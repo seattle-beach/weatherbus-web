@@ -1,8 +1,5 @@
 (function () {
   "use strict";
-  WB.StopService = function (xhrFactory) {
-    this.xhrFactory = xhrFactory;
-  };
 
   var convertDate = function (timestamp) {
     if (timestamp) {
@@ -21,11 +18,17 @@
     return stopInfo.data;
   };
 
-  WB.StopService.prototype.getInfoForStop = function (stopId, callback) {
-    var url = "api/v1/stops/" + stopId;
-    var transformError = function () {
-      return "There was an error getting stop info.";
-    };
-    WB.makeRestCall(this.xhrFactory(), url, transformError, processStopInfo, callback);
+  WB.StopService = class {
+    constructor (xhrFactory) {
+      this.xhrFactory = xhrFactory;
+    }
+  
+    getInfoForStop(stopId, callback) {
+      var url = "api/v1/stops/" + stopId;
+      var transformError = function () {
+        return "There was an error getting stop info.";
+      };
+      WB.makeRestCall(this.xhrFactory(), url, transformError, processStopInfo, callback);
+    }
   };
 }());

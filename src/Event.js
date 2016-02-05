@@ -1,17 +1,19 @@
 (function () {
   "use strict";
-  WB.Event = function () {
-    this._subscriberList = [];
-  };
-
-  WB.Event.prototype.subscribe = function (subscriber) {
-    this._subscriberList.push(subscriber);
-  };
-
-  WB.Event.prototype.trigger = function () {
-    var args = arguments;
-    this._subscriberList.forEach(function (subscriber) {
-      subscriber.apply(null, args);
-    });
+  WB.Event = class{
+    constructor() {
+      this._subscriberList = [];
+    }
+  
+    subscribe(subscriber) {
+      this._subscriberList.push(subscriber);
+    }
+  
+    trigger() {
+      var args = arguments;
+      this._subscriberList.forEach(function (subscriber) {
+        subscriber.apply(null, args);
+      });
+    }
   };
 }());

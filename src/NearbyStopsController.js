@@ -1,24 +1,24 @@
 (function () {
   "use strict";
 
-  WB.NearbyStopsController = function (locationService) {
-    this._locationService = locationService;
-  };
+  WB.NearbyStopsController = class extends WB.Controller {
+    constructor(geolocationService) {
+      super();
+      this._geolocationService = geolocationService;
+    }
 
-  WB.NearbyStopsController.prototype = new WB.Controller();
-
-  WB.NearbyStopsController.prototype.createDom = function () {
-    var dom = this.createDomFromTemplate("#template_NearbyStopsController");
-    return dom;
-  };
-
-  WB.NearbyStopsController.prototype.shown = function () {
-    var that = this;
-    this._locationService.getLocation(function (position) {
-      that._map = new google.maps.Map(that._root.querySelector(".map-container"), {
-        center: position,
-        zoom: 16
+    createDom() {
+      var dom = this.createDomFromTemplate("#template_NearbyStopsController");
+      return dom;
+    }
+  
+    shown() {
+      this._geolocationService.getLocation(position => {
+        this._map = new google.maps.Map(this._root.querySelector(".map-container"), {
+          center: position,
+          zoom: 16
+        });
       });
-    });
+    }
   };
 }());
