@@ -11,16 +11,13 @@
     
     createDom() {
       var dom = this.createDomFromTemplate("#template_AddStopController");
-      var that = this;
-  
-      dom.querySelector("button").addEventListener("click", function () {
-          that._submit();
-      });
-  
+
+      dom.querySelector("button").addEventListener("click", () => this._submit());
       this._stopIdField = dom.querySelector("input[type=text]");
-      this._stopIdField.addEventListener("keyup", function (event) {
+
+      this._stopIdField.addEventListener("keyup", event => {
         if (event.keyCode === 13) {
-          that._submit();
+          this._submit();
         }
       });
   
@@ -28,16 +25,15 @@
     }
   
     _submit() {
-      var that = this;
-      var errorNode = that._root.querySelector(".error");
+      var errorNode = this._root.querySelector(".error");
       errorNode.classList.add("hidden");
   
-      this._userService.addStop(this._username, this._stopIdField.value, function (error) {
+      this._userService.addStop(this._username, this._stopIdField.value, error => {
         if (error) {
           errorNode.classList.remove("hidden");
           errorNode.textContent = error;
         } else {
-          that.completedEvent.trigger();
+          this.completedEvent.trigger();
         }
       });
     }

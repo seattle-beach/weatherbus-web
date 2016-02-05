@@ -8,9 +8,8 @@
     }
   
     start() {
-      var that = this;
-      var userService = new WB.UserService(that._xhrFactory);
-      var stopService = new WB.StopService(that._xhrFactory);
+      var userService = new WB.UserService(this._xhrFactory);
+      var stopService = new WB.StopService(this._xhrFactory);
       var geolocationService = new WB.GeolocationService();
       var stopMatch = this.locationService.hash().match(/^#stop-(.*)$/);
       var stopWithRoutesMatch = this.locationService.search()
@@ -28,15 +27,15 @@
           this.locationService);
       } else {
         this._rootController = new WB.HomeController(geolocationService);
-        this._rootController.loginClicked.subscribe(function () {
+        this._rootController.loginClicked.subscribe(() => {
           var nlic = new WB.NotLoggedInController(userService);
-          that._rootController.remove();
-          that._rootController = nlic;
-          nlic.appendTo(that._root);
-          nlic.loggedIn.subscribe(function(username) {
-            that._rootController.remove();
-            that._rootController = new WB.StopListController(username, userService, stopService, that.locationService);
-            that._rootController.appendTo(that._root);
+          this._rootController.remove();
+          this._rootController = nlic;
+          nlic.appendTo(this._root);
+          nlic.loggedIn.subscribe(username => {
+            this._rootController.remove();
+            this._rootController = new WB.StopListController(username, userService, stopService, this.locationService);
+            this._rootController.appendTo(this._root);
           });
         });
       }

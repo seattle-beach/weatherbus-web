@@ -35,14 +35,13 @@
     }
   
     createDom() {
-      var that = this;
       var dom = this.createDomFromTemplate("#template_StopInfoController");
       var filterLink = dom.querySelector(".filter-link");
       this._departureTable = dom.querySelector(".departures");
   
-      filterLink.addEventListener("click", function (event) {
+      filterLink.addEventListener("click", event => {
         event.preventDefault();
-        that._showFilter();
+        this._showFilter();
         filterLink.classList.add("hidden");
       });
   
@@ -50,11 +49,10 @@
     }
   
     _showFilter() {
-      var that = this;
       this._filterController = new WB.RouteFilterController(this._routes(), this._routeFilter);
       this._filterController.appendTo(this._root.querySelector(".filter-container"));
-      this._filterController.completed.subscribe(function (routes) {
-        that._locationService.navigate("?stop=" + that._stopId + "&routes=" + routes.join(","));
+      this._filterController.completed.subscribe(routes => {
+        this._locationService.navigate("?stop=" + this._stopId + "&routes=" + routes.join(","));
       });
     }
   
@@ -70,25 +68,23 @@
     }
   
     shown() {
-      var that = this;
-  
-      this._stopService.getInfoForStop(this._stopId, function (error, value) {
+      this._stopService.getInfoForStop(this._stopId, (error, value) => {
         var errorNode, tbody;
-        var loading = that._root.querySelector(".loading");
+        var loading = this._root.querySelector(".loading");
         loading.classList.add("hidden");
   
         if (error) {
-          errorNode = that._root.querySelector(".error");
+          errorNode = this._root.querySelector(".error");
           errorNode.classList.remove("hidden");
           errorNode.textContent = error;
         } else {
-          that._root.querySelector(".lat").textContent = value.latitude;
-          that._root.querySelector(".lng").textContent = value.longitude;
-          tbody = that._departureTable.querySelector("tbody");
+          this._root.querySelector(".lat").textContent = value.latitude;
+          this._root.querySelector(".lng").textContent = value.longitude;
+          tbody = this._departureTable.querySelector("tbody");
   
-          that._departures = value.departures;
-          value.departures.forEach(function (d) {
-            if (that._shouldShowDeparture(d)) {
+          this._departures = value.departures;
+          value.departures.forEach(d => {
+            if (this._shouldShowDeparture(d)) {
               var row = tbody.insertRow(-1);
               appendCellWithText(row, d.routeShortName + " "  + d.headsign);
               appendCellWithText(row, formatDepartureTime(d));

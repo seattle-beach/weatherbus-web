@@ -8,17 +8,16 @@
     }
   
     createDom() {
-      var that = this;
       var dom = this.createDomFromTemplate("#template_HomeController");
   
-      dom.querySelector(".log-in").addEventListener("click", function (event) {
+      dom.querySelector(".log-in").addEventListener("click", event => {
         event.preventDefault();
-        that.loginClicked.trigger();
+        this.loginClicked.trigger();
       });
   
-      dom.querySelector(".nearby-stops").addEventListener("click", function (event) {
+      dom.querySelector(".nearby-stops").addEventListener("click", event => {
         event.preventDefault();
-        that._showNearbyStops();
+        this._showNearbyStops();
       });
   
       return dom;

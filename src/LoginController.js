@@ -13,14 +13,11 @@
       this._usernameField = dom.querySelector("input");
       this._errorLabel = dom.querySelector(".error");
   
-      var that = this;
-      this._submitButton.addEventListener("click", function () {
-          that._submit();
-      });
+      this._submitButton.addEventListener("click", () => { this._submit(); });
   
-      this._usernameField.addEventListener("keyup", function (event) {
+      this._usernameField.addEventListener("keyup", event => {
         if (event.keyCode === 13) {
-          that._submit();
+          this._submit();
         }
       });
   

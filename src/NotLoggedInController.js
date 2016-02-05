@@ -9,25 +9,24 @@
     }
   
     createDom() {
-      var that = this;
       var dom = this.createDomFromTemplate("#template_NotLoggedInController");
       this._childContainer = dom.querySelector(".child-container");
       var createLink = dom.querySelector(".create-link");
   
-      createLink.addEventListener("click", function (event) {
+      createLink.addEventListener("click", event => {
         event.preventDefault();
-        var createAccountController = new WB.CreateAccountController(that._userService);
+        var createAccountController = new WB.CreateAccountController(this._userService);
   
-        createAccountController.completed.subscribe(function (username) {
-          that.loggedIn.trigger(username);
+        createAccountController.completed.subscribe(username => {
+          this.loggedIn.trigger(username);
         });
   
-        createAccountController.canceled.subscribe(function () {
-          that._showLoginController();
+        createAccountController.canceled.subscribe(() => {
+          this._showLoginController();
           createLink.classList.remove("hidden");
         });
   
-        that._replaceChild(createAccountController);
+        this._replaceChild(createAccountController);
         createLink.classList.add("hidden");
       });
   
@@ -39,10 +38,9 @@
     }
   
     _showLoginController() {
-      var that = this;
       var loginController = new WB.LoginController();
-      loginController.completed.subscribe(function (username) {
-        that.loggedIn.trigger(username);
+      loginController.completed.subscribe(username => {
+        this.loggedIn.trigger(username);
       });
       this._replaceChild(loginController);
     }

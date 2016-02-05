@@ -7,5 +7,5 @@
   "latedef": true,
   "unused": "vars",
   "strict": true,
-  "esversion": "2015"
+  "esversion": 6
 }

@@ -9,13 +9,12 @@
     }
 
     createDom() {
-      var that = this;
       var dom = this.createDomFromTemplate("#template_RouteFilterController");
       this._addRoutes(dom);
       
-      dom.querySelector("button").addEventListener("click", function(event) {
+      dom.querySelector("button").addEventListener("click", event => {
         event.preventDefault();
-        that.completed.trigger(that._selectedRoutes());
+        this.completed.trigger(this._selectedRoutes());
       });
   
       return dom;

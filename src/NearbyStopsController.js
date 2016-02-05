@@ -13,9 +13,8 @@
     }
   
     shown() {
-      var that = this;
-      this._geolocationService.getLocation(function (position) {
-        that._map = new google.maps.Map(that._root.querySelector(".map-container"), {
+      this._geolocationService.getLocation(position => {
+        this._map = new google.maps.Map(this._root.querySelector(".map-container"), {
           center: position,
           zoom: 16
         });
