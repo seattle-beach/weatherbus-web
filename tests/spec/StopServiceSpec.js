@@ -107,4 +107,41 @@ describe("StopService", function() {
       });
     });
   });
+
+  describe("getStopsNearLocation", function () {
+    beforeEach(function () {
+      this.callback = jasmine.createSpy("callback");
+      this.subject.getStopsNearLocation({lat: 47.5959576, lng: -122.33709630000001}, this.callback);
+    });
+
+    it("should make an AJAX call", function () {
+      expect(this.xhr).toBeTruthy();
+      expect(this.xhr.open).toHaveBeenCalledWith("get",
+        "http://localhost/api/v1/stops/?lat=47.5959576&lng=-122.33709630000001&latSpan=0.01&lngSpan=0.01");
+      expect(this.xhr.send).toHaveBeenCalled();
+    });
+
+    describe("When the AJAX call succeeds", function () {
+      beforeEach(function () {
+        this.payload = {
+          data: [
+	          {
+	            id: "1_110", 
+	            name: "1st Ave S & Yesler Way",
+	            latitude: 47.601391,
+	            longitude: -122.334282
+	          }
+	        ]
+        };
+        this.xhr.response = JSON.stringify(this.payload);
+        this.xhr.readyState = 4;
+        this.xhr.status = 200;
+        this.xhr.onreadystatechange();
+      });
+
+      it("should call the callback with the stops", function () {
+        expect(this.callback).toHaveBeenCalledWith(null, this.payload.data);
+      });
+    });
+  });
 });

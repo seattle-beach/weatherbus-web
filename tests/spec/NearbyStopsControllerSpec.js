@@ -4,7 +4,10 @@ describe("NearbyStopsController", function () {
     this.browserLocationService = {
       getLocation: jasmine.createSpy("getLocation")
     };
-    this.subject = new WB.NearbyStopsController(this.browserLocationService);
+    this.stopService = {
+      getStopsNearLocation: jasmine.createSpy("getStopsNearLocation")
+    };
+    this.subject = new WB.NearbyStopsController(this.browserLocationService, this.stopService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
@@ -25,6 +28,33 @@ describe("NearbyStopsController", function () {
       expect(WB.latestMap._config.center).toEqual({
         lat: 47.5959576,
         lng: -122.33709630000001
+      });
+    });
+
+    it("should request stops near the user's location", function () {
+      expect(this.stopService.getStopsNearLocation).toHaveBeenCalledWith(
+        {lat: 47.5959576, lng: -122.33709630000001}, jasmine.any(Function));
+    });
+
+    describe("When the stops request succeeds", function () {
+      beforeEach(function () {
+        var cb = this.stopService.getStopsNearLocation.calls.mostRecent().args[1];
+        cb(null, [
+          {
+            id: "1_110", 
+            name: "1st Ave S & Yesler Way",
+            latitude: 47.601391,
+            longitude: -122.334282
+          }
+        ]);
+      });
+
+      it("should mark the stops on the map", function () {
+        expect(WB.latestMarker).toBeTruthy();
+        expect(WB.latestMarker._config.position.lat).toEqual(47.601391);
+        expect(WB.latestMarker._config.position.lng).toEqual(-122.334282);
+        expect(WB.latestMarker._config.map).toBe(WB.latestMap);
+        expect(WB.latestMarker._config.title).toEqual("1st Ave S & Yesler Way");
       });
     });
   });

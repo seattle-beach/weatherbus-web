@@ -105,6 +105,12 @@
             _container: container
           };
           return WB.latestMap;
+        },
+        Marker: function (config) {
+          WB.latestMarker = {
+            _config: config
+          };
+          return WB.latestMarker;
         }
       }
     };

@@ -26,7 +26,7 @@
           stopService, 
           this.navService);
       } else {
-        this._rootController = new WB.HomeController(browserLocationService);
+        this._rootController = new WB.HomeController(browserLocationService, stopService);
         this._rootController.loginClicked.subscribe(() => {
           var nlic = new WB.NotLoggedInController(userService);
           this._rootController.remove();
