@@ -1,7 +1,9 @@
 describe("HomeController", function () {
   "use strict";
   beforeEach(function () {
-    this.subject = new WB.HomeController();
+    this.subject = new WB.HomeController({
+      getLocation: function () {}
+    });
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });

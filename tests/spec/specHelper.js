@@ -18,6 +18,11 @@
   };
 
   beforeAll(function (done) {
+    window.addEventListener("error", function (error) {
+      // Fail the current spec
+      expect(error.message).toBe({});
+    });
+
     var xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function () {
