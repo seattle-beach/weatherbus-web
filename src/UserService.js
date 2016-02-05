@@ -1,9 +1,5 @@
 (function () {
   "use strict";
-  WB.UserService = function (xhrFactory) {
-    this.xhrFactory = xhrFactory;
-  };
-
   var parseStops = function (json) {
     return json;
   };
@@ -23,16 +19,6 @@
     return "There was an error retrieving stops.";
   };
 
-  WB.UserService.prototype.getStopsForUser = function (username, callback) {
-    var url = "users/stops?username=" + username;
-    WB.makeRestCall(this.xhrFactory(), url, transformGetStopsError, parseStops, callback);
-  };
-
-  var transformAddUserError = function (status, response) {
-    console.log("Error adding user. Server returned", status, response);
-    return "Could not create user.";
-  };
-
   var transformAddStopError = function (status, response) {
      if (status === 404) {
       try {
@@ -47,16 +33,32 @@
     return "Could not add stop.";
   };
 
-
-  WB.UserService.prototype.createUser = function (username, callback) {
-    var body = {username: username };
-    WB.makeRestPost(this.xhrFactory(), "users", body, transformAddUserError, callback);
+  var transformAddUserError = function (status, response) {
+    console.log("Error adding user. Server returned", status, response);
+    return "Could not create user.";
   };
 
-  WB.UserService.prototype.addStop = function (username, stopId, callback) {
-    var url = "users/" + encodeURIComponent(username) + "/stops";
-    var body = {stopId: stopId};
-    WB.makeRestPost(this.xhrFactory(), url, body, transformAddStopError, callback);
+
+  WB.UserService = class {
+    constructor(xhrFactory) {
+      this.xhrFactory = xhrFactory;
+    }
+  
+    getStopsForUser(username, callback) {
+      var url = "users/stops?username=" + username;
+      WB.makeRestCall(this.xhrFactory(), url, transformGetStopsError, parseStops, callback);
+    }
+  
+    createUser(username, callback) {
+      var body = {username: username };
+      WB.makeRestPost(this.xhrFactory(), "users", body, transformAddUserError, callback);
+    }
+  
+    addStop(username, stopId, callback) {
+      var url = "users/" + encodeURIComponent(username) + "/stops";
+      var body = {stopId: stopId};
+      WB.makeRestPost(this.xhrFactory(), url, body, transformAddStopError, callback);
+    }
   };
 }());
 

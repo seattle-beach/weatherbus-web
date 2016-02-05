@@ -6,5 +6,6 @@
   "browser": true,
   "latedef": true,
   "unused": "vars",
-  "strict": true
+  "strict": true,
+  "esversion": "2015"
 }
