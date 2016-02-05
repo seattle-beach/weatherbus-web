@@ -68,7 +68,6 @@ task :build, [:environment] => :clean do |t, args|
   js_temp = File.open("#{INTERMEDIATE_DIRECTORY}/wb-es2015.js", "w")
   concat_js(js_temp)
   js_temp.close
-  p "***** babeling"
   sh('node_modules/.bin/babel', js_temp.path, '--out-file', 'target/weatherbus.js', '--source-maps')
 
   FileUtils.cp("src/config-#{buildenv}.js", "#{TARGET_DIRECTORY}/config.js")

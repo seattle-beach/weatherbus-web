@@ -2,7 +2,7 @@ language: ruby
 rvm:
   - 2.2.3
 install:
-  - npm install jshint
+  - npm install --dedupe jshint babel babel-cli babel-preset-es2015
   - bundle install
 script: bundle exec rake build['acceptance'] unitTests
 env:
