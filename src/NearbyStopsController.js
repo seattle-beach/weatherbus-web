@@ -25,6 +25,7 @@
       this._browserLocationService = browserLocationService;
       this._stopService = stopService;
       this._markers = {};
+      this._infoWindows = {};
     }
 
     createDom() {
@@ -44,17 +45,36 @@
             if (!error) {
               stops.forEach(stop => {
                 if (!this._markers[stop.id]) {
-                  this._markers[stop.id] = new google.maps.Marker({
-	                  position: {lat: stop.latitude, lng: stop.longitude},
-	                  map: this._map,
-	                  title: stop.name
-	                });
+                  this._makeMarker(stop);
                 }
               });
             }
           });
          }));
       });
+    }
+
+    _makeMarker(stop) {
+      var marker = this._markers[stop.id] = new google.maps.Marker({
+        position: {lat: stop.latitude, lng: stop.longitude},
+        map: this._map,
+        title: stop.name
+      });
+      marker.addListener("click", () => {
+        var w;
+        if (!this._infoWindows[stop.id]) {
+          w = this._makeInfoWindow(stop);
+          this._infoWindows[stop.id] = w;
+          w.open(this._map, marker);
+          w.addListener("closeclick", () => {
+            delete this._infoWindows[stop.id];
+          });
+        }
+      });
+    }
+
+    _makeInfoWindow(stop) {
+      return new google.maps.InfoWindow({ content: stop.name });
     }
   };
 }());

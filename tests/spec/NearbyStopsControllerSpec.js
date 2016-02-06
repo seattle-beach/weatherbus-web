@@ -63,6 +63,29 @@ describe("NearbyStopsController", function () {
           expect(WB.latestMarker._config.map).toBe(WB.latestMap);
           expect(WB.latestMarker._config.title).toEqual("1st Ave S & Yesler Way");
         });
+
+        describe("When the user clicks a stop marker", function () {
+          beforeEach(function () {
+            WB.latestMarker._listeners.click();
+          });
+
+          it("should show an info window containing the stop name", function () {
+            expect(WB.latestInfoWindow).toBeTruthy();
+            expect(WB.latestInfoWindow._map).toBe(this.subject._map);
+            expect(WB.latestInfoWindow._marker).toBe(WB.latestMarker);
+            expect(WB.latestInfoWindow._content).toMatch("1st Ave S & Yesler Way");
+          });
+
+          it("should not show two info windows for the same stop", function () {
+            WB.latestMarker._listeners.click();
+            var firstWindow = WB.latestInfoWindow;
+            WB.latestMarker._listeners.click();
+            expect(WB.latestInfoWindow).toBe(firstWindow);
+            WB.latestInfoWindow._listeners.closeclick();
+            WB.latestMarker._listeners.click();
+            expect(WB.latestInfoWindow).not.toBe(firstWindow);
+          });
+        });
       });
 
       describe("When the bounds change repeatedly", function () {

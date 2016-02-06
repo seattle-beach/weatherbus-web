@@ -96,6 +96,13 @@
     };
 
 
+    var addGoogleEvents = function (thing) {
+      thing._listeners = {};
+      thing.addListener = function (eventName, cb) {
+        thing._listeners[eventName] = cb;
+      };
+    };
+
     // Stubs
     window.google = {
       maps: {
@@ -103,18 +110,16 @@
           WB.latestMap = {
             _config: config,
             _container: container,
-            _listeners: {},
             getBounds: function () { return undefined; },
-            addListener: function (eventName, cb) {
-              this._listeners[eventName] = cb;
-            }
           };
+          addGoogleEvents(WB.latestMap);
           return WB.latestMap;
         },
         Marker: function (config) {
           WB.latestMarker = {
             _config: config
           };
+          addGoogleEvents(WB.latestMarker);
           return WB.latestMarker;
         },
         LatLngBounds: function (sw, ne) {
@@ -135,6 +140,17 @@
         LatLng: function (lat, lng) {
           this.lat = function () { return lat; };
           this.lng = function () { return lng; };
+        },
+        InfoWindow: function(config) {
+          WB.latestInfoWindow = {
+            _content: config.content,
+            open: function (map, marker) {
+              this._map = map;
+              this._marker = marker;
+            }
+          };
+          addGoogleEvents(WB.latestInfoWindow);
+          return WB.latestInfoWindow;
         }
       }
 
