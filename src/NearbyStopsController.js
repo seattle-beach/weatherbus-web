@@ -24,6 +24,7 @@
       super();
       this._browserLocationService = browserLocationService;
       this._stopService = stopService;
+      this._markers = {};
     }
 
     createDom() {
@@ -37,15 +38,18 @@
           center: position,
           zoom: 16
         });
+
         this._map.addListener("bounds_changed", throttle(500, () => {
           this._stopService.getStopsNearLocation(this._map.getBounds(), (error, stops) => {
             if (!error) {
               stops.forEach(stop => {
-                new google.maps.Marker({
-                  position: {lat: stop.latitude, lng: stop.longitude},
-                  map: this._map,
-                  title: stop.name
-                });
+                if (!this._markers[stop.id]) {
+                  this._markers[stop.id] = new google.maps.Marker({
+	                  position: {lat: stop.latitude, lng: stop.longitude},
+	                  map: this._map,
+	                  title: stop.name
+	                });
+                }
               });
             }
           });

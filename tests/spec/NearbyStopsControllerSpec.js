@@ -39,31 +39,31 @@ describe("NearbyStopsController", function () {
         WB.latestMap._listeners.bounds_changed();
       });
 
-	    it("should request stops in the region bounded by the map", function () {
-	      expect(this.stopService.getStopsNearLocation).toHaveBeenCalledWith(this.bounds, jasmine.any(Function));
-	    });
-	
-	    describe("When the stops request succeeds", function () {
-	      beforeEach(function () {
-	        var cb = this.stopService.getStopsNearLocation.calls.mostRecent().args[1];
-	        cb(null, [
-	          {
-	            id: "1_110", 
-	            name: "1st Ave S & Yesler Way",
-	            latitude: 47.601391,
-	            longitude: -122.334282
-	          }
-	        ]);
-	      });
-	
-	      it("should mark the stops on the map", function () {
-	        expect(WB.latestMarker).toBeTruthy();
-	        expect(WB.latestMarker._config.position.lat).toEqual(47.601391);
-	        expect(WB.latestMarker._config.position.lng).toEqual(-122.334282);
-	        expect(WB.latestMarker._config.map).toBe(WB.latestMap);
-	        expect(WB.latestMarker._config.title).toEqual("1st Ave S & Yesler Way");
-	      });
-	    });
+      it("should request stops in the region bounded by the map", function () {
+        expect(this.stopService.getStopsNearLocation).toHaveBeenCalledWith(this.bounds, jasmine.any(Function));
+      });
+  
+      describe("When the stops request succeeds", function () {
+        beforeEach(function () {
+          var cb = this.stopService.getStopsNearLocation.calls.mostRecent().args[1];
+          cb(null, [
+            {
+              id: "1_110", 
+              name: "1st Ave S & Yesler Way",
+              latitude: 47.601391,
+              longitude: -122.334282
+            }
+          ]);
+        });
+  
+        it("should mark the stops on the map", function () {
+          expect(WB.latestMarker).toBeTruthy();
+          expect(WB.latestMarker._config.position.lat).toEqual(47.601391);
+          expect(WB.latestMarker._config.position.lng).toEqual(-122.334282);
+          expect(WB.latestMarker._config.map).toBe(WB.latestMap);
+          expect(WB.latestMarker._config.title).toEqual("1st Ave S & Yesler Way");
+        });
+      });
 
       describe("When the bounds change repeatedly", function () {
         it("should throttle the requests", function () {
@@ -72,6 +72,42 @@ describe("NearbyStopsController", function () {
           expect(this.stopService.getStopsNearLocation.calls.count()).toEqual(1);
           jasmine.clock().tick(500);
           expect(this.stopService.getStopsNearLocation.calls.count()).toEqual(2);
+        });
+
+        it("should create new markers for new stops", function () {
+          var existingMarker = WB.latestMarker;
+          WB.latestMap._listeners.bounds_changed();
+          jasmine.clock().tick(500);
+          var cb = this.stopService.getStopsNearLocation.calls.mostRecent().args[1];
+          cb(null, [
+            {  
+              id: "1_11025",
+              name: "Boren Ave & Jefferson St",
+              latitude: 47.606068,
+              longitude:-122.322029
+            }
+          ]);
+
+          expect(WB.latestMarker).not.toBe(existingMarker);
+          expect(WB.latestMarker._config.title).toEqual("Boren Ave & Jefferson St");
+        });
+
+        it("should not create new markers for existing stops", function () {
+          var stop = {  
+            id: "1_110", 
+            name: "1st Ave S & Yesler Way",
+            latitude: 47.601391,
+            longitude: -122.334282
+          }; 
+          var cb = this.stopService.getStopsNearLocation.calls.mostRecent().args[1];
+          cb(null, [stop]);
+          var existingMarker = WB.latestMarker;
+          WB.latestMap._listeners.bounds_changed();
+          jasmine.clock().tick(500);
+          cb = this.stopService.getStopsNearLocation.calls.mostRecent().args[1];
+          cb(null, [stop]);
+
+          expect(WB.latestMarker).toBe(existingMarker);
         });
       });
     });
