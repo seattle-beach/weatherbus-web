@@ -1,6 +1,24 @@
 (function () {
   "use strict";
 
+  var throttle = function (maxFrequency, func) {
+    var once = false;
+    var waiting = false;
+
+    return function () {
+      if (!once) {
+        func();
+        once = true;
+      } else if (!waiting) {
+        window.setTimeout(function () {
+          func();
+          waiting = false;
+        }, maxFrequency);
+        waiting = true;
+      }
+    };
+  };
+
   WB.NearbyStopsController = class extends WB.Controller {
     constructor(browserLocationService, stopService) {
       super();
@@ -19,7 +37,7 @@
           center: position,
           zoom: 16
         });
-        this._map.addListener("bounds_changed", () => {
+        this._map.addListener("bounds_changed", throttle(500, () => {
           this._stopService.getStopsNearLocation(this._map.getBounds(), (error, stops) => {
             if (!error) {
               stops.forEach(stop => {
@@ -31,7 +49,7 @@
               });
             }
           });
-         });
+         }));
       });
     }
   };

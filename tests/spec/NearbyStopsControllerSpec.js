@@ -64,6 +64,16 @@ describe("NearbyStopsController", function () {
 	        expect(WB.latestMarker._config.title).toEqual("1st Ave S & Yesler Way");
 	      });
 	    });
-     });
+
+      describe("When the bounds change repeatedly", function () {
+        it("should throttle the requests", function () {
+          WB.latestMap._listeners.bounds_changed();
+          WB.latestMap._listeners.bounds_changed();
+          expect(this.stopService.getStopsNearLocation.calls.count()).toEqual(1);
+          jasmine.clock().tick(500);
+          expect(this.stopService.getStopsNearLocation.calls.count()).toEqual(2);
+        });
+      });
+    });
   });
 });

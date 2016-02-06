@@ -137,6 +137,13 @@
           this.lng = function () { return lng; };
         }
       }
+
     };
+
+    jasmine.clock().install();
+  });
+
+  afterEach(function () {
+    jasmine.clock().uninstall();
   });
 }());
