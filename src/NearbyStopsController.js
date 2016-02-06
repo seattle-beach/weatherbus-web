@@ -19,18 +19,19 @@
           center: position,
           zoom: 16
         });
-
-        this._stopService.getStopsNearLocation(position, (error, stops) => {
-          if (!error) {
-	          stops.forEach(stop => {
-	            new google.maps.Marker({
-	              position: {lat: stop.latitude, lng: stop.longitude},
-	              map: this._map,
-	              title: stop.name
-	            });
-	          });
-          }
-        });
+        this._map.addListener("bounds_changed", () => {
+          this._stopService.getStopsNearLocation(this._map.getBounds(), (error, stops) => {
+            if (!error) {
+              stops.forEach(stop => {
+                new google.maps.Marker({
+                  position: {lat: stop.latitude, lng: stop.longitude},
+                  map: this._map,
+                  title: stop.name
+                });
+              });
+            }
+          });
+         });
       });
     }
   };

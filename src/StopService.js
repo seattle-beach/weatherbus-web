@@ -26,6 +26,10 @@
     return "There was an error getting stop info.";
   };
 
+  var round = function (n) {
+    return Math.round(n * 10000) / 10000;
+  };
+
   WB.StopService = class {
     constructor (xhrFactory) {
       this.xhrFactory = xhrFactory;
@@ -37,7 +41,11 @@
     }
 
     getStopsNearLocation(position, callback) {
-      var url = "api/v1/stops/?lat=" + position.lat + "&lng=" + position.lng + "&latSpan=0.01&lngSpan=0.01";
+      var center = position.getCenter();
+      var latSpan = position.getNorthEast().lat() - position.getSouthWest().lat();
+      var lngSpan = position.getNorthEast().lng() - position.getSouthWest().lng();
+      var url = "api/v1/stops/?lat=" + round(center.lat()) + "&lng=" + round(center.lng()) +
+        "&latSpan=" + round(latSpan) + "&lngSpan=" + round(lngSpan);
       WB.makeRestCall(this.xhrFactory(), url, transformError, processStopList, callback);
     } 
   };

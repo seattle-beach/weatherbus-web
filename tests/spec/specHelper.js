@@ -102,7 +102,12 @@
         Map: function (container, config) {
           WB.latestMap = {
             _config: config,
-            _container: container
+            _container: container,
+            _listeners: {},
+            getBounds: function () { return undefined; },
+            addListener: function (eventName, cb) {
+              this._listeners[eventName] = cb;
+            }
           };
           return WB.latestMap;
         },
@@ -111,6 +116,25 @@
             _config: config
           };
           return WB.latestMarker;
+        },
+        LatLngBounds: function (sw, ne) {
+          if (typeof sw !== "function") {
+            sw = new google.maps.LatLng(sw.lat, sw.lng);
+          }
+          if (typeof ne !== "function") {
+            ne = new google.maps.LatLng(ne.lat, ne.lng);
+          }
+          this.getSouthWest = function () { return sw; };
+          this.getNorthEast = function () { return ne; };
+          this.getCenter = function () {
+            var lat = sw.lat() + (ne.lat() - sw.lat()) / 2;
+            var lng = sw.lng() + (ne.lng() - sw.lng()) / 2;
+            return new google.maps.LatLng(lat, lng);
+          };
+        },
+        LatLng: function (lat, lng) {
+          this.lat = function () { return lat; };
+          this.lng = function () { return lng; };
         }
       }
     };

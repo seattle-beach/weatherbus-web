@@ -110,14 +110,16 @@ describe("StopService", function() {
 
   describe("getStopsNearLocation", function () {
     beforeEach(function () {
+      this.bounds = new google.maps.LatLngBounds({lat: 47.6010176, lng: -122.34413842707518},
+        {lat: 47.5908976, lng: -122.35425842707518});
       this.callback = jasmine.createSpy("callback");
-      this.subject.getStopsNearLocation({lat: 47.5959576, lng: -122.33709630000001}, this.callback);
+      this.subject.getStopsNearLocation(this.bounds, this.callback);
     });
 
-    it("should make an AJAX call", function () {
+    it("should make an AJAX call with the correct center and radii", function () {
       expect(this.xhr).toBeTruthy();
       expect(this.xhr.open).toHaveBeenCalledWith("get",
-        "http://localhost/api/v1/stops/?lat=47.5959576&lng=-122.33709630000001&latSpan=0.01&lngSpan=0.01");
+        "http://localhost/api/v1/stops/?lat=47.596&lng=-122.3492&latSpan=-0.0101&lngSpan=-0.0101");
       expect(this.xhr.send).toHaveBeenCalled();
     });
 

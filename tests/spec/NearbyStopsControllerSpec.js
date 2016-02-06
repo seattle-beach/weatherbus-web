@@ -31,31 +31,39 @@ describe("NearbyStopsController", function () {
       });
     });
 
-    it("should request stops near the user's location", function () {
-      expect(this.stopService.getStopsNearLocation).toHaveBeenCalledWith(
-        {lat: 47.5959576, lng: -122.33709630000001}, jasmine.any(Function));
-    });
-
-    describe("When the stops request succeeds", function () {
+    describe("When the map's bounds become available", function () {
       beforeEach(function () {
-        var cb = this.stopService.getStopsNearLocation.calls.mostRecent().args[1];
-        cb(null, [
-          {
-            id: "1_110", 
-            name: "1st Ave S & Yesler Way",
-            latitude: 47.601391,
-            longitude: -122.334282
-          }
-        ]);
+        this.bounds = new google.maps.LatLngBounds({lat: 47.6010176, lng: -122.34413842707518},
+          {lat: 47.5908976, lng: -122.35425842707518});
+        spyOn(WB.latestMap, "getBounds").and.returnValue(this.bounds);
+        WB.latestMap._listeners.bounds_changed();
       });
 
-      it("should mark the stops on the map", function () {
-        expect(WB.latestMarker).toBeTruthy();
-        expect(WB.latestMarker._config.position.lat).toEqual(47.601391);
-        expect(WB.latestMarker._config.position.lng).toEqual(-122.334282);
-        expect(WB.latestMarker._config.map).toBe(WB.latestMap);
-        expect(WB.latestMarker._config.title).toEqual("1st Ave S & Yesler Way");
-      });
-    });
+	    it("should request stops in the region bounded by the map", function () {
+	      expect(this.stopService.getStopsNearLocation).toHaveBeenCalledWith(this.bounds, jasmine.any(Function));
+	    });
+	
+	    describe("When the stops request succeeds", function () {
+	      beforeEach(function () {
+	        var cb = this.stopService.getStopsNearLocation.calls.mostRecent().args[1];
+	        cb(null, [
+	          {
+	            id: "1_110", 
+	            name: "1st Ave S & Yesler Way",
+	            latitude: 47.601391,
+	            longitude: -122.334282
+	          }
+	        ]);
+	      });
+	
+	      it("should mark the stops on the map", function () {
+	        expect(WB.latestMarker).toBeTruthy();
+	        expect(WB.latestMarker._config.position.lat).toEqual(47.601391);
+	        expect(WB.latestMarker._config.position.lng).toEqual(-122.334282);
+	        expect(WB.latestMarker._config.map).toBe(WB.latestMap);
+	        expect(WB.latestMarker._config.title).toEqual("1st Ave S & Yesler Way");
+	      });
+	    });
+     });
   });
 });
