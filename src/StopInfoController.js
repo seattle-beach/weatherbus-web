@@ -68,6 +68,8 @@
     }
   
     shown() {
+      this._navService.pushState("#stop-" + this._stopId);
+      
       this._stopService.getInfoForStop(this._stopId, (error, value) => {
         var errorNode, tbody;
         var loading = this._root.querySelector(".loading");

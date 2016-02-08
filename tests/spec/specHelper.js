@@ -142,8 +142,13 @@
           this.lng = function () { return lng; };
         },
         InfoWindow: function(config) {
+          var dom = document.createElement("div");
+          dom.appendChild(config.content);
+
           WB.latestInfoWindow = {
-            _content: config.content,
+            getContent: function () {
+              return dom;
+            },
             open: function (map, marker) {
               this._map = map;
               this._marker = marker;

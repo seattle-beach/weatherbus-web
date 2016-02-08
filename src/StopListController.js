@@ -72,7 +72,6 @@
   
         this._stopInfoController = new WB.StopInfoController(stop.id, null, this.stopService, this.navService);
         this._stopInfoController.appendTo(this._root);
-        this.navService.pushState("#stop-" + stop.id);
       });
       a.textContent = stop.name;
       li.appendChild(a);

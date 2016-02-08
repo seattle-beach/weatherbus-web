@@ -73,7 +73,7 @@ describe("NearbyStopsController", function () {
             expect(WB.latestInfoWindow).toBeTruthy();
             expect(WB.latestInfoWindow._map).toBe(this.subject._map);
             expect(WB.latestInfoWindow._marker).toBe(WB.latestMarker);
-            expect(WB.latestInfoWindow._content).toMatch("1st Ave S & Yesler Way");
+            expect(WB.latestInfoWindow.getContent().textContent).toMatch("1st Ave S & Yesler Way");
           });
 
           it("should not show two info windows for the same stop", function () {
@@ -84,6 +84,18 @@ describe("NearbyStopsController", function () {
             WB.latestInfoWindow._listeners.closeclick();
             WB.latestMarker._listeners.click();
             expect(WB.latestInfoWindow).not.toBe(firstWindow);
+          });
+
+          describe("When the user clicks the stop name in the info window", function () {
+            beforeEach(function () {
+              this.shouldShowStopHandler = jasmine.createSpy("shouldShowStop handler");
+              this.subject.shouldShowStop.subscribe(this.shouldShowStopHandler);
+              WB.specHelper.simulateClick(WB.latestInfoWindow.getContent().querySelector("a"));
+            });
+
+            it("should show a StopInfoController for that stop", function () {
+              expect(this.shouldShowStopHandler).toHaveBeenCalledWith("1_110");
+            });
           });
         });
       });

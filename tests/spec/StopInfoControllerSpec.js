@@ -6,13 +6,18 @@ describe("StopInfoController", function () {
       getInfoForStop: jasmine.createSpy("getInfoForStop")
     };
     this.navService = {
-      navigate: jasmine.createSpy("navigate")
+      navigate: jasmine.createSpy("navigate"),
+      pushState: jasmine.createSpy("pushState")
     };
     this.subject = new WB.StopInfoController("6789_0", null, this.stopService, this.navService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
 
+  it("should update the URL", function () {
+    expect(this.navService.pushState).toHaveBeenCalledWith("#stop-6789_0");
+  });
+  
   it("should show a loading indicator", function () {
     expect(this.root).toContainElement(".loading");
     var loadingIndicator = this.root.querySelector(".loading");

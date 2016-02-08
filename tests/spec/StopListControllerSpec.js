@@ -66,28 +66,19 @@ describe("StopListController", function () {
 
     describe("When the user clicks a stop link", function () {
       beforeEach(function () {
-        var RealCtor = WB.StopInfoController;
-        spyOn(WB, "StopInfoController").and.callFake(function (stopId, routeFilter, stopService) {
-          return new RealCtor(stopId, null, stopService);
-        });
-
         WB.specHelper.simulateClick(this.root.querySelector("li a"));
       });
 
-      it("should update the URL", function () {
-        expect(this.navService.pushState).toHaveBeenCalledWith("#stop-12345");
-      });
-
       it("should show a StopInfoController for that stop", function () {
-        expect(WB.StopInfoController).toHaveBeenCalledWith("12345", null, this.stopService, this.navService);
-        var child = WB.StopInfoController.calls.mostRecent().returnValue;
-        expect(child._root.parentNode).toBe(this.subject._root);
+        expect(this.subject._stopInfoController).toBeTruthy();
+        expect(this.subject._stopInfoController._stopId).toEqual("12345");
+        expect(this.subject._stopInfoController._root.parentNode).toBe(this.subject._root);
       });
 
       it("should remove previous stop info", function() {
-        var firstChild = WB.StopInfoController.calls.mostRecent().returnValue;
+        var firstChild = this.subject._stopInfoController;
         WB.specHelper.simulateClick(this.root.querySelectorAll("li a")[1]);
-        var secondChild = WB.StopInfoController.calls.mostRecent().returnValue;
+        var secondChild = this.subject._stopInfoController;
         expect(firstChild._root.parentNode).toBe(null);
         expect(secondChild._root.parentNode).toBe(this.subject._root);
       });

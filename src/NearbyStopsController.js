@@ -26,6 +26,7 @@
       this._stopService = stopService;
       this._markers = {};
       this._infoWindows = {};
+      this.shouldShowStop = new WB.Event();
     }
 
     createDom() {
@@ -74,7 +75,16 @@
     }
 
     _makeInfoWindow(stop) {
-      return new google.maps.InfoWindow({ content: stop.name });
+      var link = document.createElement("a");
+      link.href = "#";
+      link.textContent = stop.name;
+
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        this.shouldShowStop.trigger(stop.id);
+      });
+
+      return new google.maps.InfoWindow({ content: link });
     }
   };
 }());
