@@ -3,7 +3,9 @@
   WB.BrowserLocationService = class {
     getLocation(callback) {
       navigator.geolocation.getCurrentPosition(function (location) {
-        callback({lat: location.coords.latitude, lng: location.coords.longitude});
+        callback(null, {lat: location.coords.latitude, lng: location.coords.longitude});
+      }, function (error) {
+        callback(error);
       });
     }
   };

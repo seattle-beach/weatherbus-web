@@ -35,25 +35,37 @@
     }
   
     shown() {
-      this._browserLocationService.getLocation(position => {
-        this._map = new google.maps.Map(this._root.querySelector(".map-container"), {
-          center: position,
-          zoom: 16
-        });
+      this._browserLocationService.getLocation((error, position) => {
+        var errorNode;
 
-        this._map.addListener("bounds_changed", throttle(500, () => {
-          this._stopService.getStopsNearLocation(this._map.getBounds(), (error, stops) => {
-            if (!error) {
-              stops.forEach(stop => {
-                if (!this._markers[stop.id]) {
-                  this._makeMarker(stop);
-                }
-              });
-            }
-          });
-         }));
+        if (error) {
+          errorNode = this._root.querySelector(".error");
+          errorNode.textContent = "You haven't given Weatherbus permission to use your location.";
+          errorNode.classList.remove("hidden");
+        } else { 
+          this._showMap(position);
+        }
       });
     }
+
+    _showMap(position) {
+      this._map = new google.maps.Map(this._root.querySelector(".map-container"), {
+        center: position,
+        zoom: 16
+      });
+
+      this._map.addListener("bounds_changed", throttle(500, () => {
+        this._stopService.getStopsNearLocation(this._map.getBounds(), (error, stops) => {
+          if (!error) {
+            stops.forEach(stop => {
+              if (!this._markers[stop.id]) {
+                this._makeMarker(stop);
+              }
+            });
+          }
+        });
+       }));
+     }
 
     _makeMarker(stop) {
       var marker = this._markers[stop.id] = new google.maps.Marker({

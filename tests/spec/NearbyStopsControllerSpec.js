@@ -19,7 +19,7 @@ describe("NearbyStopsController", function () {
   describe("When the location request succeeds", function () {
     beforeEach(function () {
       var cb = this.browserLocationService.getLocation.calls.mostRecent().args[0];
-      cb({lat: 47.5959576, lng: -122.33709630000001});
+      cb(null, {lat: 47.5959576, lng: -122.33709630000001});
     });
 
     it("should show a map centered on the user's location", function () {
@@ -145,6 +145,19 @@ describe("NearbyStopsController", function () {
           expect(WB.latestMarker).toBe(existingMarker);
         });
       });
+    });
+  });
+
+  describe("When the location request fails", function () {
+    beforeEach(function () {
+      var cb = this.browserLocationService.getLocation.calls.mostRecent().args[0];
+      cb("nope!");
+    });
+
+    it("should display an error", function () {
+      var errorNode = this.root.querySelector(".error");
+      expect(errorNode).not.toHaveClass("hidden");
+      expect(errorNode.textContent).toEqual("You haven't given Weatherbus permission to use your location.");
     });
   });
 });
