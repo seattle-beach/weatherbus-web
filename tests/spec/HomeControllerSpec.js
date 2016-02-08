@@ -24,6 +24,17 @@ describe("HomeController", function () {
       expect(this.root.querySelector(".child").firstChild).toBe(this.subject._child._root);
     });
 
+    describe("When the user clicks 'Nearby stops' again", function() {
+      beforeEach(function() {
+        this.firstNearbyStopsController = this.subject._child;
+        WB.specHelper.simulateClick(this.root.querySelector(".nearby-stops"));
+      });
+
+      it("should not add another NearbyStopsController", function() {
+        expect(this.subject._child).toBe(this.firstNearbyStopsController);
+      });
+    });
+
     describe("When the NearbyStopsController's shouldShowStop event fires", function () {
       beforeEach(function () {
         this.subject._child.shouldShowStop.trigger("1_619");

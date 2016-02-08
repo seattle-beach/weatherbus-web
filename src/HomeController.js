@@ -23,7 +23,9 @@
   
       dom.querySelector(".nearby-stops").addEventListener("click", event => {
         event.preventDefault();
-        this._showNearbyStops();
+        if (!(this._child instanceof WB.NearbyStopsController)) {
+          this._showNearbyStops();
+        }
       });
   
       return dom;
