@@ -31,6 +31,7 @@
 
     createDom() {
       var dom = this.createDomFromTemplate("#template_NearbyStopsController");
+      dom.classList.add("nearby-stops-map");
       return dom;
     }
   
