@@ -17,5 +17,3 @@ deploy:
   api: https://api.run.pivotal.io
   organization: seattle-beach
   space: weatherbus-dev
-
-after_deploy: cd integration-tests && appenv=acceptance svcenv=acceptance bundle exec rspec

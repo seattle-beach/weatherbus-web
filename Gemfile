@@ -1,8 +1,4 @@
 source 'https://rubygems.org'
-gem 'capybara'
-gem 'selenium-webdriver'
 gem 'pry'
-gem 'rspec'
-gem 'poltergeist'
 gem 'jasmine'
 gem 'sass'
