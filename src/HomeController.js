@@ -32,13 +32,21 @@
     }
   
     _showNearbyStops() {
-      this._child = new WB.NearbyStopsController(this._browserLocationService, this._stopService);
-      this._child.appendTo(this._root.querySelector(".child"));
-      this._child.shouldShowStop.subscribe(stopId => {
-        this._child.remove();
-        this._child = new WB.StopInfoController(stopId, null, this._stopService, this._navService);
-        this._child.appendTo(this._root.querySelector(".child"));
+      var nearbyStopsController = new WB.NearbyStopsController(this._browserLocationService, this._stopService);
+      this._replaceChild(nearbyStopsController);
+
+      nearbyStopsController.shouldShowStop.subscribe(stopId => {
+        this._replaceChild(new WB.StopInfoController(stopId, null, this._stopService, this._navService));
       });
+    }
+    
+    _replaceChild(newChild) {
+      if (this._child) {
+        this._child.remove();
+      }
+
+      this._child = newChild;
+      this._child.appendTo(this._root.querySelector(".child"));
     }
   };
 }());

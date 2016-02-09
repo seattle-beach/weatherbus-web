@@ -46,6 +46,22 @@ describe("HomeController", function () {
         expect(stopInfoController._stopId).toEqual("1_619");
         expect(stopInfoController._root.parentNode).toBe(this.subject._root.querySelector(".child"));
       });
+
+      describe("When the user clicks 'Nearby Stops' again", function () {
+        beforeEach(function () {
+          this.stopInfoController = this.subject._child;
+          spyOn(this.stopInfoController, "remove").and.callThrough();
+          WB.specHelper.simulateClick(this.root.querySelector(".nearby-stops"));
+        });
+
+        it("should replace the stop controller with a NearbyStopsController", function () {
+          expect(this.stopInfoController.remove).toHaveBeenCalled();
+          expect(this.subject._child instanceof WB.NearbyStopsController).toBe(true);
+          var childNodes = this.root.querySelector(".child").childNodes;
+          expect(childNodes.length).toEqual(1);
+          expect(childNodes[0]).toBe(this.subject._child._root);
+        });
+      });
     });
   });
 });
