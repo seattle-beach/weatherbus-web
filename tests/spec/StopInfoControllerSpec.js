@@ -5,14 +5,19 @@ describe("StopInfoController", function () {
     this.stopService = {
       getInfoForStop: jasmine.createSpy("getInfoForStop")
     };
-    this.locationService = {
-      navigate: jasmine.createSpy("navigate")
+    this.navService = {
+      navigate: jasmine.createSpy("navigate"),
+      pushState: jasmine.createSpy("pushState")
     };
-    this.subject = new WB.StopInfoController("6789_0", null, this.stopService, this.locationService);
+    this.subject = new WB.StopInfoController("6789_0", null, this.stopService, this.navService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
 
+  it("should update the URL", function () {
+    expect(this.navService.pushState).toHaveBeenCalledWith("#stop-6789_0");
+  });
+  
   it("should show a loading indicator", function () {
     expect(this.root).toContainElement(".loading");
     var loadingIndicator = this.root.querySelector(".loading");
@@ -176,15 +181,14 @@ describe("StopInfoController", function () {
       });
 
       it("should navigate to a filtered stop URL", function () {
-        expect(this.locationService.navigate).toHaveBeenCalledWith("?stop=6789_0&routes=31,855");
+        expect(this.navService.navigate).toHaveBeenCalledWith("?stop=6789_0&routes=31,855");
       });
     });
   });
 
   describe("When a route filter was supplied", function () {
     beforeEach(function () {
-      this.subject = new WB.StopInfoController("6789_0", ["31"], this.stopService,
-      this.locationService);
+      this.subject = new WB.StopInfoController("6789_0", ["31"], this.stopService, this.navService);
       this.root = document.createElement("div");
       this.subject.appendTo(this.root);
     });

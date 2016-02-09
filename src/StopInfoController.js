@@ -1,38 +1,6 @@
 (function () {
   "use strict";
-  WB.StopInfoController = function (stopId, routeFilter, stopService, locationService) {
-    this._stopId = stopId;
-    this._stopService = stopService;
-    this._locationService = locationService;
-    this._routeFilter = routeFilter;
-  };
-
-  WB.StopInfoController.prototype = new WB.Controller();
-
-  WB.StopInfoController.prototype.createDom = function () {
-    var that = this;
-    var dom = this.createDomFromTemplate("#template_StopInfoController");
-    var filterLink = dom.querySelector(".filter-link");
-    this._departureTable = dom.querySelector(".departures");
-
-    filterLink.addEventListener("click", function (event) {
-      event.preventDefault();
-      that._showFilter();
-      filterLink.classList.add("hidden");
-    });
-
-    return dom;
-  };
-
-  WB.StopInfoController.prototype._showFilter = function () {
-    var that = this;
-    this._filterController = new WB.RouteFilterController(this._routes(), this._routeFilter);
-    this._filterController.appendTo(this._root.querySelector(".filter-container"));
-    this._filterController.completed.subscribe(function (routes) {
-      that._locationService.navigate("?stop=" + that._stopId + "&routes=" + routes.join(","));
-    });
-  };
-
+  
   var appendCellWithText = function (row, text) {
     var cell = document.createElement("td");
     cell.textContent = text;
@@ -56,52 +24,85 @@
     }
   };
 
-  WB.StopInfoController.prototype._routes = function () {
-    var routes = [];
-    var i;
-    for (i = 0; i < this._departures.length; i++) {
-      if (routes.indexOf(this._departures[i].routeShortName) === -1) {
-        routes.push(this._departures[i].routeShortName);
-      }
+
+  WB.StopInfoController = class extends WB.Controller {
+    constructor(stopId, routeFilter, stopService, navService) {
+      super();
+      this._stopId = stopId;
+      this._stopService = stopService;
+      this._navService = navService;
+      this._routeFilter = routeFilter;
     }
-    return routes;
-  };
-
-  WB.StopInfoController.prototype.shown = function () {
-    var that = this;
-
-    this._stopService.getInfoForStop(this._stopId, function (error, value) {
-      var errorNode, tbody;
-      var loading = that._root.querySelector(".loading");
-      loading.classList.add("hidden");
-
-      if (error) {
-        errorNode = that._root.querySelector(".error");
-        errorNode.classList.remove("hidden");
-        errorNode.textContent = error;
-      } else {
-        that._root.querySelector(".lat").textContent = value.latitude;
-        that._root.querySelector(".lng").textContent = value.longitude;
-        tbody = that._departureTable.querySelector("tbody");
-
-        that._departures = value.departures;
-        value.departures.forEach(function (d) {
-          if (that._shouldShowDeparture(d)) {
-            var row = tbody.insertRow(-1);
-            appendCellWithText(row, d.routeShortName + " "  + d.headsign);
-            appendCellWithText(row, formatDepartureTime(d));
-            appendCellWithText(row, d.temp);
-          }
-        });
-      }
-    });
-  };
-
-  WB.StopInfoController.prototype._shouldShowDeparture = function (departure) {
-    if (this._routeFilter === null) {
-      return true;
+  
+    createDom() {
+      var dom = this.createDomFromTemplate("#template_StopInfoController");
+      var filterLink = dom.querySelector(".filter-link");
+      this._departureTable = dom.querySelector(".departures");
+  
+      filterLink.addEventListener("click", event => {
+        event.preventDefault();
+        this._showFilter();
+        filterLink.classList.add("hidden");
+      });
+  
+      return dom;
     }
-    
-    return this._routeFilter.indexOf(departure.routeShortName) !== -1;
+  
+    _showFilter() {
+      this._filterController = new WB.RouteFilterController(this._routes(), this._routeFilter);
+      this._filterController.appendTo(this._root.querySelector(".filter-container"));
+      this._filterController.completed.subscribe(routes => {
+        this._navService.navigate("?stop=" + this._stopId + "&routes=" + routes.join(","));
+      });
+    }
+  
+    _routes() {
+      var routes = [];
+      var i;
+      for (i = 0; i < this._departures.length; i++) {
+        if (routes.indexOf(this._departures[i].routeShortName) === -1) {
+          routes.push(this._departures[i].routeShortName);
+        }
+      }
+      return routes;
+    }
+  
+    shown() {
+      this._navService.pushState("#stop-" + this._stopId);
+      
+      this._stopService.getInfoForStop(this._stopId, (error, value) => {
+        var errorNode, tbody;
+        var loading = this._root.querySelector(".loading");
+        loading.classList.add("hidden");
+  
+        if (error) {
+          errorNode = this._root.querySelector(".error");
+          errorNode.classList.remove("hidden");
+          errorNode.textContent = error;
+        } else {
+          this._root.querySelector(".lat").textContent = value.latitude;
+          this._root.querySelector(".lng").textContent = value.longitude;
+          tbody = this._departureTable.querySelector("tbody");
+  
+          this._departures = value.departures;
+          value.departures.forEach(d => {
+            if (this._shouldShowDeparture(d)) {
+              var row = tbody.insertRow(-1);
+              appendCellWithText(row, d.routeShortName + " "  + d.headsign);
+              appendCellWithText(row, formatDepartureTime(d));
+              appendCellWithText(row, d.temp);
+            }
+          });
+        }
+      });
+    }
+  
+    _shouldShowDeparture(departure) {
+      if (this._routeFilter === null) {
+        return true;
+      }
+      
+      return this._routeFilter.indexOf(departure.routeShortName) !== -1;
+    }
   };
 }());

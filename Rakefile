@@ -2,17 +2,17 @@ require 'erb'
 require 'jasmine'
 require 'rake'
 require 'fileutils'
+require 'tempfile'
 
 load 'jasmine/tasks/jasmine.rake'
 ENV['JASMINE_CONFIG_PATH'] = 'tests/jasmine.yml'
 
 TARGET_DIRECTORY = 'target'
+INTERMEDIATE_DIRECTORY = 'build'
 
 def concat(dest, sources)
-  File.open(dest, 'w') do |output|
-    for file in sources
-      output.write(File.read(file))
-    end
+  for file in sources
+    dest.write(File.read(file))
   end
 end
 
@@ -34,6 +34,13 @@ def build_version_file
     File.write("target/version.txt", "#{version}(dirty)\n")
   end
 end
+
+def concat_js(dest)
+  special = ['src/prefix.js', 'src/Controller.js']
+  all_js = Dir.glob('src/*.js')
+  ordinary = all_js.reject {|f| special.include?(f) }
+  concat(dest, special + ordinary)
+end
  
 
 task :integrationTests => :build do
@@ -53,11 +60,14 @@ task :build, [:environment] => :clean do |t, args|
   end
 
   mkdir_p(TARGET_DIRECTORY)
+  mkdir_p(INTERMEDIATE_DIRECTORY)
 
-  special = ['src/prefix.js', 'src/Controller.js']
-  all_js = Dir.glob('src/*.js')
-  ordinary = all_js.reject {|f| special.include?(f) }
-  concat('target/weatherbus.js', special + ordinary)
+  # The source file that we pass to babel must be inside the repo,
+  # otherwise babel won't find our .babelrc file.
+  js_temp = File.open("#{INTERMEDIATE_DIRECTORY}/wb-es2015.js", "w")
+  concat_js(js_temp)
+  js_temp.close
+  sh('node_modules/.bin/babel', js_temp.path, '--out-file', 'target/weatherbus.js', '--source-maps')
 
   FileUtils.cp("src/config-#{buildenv}.js", "#{TARGET_DIRECTORY}/config.js")
   build_app_html

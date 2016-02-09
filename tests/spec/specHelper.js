@@ -18,6 +18,11 @@
   };
 
   beforeAll(function (done) {
+    window.addEventListener("error", function (error) {
+      // Fail the current spec
+      expect(error.message).toBe({});
+    });
+
     var xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function () {
@@ -76,12 +81,12 @@
       }
     });
 
-    spyOn(WB.LocationService.prototype, "hash").and.throwError(
+    spyOn(WB.NavigationService.prototype, "hash").and.throwError(
       "Caught an unmocked access to a location object's hash()");
-    spyOn(WB.LocationService.prototype, "search").and.throwError(
+    spyOn(WB.NavigationService.prototype, "search").and.throwError(
       "Caught an unmocked access to a location object's search()");
-    spyOn(WB.LocationService.prototype, "pushState");
-    spyOn(WB.LocationService.prototype, "navigate").and.throwError(
+    spyOn(WB.NavigationService.prototype, "pushState");
+    spyOn(WB.NavigationService.prototype, "navigate").and.throwError(
       "Caught an unmocked access to a location object's navigate()");
 
 
@@ -91,17 +96,75 @@
     };
 
 
+    var addGoogleEvents = function (thing) {
+      thing._listeners = {};
+      thing.addListener = function (eventName, cb) {
+        thing._listeners[eventName] = cb;
+      };
+    };
+
     // Stubs
     window.google = {
       maps: {
         Map: function (container, config) {
           WB.latestMap = {
             _config: config,
-            _container: container
+            _container: container,
+            getBounds: function () { return undefined; },
           };
+          addGoogleEvents(WB.latestMap);
           return WB.latestMap;
+        },
+        Marker: function (config) {
+          WB.latestMarker = {
+            _config: config
+          };
+          addGoogleEvents(WB.latestMarker);
+          return WB.latestMarker;
+        },
+        LatLngBounds: function (sw, ne) {
+          if (typeof sw !== "function") {
+            sw = new google.maps.LatLng(sw.lat, sw.lng);
+          }
+          if (typeof ne !== "function") {
+            ne = new google.maps.LatLng(ne.lat, ne.lng);
+          }
+          this.getSouthWest = function () { return sw; };
+          this.getNorthEast = function () { return ne; };
+          this.getCenter = function () {
+            var lat = sw.lat() + (ne.lat() - sw.lat()) / 2;
+            var lng = sw.lng() + (ne.lng() - sw.lng()) / 2;
+            return new google.maps.LatLng(lat, lng);
+          };
+        },
+        LatLng: function (lat, lng) {
+          this.lat = function () { return lat; };
+          this.lng = function () { return lng; };
+        },
+        InfoWindow: function(config) {
+          var dom = document.createElement("div");
+          dom.appendChild(config.content);
+
+          WB.latestInfoWindow = {
+            getContent: function () {
+              return dom;
+            },
+            open: function (map, marker) {
+              this._map = map;
+              this._marker = marker;
+            }
+          };
+          addGoogleEvents(WB.latestInfoWindow);
+          return WB.latestInfoWindow;
         }
       }
+
     };
+
+    jasmine.clock().install();
+  });
+
+  afterEach(function () {
+    jasmine.clock().uninstall();
   });
 }());

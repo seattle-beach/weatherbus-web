@@ -5,8 +5,8 @@ describe("App", function () {
     this.root = document.createElement("div");
     this.subject = new WB.App(this.root);
     this.subject._xhrFactory = WB.specHelper.mockXhrFactory;
-    this.subject.locationService.hash.and.stub().and.returnValue("");
-    this.subject.locationService.search.and.stub().and.returnValue("");
+    this.subject.navService.hash.and.stub().and.returnValue("");
+    this.subject.navService.search.and.stub().and.returnValue("");
   });
 
   describe("When the app launches", function () {
@@ -49,7 +49,7 @@ describe("App", function () {
 
   describe("When the app launches at a url that has a stopid", function () {
     beforeEach(function () {
-      this.subject.locationService.hash.and.stub().and.returnValue("#stop-1_2345");
+      this.subject.navService.hash.and.stub().and.returnValue("#stop-1_2345");
       this.subject.start();
     });
 
@@ -61,7 +61,7 @@ describe("App", function () {
 
   describe("When the app launches at a url that has routes specified", function () {
     beforeEach(function () {
-      this.subject.locationService.search.and.stub().and.returnValue("?stop=1_619&routes=40,28");
+      this.subject.navService.search.and.stub().and.returnValue("?stop=1_619&routes=40,28");
       this.subject.start();
     });
 
