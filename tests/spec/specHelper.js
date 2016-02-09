@@ -156,6 +156,9 @@
           };
           addGoogleEvents(WB.latestInfoWindow);
           return WB.latestInfoWindow;
+        },
+        ControlPosition: {
+          TOP_RIGHT: "TR"
         }
       }
 

@@ -51,6 +51,10 @@
 
     _showMap(position) {
       this._map = new google.maps.Map(this._root.querySelector(".map-container"), {
+        zoomControlOptions: {
+          position: google.maps.ControlPosition.TOP_RIGHT
+        },
+        streetViewControl: false,
         center: position,
         zoom: 16
       });
