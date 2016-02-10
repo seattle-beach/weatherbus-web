@@ -22,5 +22,5 @@ deploy:
   organization: seattle-beach
   space: weatherbus-dev
 
-after_success:
+after_deploy:
   - bundle exec rake run_integration
