@@ -5,8 +5,12 @@ install:
   - npm install --dedupe jshint babel babel-cli babel-preset-es2015
   - bundle install
 script: bundle exec rake build['acceptance'] unitTests
+
 env:
-  - WB_MAPS_API_KEY=AIzaSyBIMixNNyUPrcnsKhRnZu18Ue5MqtT0aOY
+  matrix:
+    - WB_MAPS_API_KEY=AIzaSyBIMixNNyUPrcnsKhRnZu18Ue5MqtT0aOY
+  global:
+    secure: M5/zSQ8ULSbmtZv715BHqwarMufKtlNnVi5HdOrV3jO9B/TH80QFZyj0OfwSIRcFO5koPSuOgoBvdtHMOVkiTU7jpxELmgb8WWy1OHNEoROPx5QiYuLhI16v7LG4fYQUgdxWhxucL64Q6x6uv8DTPSJJpCCCkT/eFiVR4Bn39eLHiFH8a8WWFla3GCy1BVtT3hxq9Mr3bLzgBeBHlUOb8kTxiCi2btLjEyYCIUx9tMsSEep9nPnrgGu9N39zOYXLo7OvUiKmINfH+qq7rdum19x/6gvW7/H9KLvKw50kA4uOznE99+Kq8dJX64ynuR73p3V46D9mUz/A3jBavmfiRSJuBtNnyipGh+PEjUBHL6wxt22NNhej86Z+RlzxbtWIYaPlCn66yJpjGDy2A7efpL15+HxdX+DsPWQdjrmwafE5D2wNewhU1mE8N6QYEi+02SNeC6A74/wpVStBPGOLOr/pCbwqbESKvapinzAfE33SwAkjedeVJYcPAD5XYID4GWmsW+arPc3vWISJO2Q7tnd1dmrxqme77hIdWLNQOoTyLd/Znq7o20NFUi+8ZBRDBKGtmN8UVs/Giiv5R4J9pEsSsFmAqwhZ0o8WP+Z4lS7fAtNKsM9EbHrTijUm3udR4XvkONx0M/hJc2iDj/PpsyLCE7xYqC5wK9hZ9FLpULo=
 
 deploy:
   edge: true
@@ -17,3 +21,6 @@ deploy:
   api: https://api.run.pivotal.io
   organization: seattle-beach
   space: weatherbus-dev
+
+after_success:
+  - bundle exec rake run_integration

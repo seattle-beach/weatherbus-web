@@ -42,12 +42,6 @@ def concat_js(dest)
   concat(dest, special + ordinary)
 end
  
-
-task :integrationTests => :build do
-  sh 'cd integration-tests && rspec'
-end
-
-
 task :default => [:build, :unitTests]
 
 task :unitTests => "jasmine:ci"
@@ -87,4 +81,24 @@ task :clean do
 	    end
 	  end
   end
+end
+
+task :run_integration do
+  require 'json'
+  require 'net/http'
+  require 'open-uri'
+
+  builds = JSON.load(open('https://api.travis-ci.org/repos/seattle-beach/weatherbus-integration/builds').read)
+  build_num = builds.first['id']
+
+  url = 'https://api.travis-ci.org/builds/108158962/restart'
+  auth = "token #{ENV['AUTH_TOKEN']}"
+  sh "curl -X POST #{url} --header \"Authorization: #{auth}\""
+
+  # uri = URI("https://api.travis-ci.org/builds/#{build_num}/restart")
+  # req = Net::HTTP::Post.new(uri)
+  # req['Authorization'] = "token: #{ENV['AUTH_TOKEN']}"
+  # http = Net::HTTP.new(uri.hostname, uri.port)
+  # http.use_ssl = true
+  # res = http.request(req)
 end
