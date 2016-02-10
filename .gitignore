@@ -3,3 +3,4 @@ target/
 *.sw?
 node_modules
 .sass-cache
+.envrc
