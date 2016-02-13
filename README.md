@@ -10,8 +10,9 @@ Setup Instructions
   5. You should not see any errors.
 
 2. Launch the app
-  1. Open [file://&lt;repo root&gt;/target/index.html]() in a browser.
-  2. You should see a login form.
+  1. Run 'python -m SimpleHTTPServer' to start all servers
+  1. Open 'localhost:8000'
+  1. You should see a login form.
 
 3. Clone, set up, and launch weatherbus
   1. See <https://github.com/gbcm/weatherbus> and follow the directions there.
