@@ -43,17 +43,17 @@
     constructor(xhrFactory) {
       this.xhrFactory = xhrFactory;
     }
-  
+
     getStopsForUser(username, callback) {
       var url = "users/stops?username=" + username;
-      WB.makeRestCall(this.xhrFactory(), url, transformGetStopsError, parseStops, callback);
+      WB.makeRestGet(this.xhrFactory(), url, transformGetStopsError, parseStops, callback);
     }
-  
+
     createUser(username, callback) {
       var body = {username: username };
       WB.makeRestPost(this.xhrFactory(), "users", body, transformAddUserError, callback);
     }
-  
+
     addStop(username, stopId, callback) {
       var url = "users/" + encodeURIComponent(username) + "/stops";
       var body = {stopId: stopId};

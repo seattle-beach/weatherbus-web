@@ -34,10 +34,10 @@
     constructor (xhrFactory) {
       this.xhrFactory = xhrFactory;
     }
-  
+
     getInfoForStop(stopId, callback) {
       var url = "api/v1/stops/" + stopId;
-      WB.makeRestCall(this.xhrFactory(), url, transformError, processStopInfo, callback);
+      WB.makeRestGet(this.xhrFactory(), url, transformError, processStopInfo, callback);
     }
 
     getStopsNearLocation(position, callback) {
@@ -46,7 +46,7 @@
       var lngSpan = position.getNorthEast().lng() - position.getSouthWest().lng();
       var url = "api/v1/stops/?lat=" + round(center.lat()) + "&lng=" + round(center.lng()) +
         "&latSpan=" + round(latSpan) + "&lngSpan=" + round(lngSpan);
-      WB.makeRestCall(this.xhrFactory(), url, transformError, processStopList, callback);
-    } 
+      WB.makeRestGet(this.xhrFactory(), url, transformError, processStopList, callback);
+    }
   };
 }());

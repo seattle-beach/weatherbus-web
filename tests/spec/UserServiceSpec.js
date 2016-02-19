@@ -77,14 +77,24 @@ describe("UserService", function () {
     });
 
     describe("When the AJAX call succeeds", function () {
-      beforeEach(function () {
-        this.xhr.readyState = 4;
-        this.xhr.status = 200;
-        this.xhr.onreadystatechange();
+      var registerSuccessTests = function (status) {
+        beforeEach(function () {
+          this.xhr.readyState = 4;
+          this.xhr.status = status;
+          this.xhr.onreadystatechange();
+        });
+
+        it("should call the callback", function () {
+          expect(this.callback).toHaveBeenCalledWith(null);
+        });
+      };
+
+      describe("With a 200 status", function () {
+        registerSuccessTests(200);
       });
 
-      it("should call the callback", function () {
-        expect(this.callback).toHaveBeenCalledWith(null);
+      describe("With a 201 status", function () {
+        registerSuccessTests(201);
       });
     });
 
@@ -139,7 +149,7 @@ describe("UserService", function () {
         expect(this.callback).toHaveBeenCalledWith("Could not add stop.");
       });
     });
-    
+
     describe("When the AJAX call fails because the stop wasn't found", function () {
       beforeEach(function () {
         this.xhr.readyState = 4;
