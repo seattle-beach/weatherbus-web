@@ -2,12 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     coderay (1.1.0)
-    jasmine (2.99.0)
-      jasmine-core (>= 2.99.0, < 3.0.0)
+    jasmine (3.1.0)
+      jasmine-core (= 3.1.0)
       phantomjs
       rack (>= 1.2.1)
       rake
-    jasmine-core (2.99.2)
+    jasmine-core (3.1.0)
     method_source (0.8.2)
     phantomjs (2.1.1.0)
     pry (0.10.3)
@@ -28,4 +28,4 @@ DEPENDENCIES
   sass
 
 BUNDLED WITH
-   1.14.6
+   1.16.3
