@@ -10,7 +10,7 @@ Setup Instructions
     5. You should not see any errors.
 
 2. Launch the app
-    1. Run 'python -m SimpleHTTPServer' to start all servers
+    1. `$ cd target && 'python -m SimpleHTTPServer'`
     1. Open 'localhost:8000'
     1. You should see a login form.
 
